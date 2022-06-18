@@ -71,7 +71,6 @@ export = makePlugin({
 					"no-spread-destructuring": "error",
 					"no-export-assignment-let": "error",
 					"no-preceding-spread-element": "error",
-					module: "error",
 
 					"misleading-luatuple-checks": "warn",
 					"lua-truthiness": "warn",
