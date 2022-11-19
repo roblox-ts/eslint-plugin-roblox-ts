@@ -40,7 +40,7 @@ These are according to my preferences, so feel free to change this according to 
 ```
 
 ## Step 3: Setup the eslint config file
-Make a file named `.eslintrc` and place this in the contents. If you have a pre-existing `.prettierrc` file, you can move your rules into "prettier/prettier" (and delete `.prettierrc`). Either way, you can change your formatting preferences by editing the rules in "prettier/prettier".
+Make a file named `.eslintrc` and place this in the contents.
 
 ```json
 {
@@ -65,17 +65,7 @@ Make a file named `.eslintrc` and place this in the contents. If you have a pre-
         "plugin:roblox-ts/recommended"
     ],
     "rules": {
-        "prettier/prettier": [
-            "warn",
-            {
-                "semi": true,
-                "trailingComma": "all",
-                "singleQuote": false,
-                "printWidth": 120,
-                "tabWidth": 4,
-                "useTabs": true
-            }
-        ],
+        "prettier/prettier": "warn",
         "@typescript-eslint/array-type": [
             "warn",
             {
@@ -96,6 +86,18 @@ Make a file named `.eslintrc` and place this in the contents. If you have a pre-
 	],
         "no-undef-init": "error"
     }
+}
+```
+If you have a pre-existing `.prettierrc` file, you can keep it, and eslint will pick it up and use that.
+If not, you can create it with this recommended config:
+```json
+{
+	"semi": true,
+	"trailingComma": "all",
+	"singleQuote": false,
+	"printWidth": 120,
+	"tabWidth": 4,
+	"useTabs": true
 }
 ```
 
