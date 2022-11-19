@@ -60,7 +60,6 @@ Make a file named `.eslintrc` and place this in the contents. If you have a pre-
     ],
     "extends": [
         "plugin:@typescript-eslint/recommended",
-        "prettier/@typescript-eslint",
         "plugin:prettier/recommended",
         "plugin:roblox-ts/recommended"
     ],
