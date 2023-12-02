@@ -37,10 +37,10 @@ export const noRbxPostFixNew = makeRule<[], ViolationType>({
 		return {
 			CallExpression(node) {
 				const propertyAccess = service.esTreeNodeToTSNodeMap.get(node.callee);
-				if (ts.isPropertyAccessExpression(propertyAccess)) {
+				if (ts.isPropertyAccessExpression(propertyAccess) && propertyAccess.name.text === "new") {
 					const type = getConstrainedTypeAtLocation(checker, propertyAccess.expression);
 					const symbol = type.getSymbol();
-					if (symbol && dataTypes.includes(symbol.getName()) && propertyAccess.name.text === "new") {
+					if (symbol && dataTypes.includes(symbol.getName())) {
 						return context.report({
 							node,
 							messageId: "newViolation",
