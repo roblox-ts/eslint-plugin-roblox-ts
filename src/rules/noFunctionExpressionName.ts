@@ -7,7 +7,7 @@ export const noFunctionExpressionId = makeRule<[], "functionExpressionIdViolatio
 		type: "problem",
 		docs: {
 			description: "Bans function expression names",
-			recommended: "error",
+			recommended: "recommended",
 			requiresTypeChecking: false,
 		},
 		messages: {

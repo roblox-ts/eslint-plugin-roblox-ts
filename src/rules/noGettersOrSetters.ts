@@ -1,4 +1,4 @@
-import { TSESTree } from "@typescript-eslint/experimental-utils";
+import { TSESTree } from "@typescript-eslint/utils";
 import { makeRule } from "../util/rules";
 
 export const noGettersOrSettersName = "no-getters-or-setters";
@@ -8,7 +8,7 @@ export const noGettersOrSetters = makeRule<[], "getterSetterViolation">({
 		type: "problem",
 		docs: {
 			description: "Disallows getters and setters",
-			recommended: "error",
+			recommended: "recommended",
 			requiresTypeChecking: false,
 		},
 		schema: [],

@@ -8,7 +8,7 @@ export const noPrivateIdentifier = makeRule<[], "privateIdentifierViolation">({
 		type: "problem",
 		docs: {
 			description: "Bans private identifiers from being used",
-			recommended: "error",
+			recommended: "recommended",
 			requiresTypeChecking: false,
 		},
 		fixable: "code",

@@ -1,4 +1,4 @@
-import { TSESTree } from "@typescript-eslint/experimental-utils";
+import { TSESTree } from "@typescript-eslint/utils";
 import ts from "typescript";
 import { getParserServices, makeRule } from "../util/rules";
 import { skipDownwards } from "../util/traversal";
@@ -11,7 +11,7 @@ export const noAny = makeRule<[], "anyViolation">({
 		type: "problem",
 		docs: {
 			description: "Bans prototype from being used",
-			recommended: "error",
+			recommended: "recommended",
 			requiresTypeChecking: true,
 		},
 		messages: {

@@ -1,4 +1,4 @@
-import { TSESLint } from "@typescript-eslint/experimental-utils";
+import { TSESLint } from "@typescript-eslint/utils";
 import * as ruleImports from "./rules";
 import { makeRule, robloxTSSettings } from "./util/rules";
 
@@ -46,7 +46,7 @@ function getRules() {
 	return rules;
 }
 
-export = makePlugin({
+export default makePlugin({
 	rules: getRules(),
 	configs: {
 		recommended: {

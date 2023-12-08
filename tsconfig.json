@@ -1,11 +1,14 @@
 {
 	"compilerOptions": {
-		"module": "commonjs",
-		"target": "ES2019",
-		"lib": ["ES2019"],
-		"rootDir": "src",
+		"module": "ESNext",
+		"target": "ESNext",
+		"lib": [
+			"ESNext"
+		],
+		"rootDir": ".",
 		"outDir": "out",
 		"strict": true,
-		"esModuleInterop": true
-	}
+		"esModuleInterop": true,
+		"moduleResolution": "Bundler",
+	},
 }

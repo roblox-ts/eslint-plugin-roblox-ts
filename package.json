@@ -1,30 +1,45 @@
 {
 	"name": "eslint-plugin-roblox-ts",
-	"version": "0.0.36",
-	"main": "out/index.js",
+	"version": "0.0.38",
+	"main": "./dist/index.js",
 	"engines": {
 		"node": ">=0.10.0"
 	},
 	"scripts": {
-		"build": "tsc",
-		"build-watch": "tsc -w",
+		"build": "rollup --config=rollup.config.mts --configPlugin=rollup-plugin-esbuild",
+		"build-watch": "rollup --config=rollup.config.mts --configPlugin=rollup-plugin-esbuild --watch",
 		"prepublishOnly": "npm run build",
 		"eslint": "eslint \"src/**/*.ts\" --max-warnings 0"
 	},
+	"peerDependencies": {
+		"eslint": "*"
+	},
 	"dependencies": {
 		"@types/node": "^20.8.0",
-		"@typescript-eslint/experimental-utils": "^5.62.0",
-		"typescript": "^5.2.2"
+		"@typescript-eslint/utils": "^6.13.2",
+		"fast-glob": "^3.3.2",
+		"typescript": "5.2.2"
 	},
 	"devDependencies": {
+		"@rollup/plugin-commonjs": "^25.0.7",
 		"@typescript-eslint/eslint-plugin": "^6.7.3",
 		"@typescript-eslint/parser": "^6.7.3",
-		"eslint": "^8.50.0",
 		"eslint-config-prettier": "^9.0.0",
 		"eslint-plugin-prettier": "^5.0.0",
-		"prettier": "^3.0.3"
+		"prettier": "^3.0.3",
+		"rollup": "^4.6.1",
+		"rollup-plugin-esbuild": "^6.1.0"
 	},
 	"files": [
-		"out"
-	]
+		"dist"
+	],
+	"publishConfig": {
+		"access": "public"
+	},
+	"exports": {
+		".": {
+			"require": "./dist/index.js",
+			"default": "./dist/index.js"
+		}
+	}
 }

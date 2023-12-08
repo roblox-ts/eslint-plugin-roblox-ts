@@ -12,7 +12,7 @@ export const noArrayPairs = makeRule<[], "arrayPairsViolation" | "arrayIPairsVio
 		type: "problem",
 		docs: {
 			description: "Disallows usage of pairs() and ipairs() with Array<T>",
-			recommended: "warn",
+			recommended: "recommended",
 			requiresTypeChecking: true,
 		},
 		schema: [],
@@ -43,7 +43,6 @@ export const noArrayPairs = makeRule<[], "arrayPairsViolation" | "arrayIPairsVio
 								messageId: "arrayIPairsViolation",
 							});
 						}
-					} else {
 					}
 				}
 			},

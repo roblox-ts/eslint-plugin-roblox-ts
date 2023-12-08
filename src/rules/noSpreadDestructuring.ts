@@ -7,7 +7,7 @@ export const noSpreadDestructuring = makeRule<[], "spreadDestructuringViolation"
 		type: "problem",
 		docs: {
 			description: "Bans spread destructuring from being used",
-			recommended: "error",
+			recommended: "recommended",
 			requiresTypeChecking: false,
 		},
 		messages: {

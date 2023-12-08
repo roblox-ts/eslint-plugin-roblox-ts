@@ -7,7 +7,7 @@ export const noRegex = makeRule<[], "regexViolation">({
 		type: "problem",
 		docs: {
 			description: "Disallows the regex operator",
-			recommended: "error",
+			recommended: "recommended",
 			requiresTypeChecking: false,
 		},
 		schema: [],

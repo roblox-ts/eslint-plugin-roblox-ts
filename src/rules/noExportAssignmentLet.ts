@@ -1,4 +1,4 @@
-import { AST_NODE_TYPES } from "@typescript-eslint/experimental-utils";
+import { AST_NODE_TYPES } from "@typescript-eslint/utils";
 import ts from "typescript";
 import { getParserServices, makeRule } from "../util/rules";
 
@@ -10,7 +10,7 @@ export const noExportAssignmentLet = makeRule<[], "noExportAssignmentLetViolatio
 		type: "problem",
 		docs: {
 			description: "Bans using `export =` on a let variable",
-			recommended: "error",
+			recommended: "recommended",
 			requiresTypeChecking: false,
 		},
 		messages: {
@@ -27,7 +27,7 @@ export const noExportAssignmentLet = makeRule<[], "noExportAssignmentLetViolatio
 
 				const expression = tsNode.expression;
 				if (ts.isIdentifier(expression)) {
-					const variable = context.getScope().variables.find(variable => {
+					const variable = context.sourceCode.getScope?.(node).variables.find(variable => {
 						return variable.identifiers[0].name === expression.escapedText;
 					});
 					// Not sure why this works?

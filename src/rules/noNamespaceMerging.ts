@@ -30,7 +30,7 @@ export const noNamespaceMerging = makeRule<[], "namespaceMergingViolation">({
 		type: "problem",
 		docs: {
 			description: "Bans namespace declaration merging",
-			recommended: "error",
+			recommended: "recommended",
 			requiresTypeChecking: true,
 		},
 		messages: {

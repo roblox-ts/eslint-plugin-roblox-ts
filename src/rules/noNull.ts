@@ -7,7 +7,7 @@ export const noNull = makeRule<[], "nullViolation">({
 		type: "problem",
 		docs: {
 			description: "Bans null from being used",
-			recommended: "error",
+			recommended: "recommended",
 			requiresTypeChecking: false,
 		},
 		fixable: "code",

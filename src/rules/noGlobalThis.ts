@@ -7,7 +7,7 @@ export const noGlobalThis = makeRule<[], "globalThisViolation">({
 		type: "problem",
 		docs: {
 			description: "Bans globalThis from being used",
-			recommended: "error",
+			recommended: "recommended",
 			requiresTypeChecking: false,
 		},
 		messages: {
