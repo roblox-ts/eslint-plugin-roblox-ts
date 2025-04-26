@@ -102,6 +102,12 @@ importers:
       '@isentinel/eslint-config':
         specifier: catalog:cli
         version: 1.0.1(@types/eslint@9.6.1)(@types/estree@1.0.6)(eslint-plugin-jest@28.11.0(@typescript-eslint/eslint-plugin@8.31.0(@typescript-eslint/parser@8.31.0(eslint@9.22.0(jiti@2.4.2))(typescript@5.8.2))(eslint@9.22.0(jiti@2.4.2))(typescript@5.8.2))(eslint@9.22.0(jiti@2.4.2))(typescript@5.8.2))(eslint@9.22.0(jiti@2.4.2))(typescript@5.8.2)
+      '@rbxts/compiler-types':
+        specifier: 3.0.0-types.0
+        version: 3.0.0-types.0
+      '@rbxts/types':
+        specifier: 1.0.848
+        version: 1.0.848
       '@types/node':
         specifier: catalog:types
         version: 22.13.10
@@ -879,6 +885,12 @@ packages:
   '@pkgr/core@0.2.4':
     resolution: {integrity: sha512-ROFF39F6ZrnzSUEmQQZUar0Jt4xVoP9WnDRdWwF4NNcXs3xBTLgBUDoOwW141y1jP+S8nahIbdxbFC7IShw9Iw==}
     engines: {node: ^12.20.0 || ^14.18.0 || >=16.0.0}
+
+  '@rbxts/compiler-types@3.0.0-types.0':
+    resolution: {integrity: sha512-VGOHJPoL7+56NTatMGqQj3K7xWuzEV+aP4QD5vZiHu+bcff3kiTmtoadaF6NkJrmwfFAvbsd4Dg764ZjWNceag==}
+
+  '@rbxts/types@1.0.848':
+    resolution: {integrity: sha512-NRe8RW7V7W4YVjJf7c4XfpjA/3rW9XC86mceWFWc+8kexE8hJwCaRTUkLZ5Hd2i9so1zXP68J8OUTguHeK31BQ==}
 
   '@rollup/plugin-alias@5.1.1':
     resolution: {integrity: sha512-PR9zDb+rOzkRb2VD+EuKB7UC41vU5DIwZ5qqCpk0KJudcWAyi8rvYOhS7+L5aZCspw1stTViLgN5v6FF1p5cgQ==}
@@ -4768,6 +4780,10 @@ snapshots:
   '@pkgr/core@0.1.2': {}
 
   '@pkgr/core@0.2.4': {}
+
+  '@rbxts/compiler-types@3.0.0-types.0': {}
+
+  '@rbxts/types@1.0.848': {}
 
   '@rollup/plugin-alias@5.1.1(rollup@4.34.9)':
     optionalDependencies:

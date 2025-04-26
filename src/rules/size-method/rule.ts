@@ -10,7 +10,7 @@ import { getParserServices } from "@typescript-eslint/utils/eslint-utils";
 import type { Type, TypeChecker } from "typescript";
 
 import { createEslintRule } from "../../util";
-import { isMapType, isSetType, isStringType } from "../../utils/types";
+import { isArrayType, isMapType, isSetType, isStringType } from "../../utils/types";
 
 export const RULE_NAME = "size-method";
 
@@ -66,7 +66,7 @@ function isTargetType(
 
 	// For "length" property, only check string and array types
 	if (propertyName === "length") {
-		return isStringType(type) || checker.isArrayLikeType(type);
+		return isStringType(type) || isArrayType(checker, type);
 	}
 
 	// For "size" property, check Map, Set, WeakMap and WeakSet types

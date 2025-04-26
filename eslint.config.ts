@@ -6,9 +6,6 @@ export default style(
 		roblox: false,
 		type: "package",
 		typescript: {
-			parserOptions: {
-				project: "tsconfig.json",
-			},
 			tsconfigPath: "tsconfig.json",
 		},
 	},

@@ -1,6 +1,19 @@
 import { isBuiltinSymbolLike, isTypeFlagSet } from "@typescript-eslint/type-utils";
 
-import { type Program, type Type, TypeFlags } from "typescript";
+import { type Program, type Type, type TypeChecker, TypeFlags } from "typescript";
+
+export function isArrayType(checker: TypeChecker, type: Type): boolean {
+	if (checker.isTupleType(type) || checker.isArrayLikeType(type)) {
+		return true;
+	}
+
+	return !!(
+		type.symbol.name === "ReadonlyArray" ||
+		type.symbol.name === "Array" ||
+		type.symbol.name === "ReadVoxelsArray" ||
+		type.symbol.name === "TemplateStringsArray"
+	);
+}
 
 export function isDefinedType(type: Type): boolean {
 	return (
@@ -26,7 +39,6 @@ export function isFunction(type: Type): boolean {
 }
 
 export function isMapType(program: Program, type: Type): boolean {
-	debugger;
 	return isBuiltinSymbolLike(program, type, ["Map", "ReadonlyMap", "WeakMap"]);
 }
 
