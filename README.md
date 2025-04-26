@@ -15,9 +15,10 @@ A collection of ESLint rules specifically targeted for roblox-ts.
 
 💭 Requires [type information](https://typescript-eslint.io/linting/typed-linting).
 
-| Name                                                        | Description                             | 💭 |
-| :---------------------------------------------------------- | :-------------------------------------- | :- |
-| [lua-truthiness](src/rules/lua-truthiness/documentation.md) | Warns against falsy strings and numbers | 💭 |
+| Name                                                            | Description                                       | 💭 |
+| :-------------------------------------------------------------- | :------------------------------------------------ | :- |
+| [lua-truthiness](src/rules/lua-truthiness/documentation.md)     | Warns against falsy strings and numbers           | 💭 |
+| [no-value-typeof](src/rules/no-value-typeof/documentation.md) | Disallow using `typeof` to check for value types. |    |
 
 <!-- end auto-generated rules list -->
 

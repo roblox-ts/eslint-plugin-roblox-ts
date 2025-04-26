@@ -3,7 +3,6 @@
 💭 This rule requires [type information](https://typescript-eslint.io/linting/typed-linting).
 
 <!-- end auto-generated rule header -->
-<!-- end auto-generated rule header -->
 <!-- Do not manually modify this header. Run: `npm run eslint-docs` -->
 
 This rule warns when code relies on the truthiness of strings or numbers in
