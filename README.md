@@ -13,12 +13,15 @@ A collection of ESLint rules specifically targeted for roblox-ts.
 <!-- Do not manually modify this list. Run: `npm run eslint-docs` -->
 <!-- begin auto-generated rules list -->
 
+🔧 Automatically fixable by the [`--fix` CLI option](https://eslint.org/docs/user-guide/command-line-interface#--fix).\
+💡 Manually fixable by [editor suggestions](https://eslint.org/docs/latest/use/core-concepts#rule-suggestions).\
 💭 Requires [type information](https://typescript-eslint.io/linting/typed-linting).
 
-| Name                                                            | Description                                       | 💭 |
-| :-------------------------------------------------------------- | :------------------------------------------------ | :- |
-| [lua-truthiness](src/rules/lua-truthiness/documentation.md)     | Warns against falsy strings and numbers           | 💭 |
-| [no-value-typeof](src/rules/no-value-typeof/documentation.md) | Disallow using `typeof` to check for value types. |    |
+| Name                                                          | Description                                                                                                      | 🔧 | 💡 | 💭 |
+| :------------------------------------------------------------ | :--------------------------------------------------------------------------------------------------------------- | :- | :- | :- |
+| [lua-truthiness](src/rules/lua-truthiness/documentation.md)   | Warns against falsy strings and numbers                                                                          |    |    | 💭 |
+| [no-post-fix-new](src/rules/no-post-fix-new/documentation.md) | Bans the use of .new() on objects without a .new() method. This is useful to help users transition to roblox-ts. | 🔧 | 💡 | 💭 |
+| [no-value-typeof](src/rules/no-value-typeof/documentation.md) | Disallow using `typeof` to check for value types.                                                                |    |    |    |
 
 <!-- end auto-generated rules list -->
 

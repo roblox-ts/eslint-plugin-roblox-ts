@@ -2,6 +2,7 @@ import type { Linter } from "eslint";
 
 import { version } from "../package.json";
 import { luaTruthiness } from "./rules/lua-truthiness/rule";
+import { noPostFixNew } from "./rules/no-post-fix-new/rule";
 import { noValueTypeof } from "./rules/no-value-typeof/rule";
 
 const plugin = {
@@ -11,6 +12,7 @@ const plugin = {
 	},
 	rules: {
 		"lua-truthiness": luaTruthiness,
+		"no-post-fix-new": noPostFixNew,
 		"no-value-typeof": noValueTypeof,
 	},
 };

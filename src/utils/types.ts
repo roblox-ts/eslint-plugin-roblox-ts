@@ -21,6 +21,10 @@ export function isEmptyStringType(type: Type): boolean {
 	return isStringType(type);
 }
 
+export function isFunction(type: Type): boolean {
+	return isTypeFlagSet(type, TypeFlags.Object) && type.getCallSignatures().length > 0;
+}
+
 export function isNumberLiteralType(type: Type, value: number): boolean {
 	if (type.isNumberLiteral()) {
 		return type.value === value;
