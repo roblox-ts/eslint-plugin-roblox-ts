@@ -59,8 +59,8 @@ catalogs:
       version: 6.2.1
   inlined:
     '@antfu/utils':
-      specifier: 9.1.0
-      version: 9.1.0
+      specifier: 9.2.0
+      version: 9.2.0
   testing:
     '@typescript-eslint/rule-tester':
       specifier: 8.30.1
@@ -98,7 +98,7 @@ importers:
         version: 24.1.0
       '@antfu/utils':
         specifier: catalog:inlined
-        version: 9.1.0
+        version: 9.2.0
       '@isentinel/eslint-config':
         specifier: catalog:cli
         version: 1.0.1(@types/eslint@9.6.1)(@types/estree@1.0.6)(eslint-plugin-jest@28.11.0(@typescript-eslint/eslint-plugin@8.31.0(@typescript-eslint/parser@8.31.0(eslint@9.22.0(jiti@2.4.2))(typescript@5.8.2))(eslint@9.22.0(jiti@2.4.2))(typescript@5.8.2))(eslint@9.22.0(jiti@2.4.2))(typescript@5.8.2))(eslint@9.22.0(jiti@2.4.2))(typescript@5.8.2)
@@ -181,8 +181,8 @@ packages:
     resolution: {integrity: sha512-Pq54C1N16BjLX4aHd7VJiuqxl+KoT9wOSyAZSnC2qDf1MraZ2c2b6FldjfeNsP1HBPvNhlCmZI91bNdmwXuuWQ==}
     hasBin: true
 
-  '@antfu/utils@9.1.0':
-    resolution: {integrity: sha512-R+3bzxNN0ZscQg3ZVG7suqBTFP2dbdaCjKe5KY6hqNZimdyZ32KemotJPmoqQhKH28CqdgyXQGkWZlCGsGQmJw==}
+  '@antfu/utils@9.2.0':
+    resolution: {integrity: sha512-Oq1d9BGZakE/FyoEtcNeSwM7MpDO2vUBi11RWBZXf75zPsbUVWmUs03EqkRFrcgbXyKTas0BdZWC1wcuSoqSAw==}
 
   '@babel/code-frame@7.26.2':
     resolution: {integrity: sha512-RJlIHRueQgwWitWgF8OdFYGZX328Ax5BCemNGlqHfplnRT9ESi8JkFlvaVYbS+UubVY6dpv87Fs2u5M29iNFVQ==}
@@ -4175,7 +4175,7 @@ snapshots:
       package-manager-detector: 1.0.0
       tinyexec: 0.3.2
 
-  '@antfu/utils@9.1.0': {}
+  '@antfu/utils@9.2.0': {}
 
   '@babel/code-frame@7.26.2':
     dependencies:
