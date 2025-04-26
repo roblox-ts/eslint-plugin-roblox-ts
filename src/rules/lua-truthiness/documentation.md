@@ -33,7 +33,7 @@ if (x !== 0) {} // ✅
 function check<T>(a: T) {
 	if (a) {} // ❌
 	if (a !== undefined) {} // ✅
-}	
+}
 ```
 
 ```js
