@@ -1,0 +1,83 @@
+{
+	"name": "eslint-plugin-roblox-ts-x",
+	"version": "0.1.0",
+	"description": "A collection of ESLint rules specifically targeted for roblox-ts.",
+	"keywords": [
+		"roblox",
+		"roblox-ts",
+		"eslint-plugin",
+		"rbxts"
+	],
+	"homepage": "https://github.com/christopher-buss/eslint-plugin-roblox-ts-x#readme",
+	"bugs": "https://github.com/christopher-buss/eslint-plugin-roblox-ts-x/issues",
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/christopher-buss/eslint-plugin-roblox-ts-x.git"
+	},
+	"license": "MIT",
+	"author": "Christopher Buss <christopher.buss@pm.me> (https://github.com/christopher-buss)",
+	"sideEffects": false,
+	"type": "module",
+	"exports": {
+		".": "./dist/index.mjs",
+		"./package.json": "./package.json"
+	},
+	"main": "./dist/index.mjs",
+	"module": "./dist/index.mjs",
+	"types": "./dist/index.d.mts",
+	"files": [
+		"dist"
+	],
+	"scripts": {
+		"build": "unbuild",
+		"dev": "unbuild --stub",
+		"eslint-docs": "eslint-doc-generator",
+		"lint": "eslint",
+		"prepare": "simple-git-hooks",
+		"prepublishOnly": "nr build",
+		"release": "bumpp",
+		"start": "tsx src/index.ts",
+		"test": "vitest",
+		"typecheck": "tsc --noEmit"
+	},
+	"simple-git-hooks": {
+		"pre-commit": "pnpm i --frozen-lockfile --ignore-scripts --offline && npx lint-staged"
+	},
+	"lint-staged": {
+		"*": "eslint --fix"
+	},
+	"resolutions": {
+		"eslint-plugin-sentinel": "workspace:*"
+	},
+	"devDependencies": {
+		"@antfu/ni": "catalog:cli",
+		"@antfu/utils": "catalog:inlined",
+		"@isentinel/eslint-config": "catalog:cli",
+		"@types/node": "catalog:types",
+		"@typescript-eslint/eslint-plugin": "catalog:cli",
+		"@typescript-eslint/parser": "catalog:cli",
+		"@typescript-eslint/rule-tester": "catalog:testing",
+		"@typescript-eslint/type-utils": "catalog:cli",
+		"@typescript-eslint/utils": "catalog:cli",
+		"bumpp": "catalog:cli",
+		"eslint": "catalog:cli",
+		"eslint-doc-generator": "catalog:utils",
+		"eslint-plugin-pnpm": "catalog:cli",
+		"eslint-vitest-rule-tester": "catalog:testing",
+		"jiti": "catalog:cli",
+		"lint-staged": "catalog:cli",
+		"simple-git-hooks": "catalog:cli",
+		"tinyexec": "catalog:utils",
+		"ts-api-utils": "catalog:cli",
+		"tsx": "catalog:cli",
+		"typescript": "catalog:cli",
+		"unbuild": "catalog:cli",
+		"vite": "catalog:cli",
+		"vitest": "catalog:testing",
+		"yaml": "catalog:testing"
+	},
+	"peerDependencies": {
+		"eslint": "*"
+	},
+	"packageManager": "pnpm@10.9.0"
+}

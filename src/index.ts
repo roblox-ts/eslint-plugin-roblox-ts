@@ -1,0 +1,26 @@
+import type { Linter } from "eslint";
+
+import { version } from "../package.json";
+import { luaTruthiness } from "./rules/lua-truthiness/rule";
+
+const plugin = {
+	meta: {
+		name: "roblox-ts-x",
+		version,
+	},
+	rules: {
+		"lua-truthiness": luaTruthiness,
+	},
+};
+
+export default plugin;
+
+export type RuleOptions = {
+	[K in keyof RuleDefinitions]: RuleDefinitions[K]["defaultOptions"];
+};
+
+export type Rules = {
+	[K in keyof RuleOptions]: Linter.RuleEntry<RuleOptions[K]>;
+};
+
+type RuleDefinitions = (typeof plugin)["rules"];
