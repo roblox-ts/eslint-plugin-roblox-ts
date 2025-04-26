@@ -23,6 +23,7 @@ A collection of ESLint rules specifically targeted for roblox-ts.
 | [no-null](src/rules/no-null/documentation.md)                 | Disallow usage of the 'null' keyword in TypeScript.                                                              | 🔧 |    |    |
 | [no-post-fix-new](src/rules/no-post-fix-new/documentation.md) | Bans the use of .new() on objects without a .new() method. This is useful to help users transition to roblox-ts. | 🔧 | 💡 | 💭 |
 | [no-value-typeof](src/rules/no-value-typeof/documentation.md) | Disallow using `typeof` to check for value types.                                                                |    |    |    |
+| [size-method](src/rules/size-method/documentation.md)         | Enforces use of .size() method instead of .length or .size property for Roblox compatibility.                    | 🔧 |    | 💭 |
 
 <!-- end auto-generated rules list -->
 

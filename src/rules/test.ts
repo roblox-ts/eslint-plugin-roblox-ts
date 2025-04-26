@@ -7,6 +7,13 @@ import { run as runInternal } from "eslint-vitest-rule-tester";
 export function run(options: RuleTesterInitOptions & TestCasesOptions): void {
 	void runInternal({
 		parser: tsParser as Linter.Parser,
+		parserOptions: {
+			ecmaVersion: 2018,
+			projectService: {
+				allowDefaultProject: ["*.ts"],
+			},
+			sourceType: "module",
+		},
 		...options,
 	});
 }

@@ -5,6 +5,7 @@ import { luaTruthiness } from "./rules/lua-truthiness/rule";
 import { noNull } from "./rules/no-null/rule";
 import { noPostFixNew } from "./rules/no-post-fix-new/rule";
 import { noValueTypeof } from "./rules/no-value-typeof/rule";
+import { sizeMethod } from "./rules/size-method/rule";
 
 const plugin = {
 	meta: {
@@ -16,6 +17,7 @@ const plugin = {
 		"no-null": noNull,
 		"no-post-fix-new": noPostFixNew,
 		"no-value-typeof": noValueTypeof,
+		"size-method": sizeMethod,
 	},
 };
 

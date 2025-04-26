@@ -1,6 +1,6 @@
-import { isTypeFlagSet } from "@typescript-eslint/type-utils";
+import { isBuiltinSymbolLike, isTypeFlagSet } from "@typescript-eslint/type-utils";
 
-import { type Type, TypeFlags } from "typescript";
+import { type Program, type Type, TypeFlags } from "typescript";
 
 export function isDefinedType(type: Type): boolean {
 	return (
@@ -25,6 +25,11 @@ export function isFunction(type: Type): boolean {
 	return isTypeFlagSet(type, TypeFlags.Object) && type.getCallSignatures().length > 0;
 }
 
+export function isMapType(program: Program, type: Type): boolean {
+	debugger;
+	return isBuiltinSymbolLike(program, type, ["Map", "ReadonlyMap", "WeakMap"]);
+}
+
 export function isNumberLiteralType(type: Type, value: number): boolean {
 	if (type.isNumberLiteral()) {
 		return type.value === value;
@@ -39,6 +44,10 @@ export function isNumberType(type: Type): boolean {
 
 export function isPossiblyType(type: Type, callback: (type: Type) => boolean): boolean {
 	return isPossiblyTypeInner(type.getConstraint() ?? type, callback);
+}
+
+export function isSetType(program: Program, type: Type): boolean {
+	return isBuiltinSymbolLike(program, type, ["Set", "ReadonlySet", "WeakSet"]);
 }
 
 export function isStringType(type: Type): boolean {
