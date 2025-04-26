@@ -5,6 +5,7 @@ import { luaTruthiness } from "./rules/lua-truthiness/rule";
 import { noNull } from "./rules/no-null/rule";
 import { noPostFixNew } from "./rules/no-post-fix-new/rule";
 import { noValueTypeof } from "./rules/no-value-typeof/rule";
+import { preferTaskLibrary } from "./rules/prefer-task-library/rule";
 import { sizeMethod } from "./rules/size-method/rule";
 
 const plugin = {
@@ -17,6 +18,7 @@ const plugin = {
 		"no-null": noNull,
 		"no-post-fix-new": noPostFixNew,
 		"no-value-typeof": noValueTypeof,
+		"prefer-task-library": preferTaskLibrary,
 		"size-method": sizeMethod,
 	},
 };
