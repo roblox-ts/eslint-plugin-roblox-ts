@@ -53,6 +53,8 @@
 		"@antfu/ni": "catalog:cli",
 		"@antfu/utils": "catalog:inlined",
 		"@isentinel/eslint-config": "catalog:cli",
+		"@rbxts/compiler-types": "catalog:types",
+		"@rbxts/types": "catalog:types",
 		"@types/node": "catalog:types",
 		"@typescript-eslint/eslint-plugin": "catalog:cli",
 		"@typescript-eslint/parser": "catalog:cli",

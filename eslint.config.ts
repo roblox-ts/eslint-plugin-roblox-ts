@@ -6,14 +6,11 @@ export default style(
 		roblox: false,
 		type: "package",
 		typescript: {
-			parserOptions: {
-				project: "tsconfig.json",
-			},
 			tsconfigPath: "tsconfig.json",
 		},
 	},
 	{
-		ignores: [".eslint-doc-generatorrc.ts"],
+		ignores: [".eslint-doc-generatorrc.ts", "fixture/**"],
 	},
 	{
 		files: GLOB_TESTS,

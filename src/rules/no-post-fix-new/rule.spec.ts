@@ -149,13 +149,6 @@ const invalid: Array<InvalidTestCase> = [
 run({
 	invalid,
 	name: RULE_NAME,
-	parserOptions: {
-		ecmaVersion: 2018,
-		projectService: {
-			allowDefaultProject: ["*.ts"],
-		},
-		sourceType: "module",
-	},
 	rule: noPostFixNew,
 	valid,
 });

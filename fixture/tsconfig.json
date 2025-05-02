@@ -1,0 +1,13 @@
+{
+	"compilerOptions": {
+		"target": "ESNext",
+		"module": "ESNext",
+		"moduleResolution": "Bundler",
+		"typeRoots": ["../node_modules/@rbxts"],
+		"strict": true,
+		"skipLibCheck": true
+	},
+	"include": [
+		"**/*"
+	]
+}
