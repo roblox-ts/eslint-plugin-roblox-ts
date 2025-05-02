@@ -10,7 +10,7 @@ export default style(
 		},
 	},
 	{
-		ignores: [".eslint-doc-generatorrc.ts"],
+		ignores: [".eslint-doc-generatorrc.ts", "fixture/**"],
 	},
 	{
 		files: GLOB_TESTS,

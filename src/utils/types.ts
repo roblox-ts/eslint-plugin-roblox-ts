@@ -3,16 +3,7 @@ import { isBuiltinSymbolLike, isTypeFlagSet } from "@typescript-eslint/type-util
 import { type Program, type Type, type TypeChecker, TypeFlags } from "typescript";
 
 export function isArrayType(checker: TypeChecker, type: Type): boolean {
-	if (checker.isTupleType(type) || checker.isArrayLikeType(type)) {
-		return true;
-	}
-
-	return !!(
-		type.symbol.name === "ReadonlyArray" ||
-		type.symbol.name === "Array" ||
-		type.symbol.name === "ReadVoxelsArray" ||
-		type.symbol.name === "TemplateStringsArray"
-	);
+	return isTypeRecursive(type, inner => checker.isArrayType(inner) || checker.isTupleType(inner));
 }
 
 export function isDefinedType(type: Type): boolean {
@@ -55,7 +46,10 @@ export function isNumberType(type: Type): boolean {
 }
 
 export function isPossiblyType(type: Type, callback: (type: Type) => boolean): boolean {
-	return isPossiblyTypeInner(type.getConstraint() ?? type, callback);
+	const constrainedType = type.getConstraint() ?? type;
+	return isTypeRecursive(constrainedType, innerType => {
+		return isUnconstrainedType(innerType) || isDefinedType(innerType) || callback(innerType);
+	});
 }
 
 export function isSetType(program: Program, type: Type): boolean {
@@ -66,19 +60,13 @@ export function isStringType(type: Type): boolean {
 	return isTypeFlagSet(type, TypeFlags.StringLike);
 }
 
-function isPossiblyTypeInner(type: Type, predicate: (type: Type) => boolean): boolean {
+export function isUnconstrainedType(type: Type): boolean {
+	return isTypeFlagSet(type, TypeFlags.Any | TypeFlags.Unknown | TypeFlags.TypeVariable);
+}
+
+function isTypeRecursive(type: Type, predicate: (t: Type) => boolean): boolean {
 	if (type.isUnionOrIntersection()) {
-		return type.types.some(inner => isPossiblyTypeInner(inner, predicate));
-	}
-
-	// type variable without constraint, any, or unknown
-	if (isTypeFlagSet(type, TypeFlags.TypeVariable | TypeFlags.Any | TypeFlags.Unknown)) {
-		return true;
-	}
-
-	// defined type
-	if (isDefinedType(type)) {
-		return true;
+		return type.types.some(inner => isTypeRecursive(inner, predicate));
 	}
 
 	return predicate(type);
