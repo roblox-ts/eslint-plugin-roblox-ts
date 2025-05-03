@@ -11,7 +11,10 @@ export type TestExpression =
 	| TSESTree.WhileStatement;
 
 export function isArrayType(checker: TypeChecker, type: Type): boolean {
-	return isTypeRecursive(type, inner => checker.isArrayType(inner) || checker.isTupleType(inner));
+	return isTypeRecursive(
+		type,
+		inner => checker.isArrayLikeType(inner) && !isUnconstrainedType(inner),
+	);
 }
 
 export function isDefinedType(type: Type): boolean {
