@@ -6,6 +6,7 @@ import { misleadingLuaTupleChecks } from "./rules/misleading-lua-tuple-checks/ru
 import { noArrayPairs } from "./rules/no-array-pairs/rule";
 import { noEnumMerging } from "./rules/no-enum-merging/rule";
 import { noExportAssignableLet } from "./rules/no-export-assignment-let/rule";
+import { noForIn } from "./rules/no-for-in/rule";
 import { noInvalidIdentifier } from "./rules/no-invalid-identifier/rule";
 import { noNull } from "./rules/no-null/rule";
 import { noPostFixNew } from "./rules/no-post-fix-new/rule";
@@ -24,6 +25,7 @@ const plugin = {
 		"no-array-pairs": noArrayPairs,
 		"no-enum-merging": noEnumMerging,
 		"no-export-assignment-let": noExportAssignableLet,
+		"no-for-in": noForIn,
 		"no-invalid-identifier": noInvalidIdentifier,
 		"no-null": noNull,
 		"no-post-fix-new": noPostFixNew,
