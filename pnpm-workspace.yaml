@@ -4,7 +4,7 @@ packages:
 catalogs:
   cli:
     '@antfu/ni': 24.1.0
-    '@isentinel/eslint-config': 1.0.1
+    '@isentinel/eslint-config': 1.1.2
     '@typescript-eslint/eslint-plugin': 8.31.0
     '@typescript-eslint/parser': 8.31.0
     '@typescript-eslint/utils': 8.31.0
