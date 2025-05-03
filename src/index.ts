@@ -4,6 +4,7 @@ import { version } from "../package.json";
 import { luaTruthiness } from "./rules/lua-truthiness/rule";
 import { misleadingLuaTupleChecks } from "./rules/misleading-lua-tuple-checks/rule";
 import { noArrayPairs } from "./rules/no-array-pairs/rule";
+import { noEnumMerging } from "./rules/no-enum-merging/rule";
 import { noInvalidIdentifier } from "./rules/no-invalid-identifier/rule";
 import { noNull } from "./rules/no-null/rule";
 import { noPostFixNew } from "./rules/no-post-fix-new/rule";
@@ -20,6 +21,7 @@ const plugin = {
 		"lua-truthiness": luaTruthiness,
 		"misleading-lua-tuple-checks": misleadingLuaTupleChecks,
 		"no-array-pairs": noArrayPairs,
+		"no-enum-merging": noEnumMerging,
 		"no-invalid-identifier": noInvalidIdentifier,
 		"no-null": noNull,
 		"no-post-fix-new": noPostFixNew,
