@@ -68,9 +68,7 @@ const invalid: Array<InvalidTestCase> = [
 	{
 		code: unindent`
 			const x: ReadVoxelsArray<Enum.Material> = Object.assign(
-				[[[Enum.Material.Grass]], [[Enum.Material.Sand]], [[Enum.Material.Water]]] as Array<
-					Array<Array<Enum.Material>>
-				>,
+				[[[Enum.Material.Grass]], [[Enum.Material.Sand]], [[Enum.Material.Water]]],
 				{ Size: new Vector3(1, 3, 1) },
 			);
 			print(x.length)
@@ -79,9 +77,7 @@ const invalid: Array<InvalidTestCase> = [
 			expect(output).toMatchInlineSnapshot(
 				unindent`
 					"const x: ReadVoxelsArray<Enum.Material> = Object.assign(
-						[[[Enum.Material.Grass]], [[Enum.Material.Sand]], [[Enum.Material.Water]]] as Array<
-							Array<Array<Enum.Material>>
-						>,
+						[[[Enum.Material.Grass]], [[Enum.Material.Sand]], [[Enum.Material.Water]]],
 						{ Size: new Vector3(1, 3, 1) },
 					);
 					print(x.size())"
