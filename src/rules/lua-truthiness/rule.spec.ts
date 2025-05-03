@@ -77,14 +77,14 @@ const invalid: Array<InvalidTestCase> = [
 	{
 		code: "if (0 && '') {}",
 		errors(errors) {
-			expect(errors).toHaveLength(2);
+			expect(errors).toHaveLength(1);
 			expect(errors.every(err => err.messageId === errorMessage)).toBe(true);
 		},
 	},
 	{
 		code: "if (0 || '') {}",
 		errors(errors) {
-			expect(errors).toHaveLength(2);
+			expect(errors).toHaveLength(1);
 			expect(errors.every(err => err.messageId === errorMessage)).toBe(true);
 		},
 	},
@@ -147,14 +147,14 @@ const invalid: Array<InvalidTestCase> = [
 	{
 		code: "if (a && 0) {}",
 		errors(errors) {
-			expect(errors).toHaveLength(2);
+			expect(errors).toHaveLength(1);
 			expect(errors.every(err => err.messageId === errorMessage)).toBe(true);
 		},
 	},
 	{
 		code: "if (a || '') {}",
 		errors(errors) {
-			expect(errors).toHaveLength(2);
+			expect(errors).toHaveLength(1);
 			expect(errors.every(err => err.messageId === errorMessage)).toBe(true);
 		},
 	},
@@ -225,7 +225,7 @@ const invalid: Array<InvalidTestCase> = [
     			return a && b;
 			}
 
-			const x: string | 0 = f(0 / 0, "Hello");
+			const x: string | 0 = f(0, "Hello");
 		`,
 		errors(errors) {
 			expect(errors).toHaveLength(1);

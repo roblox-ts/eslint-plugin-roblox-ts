@@ -1,13 +1,18 @@
 import { getConstrainedTypeAtLocation } from "@typescript-eslint/type-utils";
-import type {
-	ParserServicesWithTypeInformation,
-	TSESLint,
+import {
+	type ParserServicesWithTypeInformation,
+	type TSESLint,
 	TSESTree,
 } from "@typescript-eslint/utils";
 import { getParserServices } from "@typescript-eslint/utils/eslint-utils";
 
 import { createEslintRule } from "../../util";
-import { isEmptyStringType, isNumberLiteralType, isPossiblyType } from "../../utils/types";
+import {
+	isEmptyStringType,
+	isNumberLiteralType,
+	isPossiblyType,
+	type TestExpression,
+} from "../../utils/types";
 
 export const RULE_NAME = "lua-truthiness";
 
@@ -17,13 +22,6 @@ const messages = {
 	[FALSY_STRING_NUMBER_CHECK]:
 		'0, NaN, and "" are falsy in TS. If intentional, disable this rule by placing `"roblox-ts-x/lua-truthiness": "off"` in your eslint.config file in the "rules" object.',
 };
-
-type TestExpression =
-	| TSESTree.ConditionalExpression
-	| TSESTree.DoWhileStatement
-	| TSESTree.ForStatement
-	| TSESTree.IfStatement
-	| TSESTree.WhileStatement;
 
 function checkTruthy(
 	context: Readonly<TSESLint.RuleContext<string, []>>,
@@ -49,7 +47,7 @@ function create(context: Readonly<TSESLint.RuleContext<string, []>>): TSESLint.R
 
 	function containsBoolean() {
 		return ({ test }: TestExpression): void => {
-			if (test) {
+			if (test && test.type !== TSESTree.AST_NODE_TYPES.LogicalExpression) {
 				checkTruthy(context, parserServices, test);
 			}
 		};
@@ -60,9 +58,11 @@ function create(context: Readonly<TSESLint.RuleContext<string, []>>): TSESLint.R
 		"DoWhileStatement": containsBoolean(),
 		"ForStatement": containsBoolean(),
 		"IfStatement": containsBoolean(),
-		"LogicalExpression": ({ left, operator }) => {
+		"LogicalExpression": ({ left, operator, right }) => {
 			if (operator !== "??") {
 				checkTruthy(context, parserServices, left);
+			} else {
+				checkTruthy(context, parserServices, right);
 			}
 		},
 		'UnaryExpression[operator="!"]': ({ argument }: TSESTree.UnaryExpression) => {
