@@ -17,14 +17,15 @@ A collection of ESLint rules specifically targeted for roblox-ts.
 💡 Manually fixable by [editor suggestions](https://eslint.org/docs/latest/use/core-concepts#rule-suggestions).\
 💭 Requires [type information](https://typescript-eslint.io/linting/typed-linting).
 
-| Name                                                                  | Description                                                                                                      | 🔧 | 💡 | 💭 |
-| :-------------------------------------------------------------------- | :--------------------------------------------------------------------------------------------------------------- | :- | :- | :- |
-| [lua-truthiness](src/rules/lua-truthiness/documentation.md)           | Warns against falsy strings and numbers                                                                          |    |    | 💭 |
-| [no-null](src/rules/no-null/documentation.md)                         | Disallow usage of the 'null' keyword in TypeScript.                                                              | 🔧 |    |    |
-| [no-post-fix-new](src/rules/no-post-fix-new/documentation.md)         | Bans the use of .new() on objects without a .new() method. This is useful to help users transition to roblox-ts. | 🔧 | 💡 | 💭 |
-| [no-value-typeof](src/rules/no-value-typeof/documentation.md)         | Disallow using `typeof` to check for value types.                                                                |    |    |    |
-| [prefer-task-library](src/rules/prefer-task-library/documentation.md) | Enforces use of task.wait(), task.delay(), and task.spawn() instead of global wait(), delay(), and spawn().      | 🔧 |    |    |
-| [size-method](src/rules/size-method/documentation.md)                 | Enforces use of .size() method instead of .length or .size property for Roblox compatibility.                    | 🔧 |    | 💭 |
+| Name                                                                      | Description                                                                                                      | 🔧 | 💡 | 💭 |
+| :------------------------------------------------------------------------ | :--------------------------------------------------------------------------------------------------------------- | :- | :- | :- |
+| [lua-truthiness](src/rules/lua-truthiness/documentation.md)               | Warns against falsy strings and numbers                                                                          |    |    | 💭 |
+| [no-invalid-identifier](src/rules/no-invalid-identifier/documentation.md) | Disallows the use of Luau reserved keywords as identifiers.                                                      |    |    |    |
+| [no-null](src/rules/no-null/documentation.md)                             | Disallow usage of the 'null' keyword in TypeScript.                                                              | 🔧 |    |    |
+| [no-post-fix-new](src/rules/no-post-fix-new/documentation.md)             | Bans the use of .new() on objects without a .new() method. This is useful to help users transition to roblox-ts. | 🔧 | 💡 | 💭 |
+| [no-value-typeof](src/rules/no-value-typeof/documentation.md)             | Disallow using `typeof` to check for value types.                                                                |    |    |    |
+| [prefer-task-library](src/rules/prefer-task-library/documentation.md)     | Enforces use of task.wait(), task.delay(), and task.spawn() instead of global wait(), delay(), and spawn().      | 🔧 |    |    |
+| [size-method](src/rules/size-method/documentation.md)                     | Enforces use of .size() method instead of .length or .size property for Roblox compatibility.                    | 🔧 |    | 💭 |
 
 <!-- end auto-generated rules list -->
 
