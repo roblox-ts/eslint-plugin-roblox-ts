@@ -19,7 +19,7 @@ const valid: Array<ValidTestCase> = [
 	"type MyType = { config: { repeat: boolean } }; function check(p: MyType) { if (p.config.repeat) {} }",
 ];
 
-const invalid: Array<InvalidTestCase> = [
+const invalidIdentifier: Array<InvalidTestCase> = [
 	"const and = true;",
 	"let elseif = false;",
 	"function end() {}",
@@ -40,15 +40,24 @@ const invalid: Array<InvalidTestCase> = [
 	"enum elseif { A, B }",
 	"try { /* ... */ } catch (local) { /* ... */ }",
 	"Promise.try(() => {}).catch(error => { /* ... */ });",
-];
+].map(testCase => {
+	return {
+		code: testCase.toString(),
+		errors: [{ messageId: "invalid-identifier" }],
+	};
+});
 
-run({
-	invalid: invalid.map(testCase => {
+const invalidCharacters: Array<InvalidTestCase> = ["let $path = 5;", "const π = 3.14159;"].map(
+	testCase => {
 		return {
 			code: testCase.toString(),
-			errors: [{ messageId: "invalid-identifier" }],
+			errors: [{ messageId: "invalid-characters" }],
 		};
-	}),
+	},
+);
+
+run({
+	invalid: [...invalidIdentifier, ...invalidCharacters],
 	name: RULE_NAME,
 	rule: noInvalidIdentifier,
 	valid,

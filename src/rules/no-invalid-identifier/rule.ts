@@ -19,9 +19,14 @@ const BANNED_KEYWORDS = new Set([
 	"until",
 ]);
 
+const LUAU_IDENTIFIER_REGEX = /^[A-Za-z_][A-Za-z0-9_]*$/;
+
+const INVALID_CHARACTERS = "invalid-characters";
 const INVALID_IDENTIFIER = "invalid-identifier";
 
 const messages = {
+	[INVALID_CHARACTERS]:
+		"Identifier '{{ identifier }}' contains invalid characters. Only letters, digits, and underscores are allowed.",
 	[INVALID_IDENTIFIER]:
 		"Avoid using '{{ identifier }}' as an identifier, as it is a reserved keyword in Luau.",
 };
@@ -29,7 +34,7 @@ const messages = {
 function create(context: Readonly<TSESLint.RuleContext<string, []>>): TSESLint.RuleListener {
 	return {
 		Identifier(node: TSESTree.Identifier) {
-			if (!BANNED_KEYWORDS.has(node.name)) {
+			if (!BANNED_KEYWORDS.has(node.name) && LUAU_IDENTIFIER_REGEX.test(node.name)) {
 				return;
 			}
 
@@ -40,10 +45,8 @@ function create(context: Readonly<TSESLint.RuleContext<string, []>>): TSESLint.R
 			}
 
 			context.report({
-				data: {
-					identifier: name,
-				},
-				messageId: INVALID_IDENTIFIER,
+				data: { identifier: name },
+				messageId: BANNED_KEYWORDS.has(name) ? INVALID_IDENTIFIER : INVALID_CHARACTERS,
 				node,
 			});
 		},
@@ -58,17 +61,22 @@ const PROPERTY_KEY_PARENT_TYPES = new Set([
 ]);
 
 function isAllowedContext(node: TSESTree.Identifier, parent: TSESTree.Node): boolean {
-	const isPropertyKey =
-		PROPERTY_KEY_PARENT_TYPES.has(parent.type) && "key" in parent && parent.key === node;
+	// isPropertyKey
+	if (PROPERTY_KEY_PARENT_TYPES.has(parent.type) && "key" in parent && parent.key === node) {
+		return true;
+	}
 
-	const isEnumMemberId = parent.type === AST_NODE_TYPES.TSEnumMember && parent.id === node;
+	// isEnumMemberId
+	if (parent.type === AST_NODE_TYPES.TSEnumMember && parent.id === node) {
+		return true;
+	}
 
-	const isMemberExpressionProperty =
+	// isMemberExpressionProperty
+	return (
 		parent.type === AST_NODE_TYPES.MemberExpression &&
 		parent.property === node &&
-		!parent.computed;
-
-	return isPropertyKey || isEnumMemberId || isMemberExpressionProperty;
+		!parent.computed
+	);
 }
 
 export const noInvalidIdentifier = createEslintRule({
