@@ -1,6 +1,14 @@
 import { isBuiltinSymbolLike, isTypeFlagSet } from "@typescript-eslint/type-utils";
+import type { TSESTree } from "@typescript-eslint/utils";
 
 import { type Program, type Type, type TypeChecker, TypeFlags } from "typescript";
+
+export type TestExpression =
+	| TSESTree.ConditionalExpression
+	| TSESTree.DoWhileStatement
+	| TSESTree.ForStatement
+	| TSESTree.IfStatement
+	| TSESTree.WhileStatement;
 
 export function isArrayType(checker: TypeChecker, type: Type): boolean {
 	return isTypeRecursive(type, inner => checker.isArrayType(inner) || checker.isTupleType(inner));
