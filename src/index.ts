@@ -12,6 +12,7 @@ import { noGetSet } from "./rules/no-get-set/rule";
 import { noInvalidIdentifier } from "./rules/no-invalid-identifier/rule";
 import { noNull } from "./rules/no-null/rule";
 import { noPostFixNew } from "./rules/no-post-fix-new/rule";
+import { noUnsupportedSyntax } from "./rules/no-unsupported-syntax/rule";
 import { noValueTypeof } from "./rules/no-value-typeof/rule";
 import { preferTaskLibrary } from "./rules/prefer-task-library/rule";
 import { sizeMethod } from "./rules/size-method/rule";
@@ -33,6 +34,7 @@ const plugin = {
 		"no-invalid-identifier": noInvalidIdentifier,
 		"no-null": noNull,
 		"no-post-fix-new": noPostFixNew,
+		"no-unsupported-syntax": noUnsupportedSyntax,
 		"no-value-typeof": noValueTypeof,
 		"prefer-task-library": preferTaskLibrary,
 		"size-method": sizeMethod,
