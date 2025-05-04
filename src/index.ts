@@ -8,6 +8,7 @@ import { noEnumMerging } from "./rules/no-enum-merging/rule";
 import { noExportAssignableLet } from "./rules/no-export-assignment-let/rule";
 import { noForIn } from "./rules/no-for-in/rule";
 import { noFunctionExpressionName } from "./rules/no-function-expression-name/rule";
+import { noGetSet } from "./rules/no-get-set/rule";
 import { noInvalidIdentifier } from "./rules/no-invalid-identifier/rule";
 import { noNull } from "./rules/no-null/rule";
 import { noPostFixNew } from "./rules/no-post-fix-new/rule";
@@ -28,6 +29,7 @@ const plugin = {
 		"no-export-assignment-let": noExportAssignableLet,
 		"no-for-in": noForIn,
 		"no-function-expression-name": noFunctionExpressionName,
+		"no-get-set": noGetSet,
 		"no-invalid-identifier": noInvalidIdentifier,
 		"no-null": noNull,
 		"no-post-fix-new": noPostFixNew,

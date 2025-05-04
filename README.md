@@ -6,7 +6,13 @@
 [![JSDocs][jsdocs-src]][jsdocs-href]
 [![License][license-src]][license-href]
 
-A collection of ESLint rules specifically targeted for roblox-ts.
+A collection of ESLint rules specifically targeted to flag common issues when
+using [roblox-ts](https://roblox-ts.github.io/roblox-ts/). These rules are
+nearly all designed to help avoid compiler errors for features that are not
+supported by the roblox-ts compiler, despite being valid TypeScript.
+
+These rules should help users move from TypeScript to roblox-ts, as well as help
+users who wish to learn roblox-ts when coming from Lua.
 
 ## Rules
 
@@ -26,6 +32,7 @@ A collection of ESLint rules specifically targeted for roblox-ts.
 | [no-export-assignment-let](src/rules/no-export-assignment-let/documentation.md)       | Bans using `export =` on a let variable                                                                          |    |    |    |
 | [no-for-in](src/rules/no-for-in/documentation.md)                                     | Disallows iterating with a for-in loop                                                                           | 🔧 |    |    |
 | [no-function-expression-name](src/rules/no-function-expression-name/documentation.md) | Function expression names are not supported!                                                                     | 🔧 |    |    |
+| [no-get-set](src/rules/no-get-set/documentation.md)                                   | Disallows getters and setters                                                                                    | 🔧 |    |    |
 | [no-invalid-identifier](src/rules/no-invalid-identifier/documentation.md)             | Disallows the use of Luau reserved keywords as identifiers.                                                      |    |    |    |
 | [no-null](src/rules/no-null/documentation.md)                                         | Disallow usage of the 'null' keyword in TypeScript.                                                              | 🔧 |    |    |
 | [no-post-fix-new](src/rules/no-post-fix-new/documentation.md)                         | Bans the use of .new() on objects without a .new() method. This is useful to help users transition to roblox-ts. | 🔧 | 💡 | 💭 |
