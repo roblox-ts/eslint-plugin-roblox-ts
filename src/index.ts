@@ -10,6 +10,7 @@ import { noForIn } from "./rules/no-for-in/rule";
 import { noFunctionExpressionName } from "./rules/no-function-expression-name/rule";
 import { noGetSet } from "./rules/no-get-set/rule";
 import { noInvalidIdentifier } from "./rules/no-invalid-identifier/rule";
+import { noNamespaceMerging } from "./rules/no-namespace-merging/rule";
 import { noNull } from "./rules/no-null/rule";
 import { noPostFixNew } from "./rules/no-post-fix-new/rule";
 import { noUnsupportedSyntax } from "./rules/no-unsupported-syntax/rule";
@@ -32,6 +33,7 @@ const plugin = {
 		"no-function-expression-name": noFunctionExpressionName,
 		"no-get-set": noGetSet,
 		"no-invalid-identifier": noInvalidIdentifier,
+		"no-namespace-merging": noNamespaceMerging,
 		"no-null": noNull,
 		"no-post-fix-new": noPostFixNew,
 		"no-unsupported-syntax": noUnsupportedSyntax,
