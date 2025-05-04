@@ -8,23 +8,31 @@ export const RULE_NAME = "no-unsupported-syntax";
 const GLOBAL_THIS_VIOLATION = "global-this-violation";
 const PROTOTYPE_VIOLATION = "prototype-violation";
 const REGEX_LITERAL_VIOLATION = "regex-literal-violation";
+const SPREAD_DESTRUCTURING_VIOLATION = "spread-destructuring-violation";
 
 const messages = {
 	[GLOBAL_THIS_VIOLATION]: "`globalThis` is not supported in roblox-ts.",
 	[PROTOTYPE_VIOLATION]: "`.prototype` is not supported in roblox-ts.",
 	[REGEX_LITERAL_VIOLATION]: "Regex literals are not supported in roblox-ts",
+	[SPREAD_DESTRUCTURING_VIOLATION]: "Operator `...` is not supported for destructuring!",
 };
 
 function create(context: Readonly<TSESLint.RuleContext<string, []>>): TSESLint.RuleListener {
 	return {
-		Identifier(node: TSESTree.Identifier) {
+		ArrayPattern: node => {
+			reportInvalidSpreadDestructure(context, node);
+		},
+		Identifier: node => {
 			reportGlobalThisViolation(context, node);
 		},
-		Literal(node: TSESTree.Literal) {
+		Literal: node => {
 			reportRegexViolation(context, node);
 		},
-		MemberExpression(node: TSESTree.MemberExpression) {
+		MemberExpression: node => {
 			reportPrototypeViolation(context, node);
+		},
+		ObjectPattern: node => {
+			reportInvalidSpreadDestructure(context, node);
 		},
 	};
 }
@@ -38,6 +46,22 @@ function reportGlobalThisViolation(
 			messageId: GLOBAL_THIS_VIOLATION,
 			node,
 		});
+	}
+}
+
+function reportInvalidSpreadDestructure(
+	context: Readonly<TSESLint.RuleContext<string, []>>,
+	node: TSESTree.ArrayPattern | TSESTree.ObjectPattern,
+): void {
+	const members = node.type === AST_NODE_TYPES.ArrayPattern ? node.elements : node.properties;
+
+	for (const member of members) {
+		if (member?.type === AST_NODE_TYPES.RestElement) {
+			context.report({
+				messageId: SPREAD_DESTRUCTURING_VIOLATION,
+				node: member,
+			});
+		}
 	}
 }
 

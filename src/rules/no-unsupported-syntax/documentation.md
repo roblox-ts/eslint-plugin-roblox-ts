@@ -9,7 +9,9 @@ Currently, this rule disallows:
 
 -   `globalThis`: This global object is not available in the Roblox environment.
 -   `.prototype`: Accessing the `prototype` property of constructors is not supported and can lead to errors.
--   Regex Literals (`/pattern/flags`): These are not directly supported. Use the `RegExp` constructor instead.
+-   Regex Literals (`/pattern/flags`): These are not directly supported. Use the
+    `RegExp` constructor instead.
+-   Spread operator (`...`): Not supported for object or array destructuring.
 
 ## Examples
 
@@ -31,13 +33,16 @@ const pattern = /abc/i; // ❌ Regex literals are not supported
 if (/test/.test(str)) { // ❌ Regex literals are not supported
   // ...
 }
+
+// Operator ...
+const { a, ...b } = { a: 1, b: 2 }; // ❌ Spread operator is not supported
+const arr = [1, 2, 3];
+const newArr = [...arr, 4]; // ❌ Spread operator is not supported
 ```
 
 ### Correct
 
 ```js
-// Instead of globalThis, use specific globals if available or manage state differently.
-
 // Instead of .prototype, use static methods or other patterns.
 class MyClass {
   static staticMethod() {}

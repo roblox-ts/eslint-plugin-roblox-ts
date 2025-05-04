@@ -1,4 +1,5 @@
-import type { InvalidTestCase, ValidTestCase } from "eslint-vitest-rule-tester";
+import { type InvalidTestCase, unindent, type ValidTestCase } from "eslint-vitest-rule-tester";
+import { expect } from "vitest";
 
 import { run } from "../test";
 import { noUnsupportedSyntax, RULE_NAME } from "./rule";
@@ -6,6 +7,7 @@ import { noUnsupportedSyntax, RULE_NAME } from "./rule";
 const GLOBAL_THIS_VIOLATION = "global-this-violation";
 const PROTOTYPE_VIOLATION = "prototype-violation";
 const REGEX_LITERAL_VIOLATION = "regex-literal-violation";
+const SPREAD_DESTRUCTURING_VIOLATION = "spread-destructuring-violation";
 
 const valid: Array<ValidTestCase> = [
 	"const x = 1;",
@@ -17,6 +19,16 @@ const valid: Array<ValidTestCase> = [
 	"const proto = 'prototype'; obj[proto];",
 	"class Bar {}",
 	"_G.Bar = Bar;",
+	"const a = {}; const b = { ...a };",
+	"const [a, b] = [1, 2];",
+	unindent`
+		let x: number;
+		let y: number;
+		let z: number;
+		[x, y, [z]] = [1, 2, [3]];
+	`,
+	'const truth = ["a", "b", "c", "d", "e", "f", "g"]; [..."abcdefg"]',
+	"let x = 0;	const [] = pcall(() => (x = 123));",
 ];
 
 const invalid: Array<InvalidTestCase> = [
@@ -47,6 +59,31 @@ const invalid: Array<InvalidTestCase> = [
 	{
 		code: "if (/test/.test(str)) {}",
 		errors: [{ messageId: REGEX_LITERAL_VIOLATION }],
+	},
+	{
+		code: "const [a, ...b] = [1, 2, 3];",
+		errors: [{ messageId: SPREAD_DESTRUCTURING_VIOLATION }],
+	},
+	{
+		code: "const { a, ...b } = { a: 1, b: 2 };",
+		errors: [{ messageId: SPREAD_DESTRUCTURING_VIOLATION }],
+	},
+	{
+		code: "const { X, ...etc } = new Vector3();",
+		errors: [{ messageId: SPREAD_DESTRUCTURING_VIOLATION }],
+	},
+	{
+		code: "({ a, b, ...{c, d} } = obj);",
+		errors: [{ messageId: SPREAD_DESTRUCTURING_VIOLATION }],
+	},
+	{
+		code: "[a, ...[b, ...[c]]] = [1, 2, 3];",
+		errors(errors) {
+			expect(errors).toHaveLength(2);
+			expect(errors.every(err => err.messageId === SPREAD_DESTRUCTURING_VIOLATION)).toBe(
+				true,
+			);
+		},
 	},
 ];
 
