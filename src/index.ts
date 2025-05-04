@@ -15,6 +15,7 @@ import { noNull } from "./rules/no-null/rule";
 import { noObjectMath } from "./rules/no-object-math/rule";
 import { noPostFixNew } from "./rules/no-post-fix-new/rule";
 import { noPrecedingSpreadElement } from "./rules/no-preceding-spread-element/rule";
+import { noPrivateIdentifier } from "./rules/no-private-identifier/rule";
 import { noUnsupportedSyntax } from "./rules/no-unsupported-syntax/rule";
 import { noValueTypeof } from "./rules/no-value-typeof/rule";
 import { preferTaskLibrary } from "./rules/prefer-task-library/rule";
@@ -40,6 +41,7 @@ const plugin = {
 		"no-object-math": noObjectMath,
 		"no-post-fix-new": noPostFixNew,
 		"no-preceding-spread-element": noPrecedingSpreadElement,
+		"no-private-identifier": noPrivateIdentifier,
 		"no-unsupported-syntax": noUnsupportedSyntax,
 		"no-value-typeof": noValueTypeof,
 		"prefer-task-library": preferTaskLibrary,
