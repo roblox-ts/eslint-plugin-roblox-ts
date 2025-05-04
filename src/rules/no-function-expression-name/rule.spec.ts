@@ -106,6 +106,23 @@ const invalid: Array<InvalidTestCase> = [
 			expect(errors[0]!.suggestions).toBeUndefined();
 		},
 	},
+	{
+		code: unindent`
+			(function a() {
+				// statements…
+			})();
+		`,
+		errors: [{ messageId }],
+		output: output => {
+			expect(output).toMatchInlineSnapshot(
+				unindent`
+					"(function() {
+						// statements…
+					})();"
+				`,
+			);
+		},
+	},
 ];
 
 run({
