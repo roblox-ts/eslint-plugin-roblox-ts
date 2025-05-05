@@ -48,10 +48,6 @@ guiding users who already know TypeScript to avoid unsupported features.
 
 <!-- end auto-generated rules list -->
 
-## License
-
-[MIT](./LICENSE) License © [Christopher Buss](https://github.com/christopher-buss)
-
 <!-- Badges -->
 
 [npm-version-src]: https://img.shields.io/npm/v/eslint-plugin-roblox-ts-x?style=flat&colorA=080f12&colorB=1fa669
@@ -93,7 +89,7 @@ export default [
 ]
 ```
 
-### Flat Config ([`eslint.config.js`](https://eslint.org/docs/latest/use/configure/configuration-files))
+### Flat Config ([`eslint.config.ts`](https://eslint.org/docs/latest/use/configure/configuration-files))
 
 Altertatively, add `eslint-plugin-roblox-ts-x` to the plugins section of the ESLint
 configuration file and define the list of rules you will use.
@@ -112,3 +108,8 @@ export default [
 	},
 ]
 ```
+
+## License
+
+[MIT](./LICENSE) License © [Christopher
+Buss](https://github.com/christopher-buss)
