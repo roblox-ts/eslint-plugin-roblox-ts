@@ -87,7 +87,7 @@ export const noPostFixNew = createEslintRule({
 	defaultOptions: [],
 	meta: {
 		docs: {
-			description: "Disallow the use of .new() on objects without a .new() method",
+			description: "Disallow .new() on objects without a .new() method",
 			recommended: true,
 			requiresTypeChecking: true,
 		},
