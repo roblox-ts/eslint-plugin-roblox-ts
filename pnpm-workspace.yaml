@@ -14,7 +14,7 @@ catalogs:
     eslint: 9.22.0
     jiti: 2.4.2
     lint-staged: 15.5.0
-    simple-git-hooks: 2.11.1
+    simple-git-hooks: 2.13.0
     ts-api-utils: 2.1.0
     tsx: 4.19.3
     typescript: 5.8.2
