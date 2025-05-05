@@ -54,17 +54,7 @@ catalogs:
     unbuild:
       specifier: 3.5.0
       version: 3.5.0
-    vite:
-      specifier: 6.2.1
-      version: 6.2.1
-  inlined:
-    '@antfu/utils':
-      specifier: 9.1.0
-      version: 9.1.0
   testing:
-    '@typescript-eslint/rule-tester':
-      specifier: 8.30.1
-      version: 8.30.1
     eslint-plugin-eslint-plugin:
       specifier: 6.4.0
       version: 6.4.0
@@ -91,9 +81,6 @@ catalogs:
     eslint-doc-generator:
       specifier: 2.1.2
       version: 2.1.2
-    tinyexec:
-      specifier: 0.3.2
-      version: 0.3.2
 
 overrides:
   eslint-plugin-sentinel: workspace:*
@@ -105,9 +92,6 @@ importers:
       '@antfu/ni':
         specifier: catalog:cli
         version: 24.1.0
-      '@antfu/utils':
-        specifier: catalog:inlined
-        version: 9.1.0
       '@isentinel/eslint-config':
         specifier: catalog:cli
         version: 1.0.1(@types/eslint@9.6.1)(@types/estree@1.0.6)(eslint-plugin-jest@28.11.0(@typescript-eslint/eslint-plugin@8.31.0(@typescript-eslint/parser@8.31.0(eslint@9.22.0(jiti@2.4.2))(typescript@5.8.2))(eslint@9.22.0(jiti@2.4.2))(typescript@5.8.2))(eslint@9.22.0(jiti@2.4.2))(typescript@5.8.2))(eslint@9.22.0(jiti@2.4.2))(typescript@5.8.2)
@@ -126,9 +110,6 @@ importers:
       '@typescript-eslint/parser':
         specifier: catalog:cli
         version: 8.31.0(eslint@9.22.0(jiti@2.4.2))(typescript@5.8.2)
-      '@typescript-eslint/rule-tester':
-        specifier: catalog:testing
-        version: 8.30.1(eslint@9.22.0(jiti@2.4.2))(typescript@5.8.2)
       '@typescript-eslint/type-utils':
         specifier: catalog:cli
         version: 8.31.0(eslint@9.22.0(jiti@2.4.2))(typescript@5.8.2)
@@ -162,9 +143,6 @@ importers:
       simple-git-hooks:
         specifier: catalog:cli
         version: 2.11.1
-      tinyexec:
-        specifier: catalog:utils
-        version: 0.3.2
       ts-api-utils:
         specifier: catalog:cli
         version: 2.1.0(typescript@5.8.2)
@@ -177,9 +155,6 @@ importers:
       unbuild:
         specifier: catalog:cli
         version: 3.5.0(typescript@5.8.2)
-      vite:
-        specifier: catalog:cli
-        version: 6.2.1(@types/node@22.13.10)(jiti@2.4.2)(tsx@4.19.3)(yaml@2.7.0)
       vitest:
         specifier: catalog:testing
         version: 3.1.1(@types/debug@4.1.12)(@types/node@22.13.10)(jiti@2.4.2)(tsx@4.19.3)(yaml@2.7.0)
@@ -198,9 +173,6 @@ packages:
   '@antfu/ni@24.1.0':
     resolution: {integrity: sha512-Pq54C1N16BjLX4aHd7VJiuqxl+KoT9wOSyAZSnC2qDf1MraZ2c2b6FldjfeNsP1HBPvNhlCmZI91bNdmwXuuWQ==}
     hasBin: true
-
-  '@antfu/utils@9.1.0':
-    resolution: {integrity: sha512-R+3bzxNN0ZscQg3ZVG7suqBTFP2dbdaCjKe5KY6hqNZimdyZ32KemotJPmoqQhKH28CqdgyXQGkWZlCGsGQmJw==}
 
   '@babel/code-frame@7.26.2':
     resolution: {integrity: sha512-RJlIHRueQgwWitWgF8OdFYGZX328Ax5BCemNGlqHfplnRT9ESi8JkFlvaVYbS+UubVY6dpv87Fs2u5M29iNFVQ==}
@@ -1145,12 +1117,6 @@ packages:
     peerDependencies:
       eslint: ^8.57.0 || ^9.0.0
       typescript: '>=4.8.4 <5.9.0'
-
-  '@typescript-eslint/rule-tester@8.30.1':
-    resolution: {integrity: sha512-3UmS0ltzcJZfOwUl5QoMXC4W22tg7uoisjo7JNa6VrI397X+SF25k4c8z2sIzHfCvnMaeXKdNorvenGson/bLQ==}
-    engines: {node: ^18.18.0 || ^20.9.0 || >=21.1.0}
-    peerDependencies:
-      eslint: ^8.57.0 || ^9.0.0
 
   '@typescript-eslint/scope-manager@7.18.0':
     resolution: {integrity: sha512-jjhdIE/FPF2B7Z1uzc6i3oWKbGcHb87Qw7AWj6jmEqNOfDFbJWtjt/XfwCpvNkpGWlcJaog5vTR+VV8+w9JflA==}
@@ -4205,8 +4171,6 @@ snapshots:
       package-manager-detector: 1.0.0
       tinyexec: 0.3.2
 
-  '@antfu/utils@9.1.0': {}
-
   '@babel/code-frame@7.26.2':
     dependencies:
       '@babel/helper-validator-identifier': 7.25.9
@@ -5060,20 +5024,6 @@ snapshots:
       typescript: 5.8.2
     transitivePeerDependencies:
       - supports-color
-
-  '@typescript-eslint/rule-tester@8.30.1(eslint@9.22.0(jiti@2.4.2))(typescript@5.8.2)':
-    dependencies:
-      '@typescript-eslint/parser': 8.30.1(eslint@9.22.0(jiti@2.4.2))(typescript@5.8.2)
-      '@typescript-eslint/typescript-estree': 8.30.1(typescript@5.8.2)
-      '@typescript-eslint/utils': 8.30.1(eslint@9.22.0(jiti@2.4.2))(typescript@5.8.2)
-      ajv: 6.12.6
-      eslint: 9.22.0(jiti@2.4.2)
-      json-stable-stringify-without-jsonify: 1.0.1
-      lodash.merge: 4.6.2
-      semver: 7.7.1
-    transitivePeerDependencies:
-      - supports-color
-      - typescript
 
   '@typescript-eslint/scope-manager@7.18.0':
     dependencies:
