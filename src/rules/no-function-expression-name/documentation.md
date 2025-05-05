@@ -1,4 +1,4 @@
-# Disallow the use of function expression names as they are not supported
+# Disallow the use of function expression names
 
 🔧 This rule is automatically fixable by the [`--fix` CLI option](https://eslint.org/docs/latest/user-guide/command-line-interface#--fix).
 

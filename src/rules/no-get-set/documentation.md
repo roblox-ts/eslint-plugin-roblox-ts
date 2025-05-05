@@ -1,4 +1,4 @@
-# Disallows getters and setters
+# Disallow getters and setters
 
 🔧 This rule is automatically fixable by the [`--fix` CLI option](https://eslint.org/docs/latest/user-guide/command-line-interface#--fix).
 

@@ -68,7 +68,7 @@ export const noAny = createEslintRule({
 			},
 		],
 		docs: {
-			description: "Disallow values of type `any` is not supported! Use `unknown` instead",
+			description: "Disallow values of type `any`. Use `unknown` instead",
 			recommended: true,
 			requiresTypeChecking: false,
 		},

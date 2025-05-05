@@ -1,4 +1,4 @@
-# Disallows the use of LuaTuple in conditional expressions
+# Disallow the use of LuaTuple in conditional expressions
 
 🔧 This rule is automatically fixable by the [`--fix` CLI option](https://eslint.org/docs/latest/user-guide/command-line-interface#--fix).
 

@@ -1,4 +1,4 @@
-# Enforce use of .size() method instead of .length or .size property for Roblox compatibility
+# Enforce use of .size() instead of .length or .size property
 
 🔧 This rule is automatically fixable by the [`--fix` CLI option](https://eslint.org/docs/latest/user-guide/command-line-interface#--fix).
 

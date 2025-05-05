@@ -1,4 +1,4 @@
-# Disallow spread elements not last in a list of arguments from being used
+# Disallow spread elements not last in a list of arguments
 
 💭 This rule requires [type information](https://typescript-eslint.io/linting/typed-linting).
 

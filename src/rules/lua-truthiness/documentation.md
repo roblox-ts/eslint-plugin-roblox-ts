@@ -1,4 +1,4 @@
-# Enforces the use of lua truthiness in roblox-ts
+# Enforces the use of lua truthiness
 
 💭 This rule requires [type information](https://typescript-eslint.io/linting/typed-linting).
 

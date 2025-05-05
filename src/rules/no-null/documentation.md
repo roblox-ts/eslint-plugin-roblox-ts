@@ -1,4 +1,4 @@
-# Disallow usage of the 'null' keyword in TypeScript
+# Disallow usage of the `null` keyword
 
 🔧 This rule is automatically fixable by the [`--fix` CLI option](https://eslint.org/docs/latest/user-guide/command-line-interface#--fix).
 

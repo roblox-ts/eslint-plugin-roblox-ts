@@ -46,7 +46,7 @@ export const noGetSet = createEslintRule({
 	defaultOptions: [],
 	meta: {
 		docs: {
-			description: "Disallows getters and setters",
+			description: "Disallow getters and setters",
 			recommended: true,
 			requiresTypeChecking: false,
 		},

@@ -65,7 +65,7 @@ export const misleadingLuaTupleChecks = createEslintRule({
 	defaultOptions: [],
 	meta: {
 		docs: {
-			description: "Disallows the use of LuaTuple in conditional expressions",
+			description: "Disallow the use of LuaTuple in conditional expressions",
 			recommended: true,
 			requiresTypeChecking: true,
 		},

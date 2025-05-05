@@ -53,7 +53,7 @@ export const noArrayPairs = createEslintRule({
 	defaultOptions: [],
 	meta: {
 		docs: {
-			description: "Disallows usage of pairs() and ipairs() with Array<T>",
+			description: "Disallow usage of pairs() and ipairs() with Array<T>",
 			recommended: true,
 			requiresTypeChecking: true,
 		},

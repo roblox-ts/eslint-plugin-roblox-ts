@@ -1,4 +1,4 @@
-# Disallow the use of .new() on objects without a .new() method. This is useful to help users transition to roblox-ts
+# Disallow the use of .new() on objects without a .new() method
 
 🔧 This rule is automatically fixable by the [`--fix` CLI option](https://eslint.org/docs/latest/user-guide/command-line-interface#--fix).
 

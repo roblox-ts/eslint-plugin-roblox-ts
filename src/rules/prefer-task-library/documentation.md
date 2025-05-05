@@ -1,4 +1,4 @@
-# Enforce use of task.wait(), task.delay(), and task.spawn() instead of global wait(), delay(), and spawn()
+# Enforce use of task library alternatives
 
 🔧 This rule is automatically fixable by the [`--fix` CLI option](https://eslint.org/docs/latest/user-guide/command-line-interface#--fix).
 

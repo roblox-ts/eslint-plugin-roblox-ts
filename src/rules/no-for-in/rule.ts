@@ -28,7 +28,7 @@ export const noForIn = createEslintRule({
 	defaultOptions: [],
 	meta: {
 		docs: {
-			description: "Disallows iterating with a for-in loop",
+			description: "Disallow iterating with a for-in loop",
 			recommended: true,
 			requiresTypeChecking: false,
 		},

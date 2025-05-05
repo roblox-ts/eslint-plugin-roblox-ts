@@ -1,4 +1,4 @@
-# Disallow using `export =` on a let variable as it is not supported in roblox-ts
+# Disallow using `export =` on a let variable
 
 <!-- end auto-generated rule header -->
 <!-- Do not manually modify this header. Run: `npm run eslint-docs` -->

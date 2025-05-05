@@ -80,7 +80,7 @@ export const luaTruthiness = createEslintRule({
 	defaultOptions: [],
 	meta: {
 		docs: {
-			description: "Enforces the use of lua truthiness in roblox-ts",
+			description: "Enforces the use of lua truthiness",
 			recommended: true,
 			requiresTypeChecking: true,
 		},

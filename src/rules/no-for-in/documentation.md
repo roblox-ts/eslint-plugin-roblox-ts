@@ -1,4 +1,4 @@
-# Disallows iterating with a for-in loop
+# Disallow iterating with a for-in loop
 
 🔧 This rule is automatically fixable by the [`--fix` CLI option](https://eslint.org/docs/latest/user-guide/command-line-interface#--fix).
 
