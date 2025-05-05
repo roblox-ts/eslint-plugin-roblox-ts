@@ -40,7 +40,6 @@ function create(
 			}
 
 			context.report({
-				fix: undefined,
 				messageId:
 					node.callee.name === "pairs" ? ARRAY_PAIRS_VIOLATION : ARRAY_IPAIRS_VIOLATION,
 				node,
@@ -55,7 +54,7 @@ export const noArrayPairs = createEslintRule({
 	meta: {
 		docs: {
 			description: "Disallows usage of pairs() and ipairs() with Array<T>",
-			recommended: "recommended",
+			recommended: true,
 			requiresTypeChecking: true,
 		},
 		messages,

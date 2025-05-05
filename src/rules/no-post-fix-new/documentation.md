@@ -1,11 +1,13 @@
-# Bans the use of .new() on objects without a .new() method. This is useful to help users transition to roblox-ts
+# Disallow the use of .new() on objects without a .new() method. This is useful to help users transition to roblox-ts
 
-🔧💡 This rule is automatically fixable by the [`--fix` CLI option](https://eslint.org/docs/latest/user-guide/command-line-interface#--fix) and manually fixable by [editor suggestions](https://eslint.org/docs/latest/use/core-concepts#rule-suggestions).
+🔧 This rule is automatically fixable by the [`--fix` CLI option](https://eslint.org/docs/latest/user-guide/command-line-interface#--fix).
 
 💭 This rule requires [type information](https://typescript-eslint.io/linting/typed-linting).
 
 <!-- end auto-generated rule header -->
 <!-- Do not manually modify this header. Run: `npm run eslint-docs` -->
+
+## Rule details
 
 This rule warns when code calls `.new()` on an object that does not have a `.new()` method. In roblox-ts, constructors should be called with the `new` keyword (e.g., `new X()`), not with a `.new()` method, unless the object actually defines a callable `.new()` method.
 

@@ -1,7 +1,9 @@
-# Disallows the use of Luau reserved keywords as identifiers
+# Disallow the use of Luau reserved keywords as identifiers
 
 <!-- end auto-generated rule header -->
 <!-- Do not manually modify this header. Run: `npm run eslint-docs` -->
+
+## Rule details
 
 This rule prevents the use of identifiers that are reserved keywords in Luau but
 not in TypeScript. Using these keywords as variable names, function names, class

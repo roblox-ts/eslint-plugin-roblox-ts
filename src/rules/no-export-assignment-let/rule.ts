@@ -44,8 +44,9 @@ export const noExportAssignableLet = createEslintRule({
 	defaultOptions: [],
 	meta: {
 		docs: {
-			description: "Bans using `export =` on a let variable",
-			recommended: "recommended",
+			description:
+				"Disallow using `export =` on a let variable as it is not supported in roblox-ts",
+			recommended: true,
 			requiresTypeChecking: false,
 		},
 		messages,

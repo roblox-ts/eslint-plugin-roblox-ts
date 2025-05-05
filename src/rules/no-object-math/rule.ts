@@ -91,8 +91,8 @@ export const noObjectMath = createEslintRule({
 	defaultOptions: [],
 	meta: {
 		docs: {
-			description: "Disallows using objects in mathematical operations.",
-			recommended: "recommended",
+			description: "Disallow using objects in mathematical operations",
+			recommended: true,
 			requiresTypeChecking: true,
 		},
 		fixable: "code",

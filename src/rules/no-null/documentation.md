@@ -3,8 +3,9 @@
 🔧 This rule is automatically fixable by the [`--fix` CLI option](https://eslint.org/docs/latest/user-guide/command-line-interface#--fix).
 
 <!-- end auto-generated rule header -->
-<!-- end auto-generated rule header -->
 <!-- Do not manually modify this header. Run: `npm run eslint-docs` -->
+
+## Rule details
 
 This rule warns when code uses the `null` keyword. In Roblox TS, `null` is not idiomatic and you should use `undefined` instead. The fixer will automatically replace `null` with `undefined`.
 

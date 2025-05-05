@@ -1,9 +1,11 @@
-# Bans spread elements not last in a list of arguments from being used,
+# Disallow spread elements not last in a list of arguments from being used,
 
 💭 This rule requires [type information](https://typescript-eslint.io/linting/typed-linting).
 
 <!-- end auto-generated rule header -->
 <!-- Do not manually modify this header. Run: `npm run eslint-docs` -->
+
+## Rule details
 
 Disallows spread elements (`...`) from appearing anywhere except as the last element in a function or constructor call argument list.
 

@@ -1,9 +1,11 @@
-# Warns against falsy strings and numbers
+# Enforces the use of lua truthiness in roblox-ts
 
 💭 This rule requires [type information](https://typescript-eslint.io/linting/typed-linting).
 
 <!-- end auto-generated rule header -->
 <!-- Do not manually modify this header. Run: `npm run eslint-docs` -->
+
+## Rule details
 
 This rule warns when code relies on the truthiness of strings or numbers in
 conditional expressions. In TypeScript, values like `0`, `NaN`, and `""` (empty

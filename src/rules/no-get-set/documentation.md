@@ -5,6 +5,8 @@
 <!-- end auto-generated rule header -->
 <!-- Do not manually modify this header. Run: `npm run eslint-docs` -->
 
+## Rule details
+
 This rule bans the use of `get` and `set` keywords in class and object literal
 definitions due to not being supported in roblox-ts.
 

@@ -40,8 +40,8 @@ export const noNull = createEslintRule({
 	defaultOptions: [],
 	meta: {
 		docs: {
-			description: "Disallow usage of the 'null' keyword in TypeScript.",
-			recommended: "recommended",
+			description: "Disallow usage of the 'null' keyword in TypeScript",
+			recommended: true,
 			requiresTypeChecking: false,
 		},
 		fixable: "code",

@@ -88,12 +88,11 @@ export const noPostFixNew = createEslintRule({
 	meta: {
 		docs: {
 			description:
-				"Bans the use of .new() on objects without a .new() method. This is useful to help users transition to roblox-ts.",
-			recommended: "recommended",
+				"Disallow the use of .new() on objects without a .new() method. This is useful to help users transition to roblox-ts",
+			recommended: true,
 			requiresTypeChecking: true,
 		},
 		fixable: "code",
-		hasSuggestions: true,
 		messages,
 		schema: [],
 		type: "problem",

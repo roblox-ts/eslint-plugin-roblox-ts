@@ -40,8 +40,8 @@ export const preferTaskLibrary = createEslintRule({
 	meta: {
 		docs: {
 			description:
-				"Enforces use of task.wait(), task.delay(), and task.spawn() instead of global wait(), delay(), and spawn().",
-			recommended: "recommended",
+				"Enforce use of task.wait(), task.delay(), and task.spawn() instead of global wait(), delay(), and spawn()",
+			recommended: true,
 			requiresTypeChecking: false,
 		},
 		fixable: "code",

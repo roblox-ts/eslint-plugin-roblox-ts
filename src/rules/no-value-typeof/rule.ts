@@ -26,8 +26,8 @@ export const noValueTypeof = createEslintRule({
 	defaultOptions: [],
 	meta: {
 		docs: {
-			description: "Disallow using `typeof` to check for value types.",
-			recommended: "recommended",
+			description: "Disallow using `typeof` to check for value types",
+			recommended: true,
 			requiresTypeChecking: false,
 		},
 		messages,

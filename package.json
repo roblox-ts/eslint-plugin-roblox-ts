@@ -64,6 +64,7 @@
 		"bumpp": "catalog:cli",
 		"eslint": "catalog:cli",
 		"eslint-doc-generator": "catalog:utils",
+		"eslint-plugin-eslint-plugin": "catalog:testing",
 		"eslint-plugin-pnpm": "catalog:cli",
 		"eslint-vitest-rule-tester": "catalog:testing",
 		"jiti": "catalog:cli",

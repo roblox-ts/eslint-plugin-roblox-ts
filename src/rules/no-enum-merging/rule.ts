@@ -41,8 +41,8 @@ export const noEnumMerging = createEslintRule({
 	defaultOptions: [],
 	meta: {
 		docs: {
-			description: "Disallows merging enum declarations.",
-			recommended: "recommended",
+			description: "Disallow merging enum declarations",
+			recommended: true,
 			requiresTypeChecking: false,
 		},
 		messages,

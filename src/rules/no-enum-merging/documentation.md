@@ -1,7 +1,9 @@
-# Disallows merging enum declarations
+# Disallow merging enum declarations
 
 <!-- end auto-generated rule header -->
 <!-- Do not manually modify this header. Run: `npm run eslint-docs` -->
+
+## Rule details
 
 TypeScript allows merging enum declarations, where multiple `enum` blocks with the same name contribute members to a single combined enum. However, roblox-ts does not support this feature.
 

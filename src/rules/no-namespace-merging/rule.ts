@@ -51,8 +51,8 @@ export const noNamespaceMerging = createEslintRule({
 	defaultOptions: [],
 	meta: {
 		docs: {
-			description: "Disallows merging namespace declarations.",
-			recommended: "recommended",
+			description: "Disallow merging namespace declarations",
+			recommended: true,
 			requiresTypeChecking: false,
 		},
 		messages,

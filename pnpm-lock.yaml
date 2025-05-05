@@ -65,6 +65,9 @@ catalogs:
     '@typescript-eslint/rule-tester':
       specifier: 8.30.1
       version: 8.30.1
+    eslint-plugin-eslint-plugin:
+      specifier: 6.4.0
+      version: 6.4.0
     eslint-vitest-rule-tester:
       specifier: 2.2.0
       version: 2.2.0
@@ -141,6 +144,9 @@ importers:
       eslint-doc-generator:
         specifier: catalog:utils
         version: 2.1.2(eslint@9.22.0(jiti@2.4.2))(typescript@5.8.2)
+      eslint-plugin-eslint-plugin:
+        specifier: catalog:testing
+        version: 6.4.0(eslint@9.22.0(jiti@2.4.2))
       eslint-plugin-pnpm:
         specifier: catalog:cli
         version: 0.3.1(eslint@9.22.0(jiti@2.4.2))
@@ -2129,6 +2135,12 @@ packages:
     engines: {node: '>=6.5.0'}
     peerDependencies:
       eslint: '>=4.19.1'
+
+  eslint-plugin-eslint-plugin@6.4.0:
+    resolution: {integrity: sha512-X94/hr7DnckX68wE6Qqeo3DsZndZSclfoewjwD249yG5z2EAOl3UGUohLIgOpmbUjcFv6AlfW3wxBnOiWkS1Iw==}
+    engines: {node: ^18.18.0 || ^20.9.0 || >=21.1.0}
+    peerDependencies:
+      eslint: '>=8.23.0'
 
   eslint-plugin-format-lua@0.1.0:
     resolution: {integrity: sha512-AgEfESp2feNG3Un8v1sU+G42P5oHtr7K1KcPpSZ1fgPCkxh6odDACuZh/6BCPpU0tfGYH4ZcF8LF7ZCAoEVSXg==}
@@ -6245,6 +6257,12 @@ snapshots:
       escape-string-regexp: 1.0.5
       eslint: 9.22.0(jiti@2.4.2)
       ignore: 5.3.2
+
+  eslint-plugin-eslint-plugin@6.4.0(eslint@9.22.0(jiti@2.4.2)):
+    dependencies:
+      '@eslint-community/eslint-utils': 4.6.1(eslint@9.22.0(jiti@2.4.2))
+      eslint: 9.22.0(jiti@2.4.2)
+      estraverse: 5.3.0
 
   eslint-plugin-format-lua@0.1.0(eslint@9.22.0(jiti@2.4.2)):
     dependencies:

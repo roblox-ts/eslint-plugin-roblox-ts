@@ -28,8 +28,8 @@ export const noPrivateIdentifier = createEslintRule({
 	defaultOptions: [],
 	meta: {
 		docs: {
-			description: "Disallows the use of private identifiers (`#`).",
-			recommended: "recommended",
+			description: "Disallow the use of private identifiers (`#`)",
+			recommended: true,
 			requiresTypeChecking: false,
 		},
 		fixable: "code",

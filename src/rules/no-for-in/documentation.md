@@ -5,6 +5,8 @@
 <!-- end auto-generated rule header -->
 <!-- Do not manually modify this header. Run: `npm run eslint-docs` -->
 
+## Rule details
+
 The `for...in` statement iterates over the enumerable properties of an object.
 However, in TypeScript (and consequently roblox-ts), the type of the iterator
 variable in a `for...in` loop is always inferred as `string`. Due to this,

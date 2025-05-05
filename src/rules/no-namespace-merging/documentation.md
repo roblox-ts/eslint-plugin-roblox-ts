@@ -1,7 +1,9 @@
-# Disallows merging namespace declarations
+# Disallow merging namespace declarations
 
 <!-- end auto-generated rule header -->
 <!-- Do not manually modify this header. Run: `npm run eslint-docs` -->
+
+## Rule details
 
 TypeScript allows merging namespace (or module) declarations, where multiple `namespace` or `module` blocks with the same name contribute members to a single combined namespace. However, roblox-ts does not support this feature.
 

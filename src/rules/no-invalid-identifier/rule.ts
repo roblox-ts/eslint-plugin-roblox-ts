@@ -60,9 +60,15 @@ const PROPERTY_KEY_PARENT_TYPES = new Set([
 	AST_NODE_TYPES.TSPropertySignature,
 ]);
 
+type NodeWithKey =
+	| TSESTree.MethodDefinition
+	| TSESTree.Property
+	| TSESTree.PropertyDefinition
+	| TSESTree.TSPropertySignature;
+
 function isAllowedContext(node: TSESTree.Identifier, parent: TSESTree.Node): boolean {
 	// isPropertyKey
-	if (PROPERTY_KEY_PARENT_TYPES.has(parent.type) && "key" in parent && parent.key === node) {
+	if (PROPERTY_KEY_PARENT_TYPES.has(parent.type) && (parent as NodeWithKey).key === node) {
 		return true;
 	}
 
@@ -84,8 +90,8 @@ export const noInvalidIdentifier = createEslintRule({
 	defaultOptions: [],
 	meta: {
 		docs: {
-			description: "Disallows the use of Luau reserved keywords as identifiers.",
-			recommended: "recommended",
+			description: "Disallow the use of Luau reserved keywords as identifiers",
+			recommended: true,
 			requiresTypeChecking: false,
 		},
 		messages,

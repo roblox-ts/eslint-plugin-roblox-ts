@@ -4,6 +4,13 @@
 
 <!-- end auto-generated rule header -->
 
+💭 This rule requires [type information](https://typescript-eslint.io/linting/typed-linting).
+
+<!-- end auto-generated rule header -->
+<!-- Do not manually modify this header. Run: `npm run eslint-docs` -->
+
+## Rule details
+
 This rule disallows the usage of `pairs()` and `ipairs()` with `Array<T>` in
 Lua. This is because `pairs()` and `ipairs()` do not shift the array indices to
 match the array indices in TypeScript. This can lead to unexpected behavior

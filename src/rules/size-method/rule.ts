@@ -83,8 +83,8 @@ export const sizeMethod = createEslintRule({
 	meta: {
 		docs: {
 			description:
-				"Enforces use of .size() method instead of .length or .size property for Roblox compatibility.",
-			recommended: "recommended",
+				"Enforce use of .size() method instead of .length or .size property for Roblox compatibility",
+			recommended: true,
 			requiresTypeChecking: true,
 		},
 		fixable: "code",

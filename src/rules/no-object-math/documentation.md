@@ -1,4 +1,4 @@
-# Disallows using objects in mathematical operations
+# Disallow using objects in mathematical operations
 
 🔧 This rule is automatically fixable by the [`--fix` CLI option](https://eslint.org/docs/latest/user-guide/command-line-interface#--fix).
 
@@ -6,6 +6,8 @@
 
 <!-- end auto-generated rule header -->
 <!-- Do not manually modify this header. Run: `npm run eslint-docs` -->
+
+## Rule details
 
 In standard TypeScript, you can use operators like `+`, `-`, `*`, `/` for
 mathematical operations. However, when working with Roblox data types like

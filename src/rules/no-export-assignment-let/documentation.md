@@ -1,10 +1,13 @@
-# Bans using `export =` on a let variable
+# Disallow using `export =` on a let variable as it is not supported in roblox-ts
 
-<!-- end auto-generated rule header -->
 <!-- end auto-generated rule header -->
 <!-- Do not manually modify this header. Run: `npm run eslint-docs` -->
 
+## Rule details
+
 Disallows using `export =` with variables declared using `let`.
+
+## Examples
 
 ```js
 let count = 0;

@@ -1,7 +1,9 @@
-# Disallows unsupported syntax like `globalThis`, `.prototype`, and regex literals
+# Disallow unsupported syntax in roblox-ts
 
 <!-- end auto-generated rule header -->
 <!-- Do not manually modify this header. Run: `npm run eslint-docs` -->
+
+## Rule details
 
 This rule bans the use of certain TypeScript syntax features that are not supported or behave differently in the roblox-ts environment.
 

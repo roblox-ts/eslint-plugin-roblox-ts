@@ -40,8 +40,8 @@ export const noPrecedingSpreadElement = createEslintRule({
 	defaultOptions: [],
 	meta: {
 		docs: {
-			description: "Bans spread elements not last in a list of arguments from being used,",
-			recommended: "recommended",
+			description: "Disallow spread elements not last in a list of arguments from being used",
+			recommended: true,
 			requiresTypeChecking: true,
 		},
 		messages,

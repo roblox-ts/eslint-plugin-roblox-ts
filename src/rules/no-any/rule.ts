@@ -62,9 +62,14 @@ export const noAny = createEslintRule({
 		},
 	],
 	meta: {
+		defaultOptions: [
+			{
+				fixToUnknown: true,
+			},
+		],
 		docs: {
-			description: "Using values of type `any` is not supported! Use `unknown` instead.",
-			recommended: "recommended",
+			description: "Disallow values of type `any` is not supported! Use `unknown` instead",
+			recommended: true,
 			requiresTypeChecking: false,
 		},
 		fixable: "code",
@@ -75,7 +80,6 @@ export const noAny = createEslintRule({
 				additionalProperties: false,
 				properties: {
 					fixToUnknown: {
-						default: true,
 						description:
 							"Whether to enable auto-fixing in which the `any` type is converted to the `unknown` type.'",
 						type: "boolean",

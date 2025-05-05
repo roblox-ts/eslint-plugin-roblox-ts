@@ -100,8 +100,8 @@ export const noUnsupportedSyntax = createEslintRule({
 	defaultOptions: [],
 	meta: {
 		docs: {
-			description: "Disallows unsupported syntax in roblox-ts.",
-			recommended: "recommended",
+			description: "Disallow unsupported syntax in roblox-ts",
+			recommended: true,
 			requiresTypeChecking: false,
 		},
 		messages,

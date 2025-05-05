@@ -1,9 +1,13 @@
-# Disallows the use of LuaTuple in conditional expressions.
+# Disallows the use of LuaTuple in conditional expressions
+
+🔧 This rule is automatically fixable by the [`--fix` CLI option](https://eslint.org/docs/latest/user-guide/command-line-interface#--fix).
 
 💭 This rule requires [type information](https://typescript-eslint.io/linting/typed-linting).
 
 <!-- end auto-generated rule header -->
 <!-- Do not manually modify this header. Run: `npm run eslint-docs` -->
+
+## Rule details
 
 In Luau, functions can return multiple values, represented in roblox-ts by the
 `LuaTuple<T>` type. When a `LuaTuple` is used directly in a conditional

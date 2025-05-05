@@ -35,8 +35,8 @@ export const noFunctionExpressionName = createEslintRule({
 	defaultOptions: [],
 	meta: {
 		docs: {
-			description: "Function expression names are not supported!",
-			recommended: "recommended",
+			description: "Disallow the use of function expression names as they are not supported",
+			recommended: true,
 			requiresTypeChecking: false,
 		},
 		fixable: "code",

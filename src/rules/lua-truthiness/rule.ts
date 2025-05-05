@@ -77,8 +77,8 @@ export const luaTruthiness = createEslintRule({
 	defaultOptions: [],
 	meta: {
 		docs: {
-			description: "Warns against falsy strings and numbers",
-			recommended: "recommended",
+			description: "Enforces the use of lua truthiness in roblox-ts",
+			recommended: true,
 			requiresTypeChecking: true,
 		},
 		messages,

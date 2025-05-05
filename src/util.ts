@@ -2,7 +2,7 @@ import { RuleCreator } from "@typescript-eslint/utils/eslint-utils";
 
 export interface PluginDocumentation {
 	description: string;
-	recommended?: "all" | "recommended" | "strict" | "stylistic";
+	recommended?: boolean;
 	requiresTypeChecking: boolean;
 }
 
