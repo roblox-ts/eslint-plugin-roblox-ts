@@ -3,6 +3,7 @@ import type { Linter } from "eslint";
 import { version } from "../package.json";
 import { luaTruthiness } from "./rules/lua-truthiness/rule";
 import { misleadingLuaTupleChecks } from "./rules/misleading-lua-tuple-checks/rule";
+import { noAny } from "./rules/no-any/rule";
 import { noArrayPairs } from "./rules/no-array-pairs/rule";
 import { noEnumMerging } from "./rules/no-enum-merging/rule";
 import { noExportAssignableLet } from "./rules/no-export-assignment-let/rule";
@@ -29,6 +30,7 @@ const plugin = {
 	rules: {
 		"lua-truthiness": luaTruthiness,
 		"misleading-lua-tuple-checks": misleadingLuaTupleChecks,
+		"no-any": noAny,
 		"no-array-pairs": noArrayPairs,
 		"no-enum-merging": noEnumMerging,
 		"no-export-assignment-let": noExportAssignableLet,
