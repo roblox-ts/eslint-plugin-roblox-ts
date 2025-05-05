@@ -1,3 +1,5 @@
+import type { TSESLint } from "@typescript-eslint/utils";
+
 import type { Linter } from "eslint";
 
 import { version } from "../package.json";
@@ -22,9 +24,11 @@ import { noValueTypeof } from "./rules/no-value-typeof/rule";
 import { preferTaskLibrary } from "./rules/prefer-task-library/rule";
 import { sizeMethod } from "./rules/size-method/rule";
 
+const PLUGIN_NAME = "roblox-ts-x";
+
 const plugin = {
 	meta: {
-		name: "roblox-ts-x",
+		name: PLUGIN_NAME,
 		version,
 	},
 	rules: {
@@ -49,12 +53,17 @@ const plugin = {
 		"prefer-task-library": preferTaskLibrary,
 		"size-method": sizeMethod,
 	},
-};
-
-export default plugin;
+} satisfies TSESLint.FlatConfig.Plugin;
 
 export type RuleOptions = {
 	[K in keyof RuleDefinitions]: RuleDefinitions[K]["defaultOptions"];
+};
+
+export default {
+	...plugin,
+	config: {
+		recommended: createConfig(),
+	},
 };
 
 export type Rules = {
@@ -62,3 +71,18 @@ export type Rules = {
 };
 
 type RuleDefinitions = (typeof plugin)["rules"];
+
+function createConfig(): TSESLint.FlatConfig.Config {
+	return {
+		plugins: {
+			[PLUGIN_NAME]: plugin,
+		},
+		rules: getRules(),
+	};
+}
+
+function getRules(): Linter.RulesRecord {
+	return Object.fromEntries(
+		Object.keys(plugin.rules).map(ruleName => [`${PLUGIN_NAME}/${ruleName}`, "error"]),
+	);
+}

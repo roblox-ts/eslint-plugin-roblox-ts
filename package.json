@@ -47,7 +47,7 @@
 		"*": "eslint --fix"
 	},
 	"resolutions": {
-		"eslint-plugin-sentinel": "workspace:*"
+		"eslint-plugin-roblox-ts-x": "workspace:*"
 	},
 	"devDependencies": {
 		"@antfu/ni": "catalog:cli",

@@ -24,6 +24,7 @@
 
 	// Enable eslint for all supported languages
 	"eslint.validate": [
+		"javascript",
 		"typescript",
 		"typescriptreact",
 		"markdown",

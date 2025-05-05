@@ -83,7 +83,7 @@ catalogs:
       version: 2.1.2
 
 overrides:
-  eslint-plugin-sentinel: workspace:*
+  eslint-plugin-roblox-ts-x: workspace:*
 
 importers:
 

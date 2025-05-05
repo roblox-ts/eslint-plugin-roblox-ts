@@ -11,8 +11,8 @@ using [roblox-ts](https://roblox-ts.github.io/roblox-ts/). These rules are
 nearly all designed to help avoid compiler errors for features that are not
 supported by the roblox-ts compiler, despite being valid TypeScript.
 
-These rules should help users move from TypeScript to roblox-ts, as well as help
-users who wish to learn roblox-ts when coming from Lua.
+These rules should help users learn roblox-ts when coming from Lua, as well as
+guiding users who already know TypeScript to avoid unsupported features.
 
 ## Rules
 
@@ -64,3 +64,51 @@ users who wish to learn roblox-ts when coming from Lua.
 [license-href]: https://github.com/christopher-buss/eslint-plugin-roblox-ts-x/blob/main/LICENSE
 [jsdocs-src]: https://img.shields.io/badge/jsdocs-reference-080f12?style=flat&colorA=080f12&colorB=1fa669
 [jsdocs-href]: https://www.jsdocs.io/package/eslint-plugin-roblox-ts-x
+
+## Installation
+
+You'll first need to install [ESLint](https://eslint.org) v9.0.0 or greater:
+
+```sh
+npm install eslint --save-dev
+```
+
+Next, install `eslint-plugin-roblox-ts-x`:
+
+```sh
+npm install eslint-plugin-roblox-ts-x --save-dev
+```
+
+## Usage
+
+The easiest way to use `eslint-plugin-roblox-ts-x` is to use the ready-made config. Config files use all the rules of the current plugin, but you can override them.
+
+### Flat Config ([`eslint.config.ts`](https://eslint.org/docs/latest/use/configure/configuration-files))
+
+```js
+import roblox from 'eslint-plugin-roblox-ts-x'
+
+export default [
+	roblox.configs.recommended,
+]
+```
+
+### Flat Config ([`eslint.config.js`](https://eslint.org/docs/latest/use/configure/configuration-files))
+
+Altertatively, add `eslint-plugin-roblox-ts-x` to the plugins section of the ESLint
+configuration file and define the list of rules you will use.
+
+```js
+import roblox from 'eslint-plugin-roblox-ts-x'
+
+export default [
+	{
+		plugins: {
+			"roblox-ts-x": roblox,
+		},
+		rules: {
+			"roblox-ts-x/no-any": ["error", { fixToUnknown: true }],
+		},
+	},
+]
+```
