@@ -10,6 +10,7 @@ const valid: Array<ValidTestCase> = [
 	"if (false) {}",
 	"if (undefined) {}",
 	'if ("hello") {}',
+	"const x: number | undefined = undefined; const y = x ?? 0;",
 ];
 
 const errorMessage = "falsy-string-number-check";

@@ -58,10 +58,13 @@ function create(context: Readonly<TSESLint.RuleContext<string, []>>): TSESLint.R
 		"DoWhileStatement": containsBoolean(),
 		"ForStatement": containsBoolean(),
 		"IfStatement": containsBoolean(),
-		"LogicalExpression": ({ left, operator, right }) => {
+		"LogicalExpression": ({ left, operator, parent, right }) => {
 			if (operator !== "??") {
 				checkTruthy(context, parserServices, left);
-			} else {
+				return;
+			}
+
+			if (parent.type === TSESTree.AST_NODE_TYPES.IfStatement) {
 				checkTruthy(context, parserServices, right);
 			}
 		},
