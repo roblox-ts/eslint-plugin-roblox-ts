@@ -1,8 +1,6 @@
 import { AST_NODE_TYPES, type TSESLint, type TSESTree } from "@typescript-eslint/utils";
 
-import assert from "node:assert";
-
-import { createEslintRule } from "../../util";
+import { assert, createEslintRule } from "../../util";
 
 export const RULE_NAME = "prefer-task-library";
 
@@ -23,7 +21,7 @@ function create(context: Readonly<TSESLint.RuleContext<string, []>>): TSESLint.R
 
 			context.report({
 				data: { fn: node.callee.name },
-				fix(fixer) {
+				fix: fixer => {
 					assert(node.callee.type === AST_NODE_TYPES.Identifier);
 					return fixer.replaceText(node.callee, `task.${node.callee.name}`);
 				},
