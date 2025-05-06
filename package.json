@@ -30,6 +30,7 @@
 	],
 	"scripts": {
 		"build": "unbuild",
+		"create-rule": "tsx scripts/create-rule.ts",
 		"dev": "unbuild --stub",
 		"eslint-docs": "eslint-doc-generator",
 		"lint": "eslint",

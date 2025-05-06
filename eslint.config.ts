@@ -13,7 +13,7 @@ export default style(
 		},
 	},
 	{
-		ignores: [".eslint-doc-generatorrc.ts", "fixture/**"],
+		ignores: [".eslint-doc-generatorrc.ts", "fixture/**", "scripts/template/**"],
 	},
 	{
 		files: GLOB_TESTS,

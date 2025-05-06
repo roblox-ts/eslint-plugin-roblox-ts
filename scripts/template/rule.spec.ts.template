@@ -1,0 +1,50 @@
+import { type InvalidTestCase, unindent, type ValidTestCase } from "eslint-vitest-rule-tester";
+import { expect } from "vitest"; // Or remove if not using expect directly
+
+import { run } from "../test"; // Assuming a shared test runner setup like in other rules
+import { {{RULE_NAME_CAMEL_CASE}}, RULE_NAME } from "./rule";
+
+// Define message identifier used in the rule
+const messageId = "violation"; // Match the identifier in rule.ts
+
+const valid: Array<ValidTestCase> = [
+	// Code snippets that should PASS
+	`// Valid code example
+	const x = 1;`,
+	// Add more valid test cases here
+];
+
+const invalid: Array<InvalidTestCase> = [
+	// Code snippets that should FAIL
+	{
+		code: `// Invalid code example
+		const y = 2;`,
+		errors: [{ messageId }], // Ensure messageId matches the one reported by the rule
+		// Optional: For fixable rules, check the output after applying the fix
+		/*
+		output: output => {
+			expect(output).toMatchInlineSnapshot(`
+				// Expected code after fix
+				const y = 1;
+			`);
+		},
+		*/
+		// Optional: For rules with suggestions
+		/*
+		errors: errors => {
+			expect(errors).toHaveLength(1);
+			expect(errors[0]!.messageId).toBe(messageId);
+			expect(errors[0]!.suggestions).toHaveLength(1);
+			expect(errors[0]!.suggestions![0]!.messageId).toBe("suggestionId"); // Match suggestion ID
+		}
+		*/
+	},
+	// Add more invalid test cases here
+];
+
+run({
+	invalid,
+	name: RULE_NAME,
+	rule: {{RULE_NAME_CAMEL_CASE}},
+	valid,
+});

@@ -1,0 +1,57 @@
+import type { TSESLint, TSESTree } from "@typescript-eslint/utils";
+// import { AST_NODE_TYPES } from "@typescript-eslint/utils"; // Uncomment if needed
+// import { getParserServices } from "@typescript-eslint/utils/eslint-utils"; // Uncomment if needed
+
+import { createEslintRule } from "../../util";
+// import { isTypeFlagSet, /* other type utils */ } from "../../utils/types"; // Uncomment if needed
+
+export const RULE_NAME = "{{RULE_NAME}}";
+
+// Define message identifiers
+const MESSAGE_ID = "violation";
+
+const messages = {
+	[MESSAGE_ID]: "Description of the violation for {{RULE_NAME}}.",
+};
+
+// Rule definition
+function create(context: Readonly<TSESLint.RuleContext<string, []>>): TSESLint.RuleListener {
+	// const parserServices = getParserServices(context); // Uncomment if type information is needed
+	// const checker = parserServices.program.getTypeChecker(); // Uncomment if type information is needed
+
+	return {
+		// Visitor pattern: Select nodes to visit
+		// Example: Visiting Identifier nodes
+		/*
+		Identifier(node: TSESTree.Identifier) {
+			// Rule logic here
+			if (node.name === "bad") {
+				context.report({
+					node,
+					messageId: MESSAGE_ID,
+					// data: { variableName: node.name }, // Optional data for message placeholders
+					// fix: (fixer) => fixer.replaceText(node, "good"), // Optional fix
+				});
+			}
+		},
+		*/
+	};
+}
+
+export const {{RULE_NAME_CAMEL_CASE}} = createEslintRule({
+	create,
+	defaultOptions: [],
+	meta: { 
+		docs: {
+			description: "Brief description of the rule's purpose",
+			recommended: false, // Or true if recommended
+			requiresTypeChecking: false, // Or true if type information is needed
+		},
+		fixable: undefined, // Or "code" or "whitespace"
+		hasSuggestions: false, // Or true if providing suggestions
+		messages,
+		schema: [], // Rule options schema if any
+		type: "problem", // Or "suggestion" or "layout"
+	},
+	name: RULE_NAME,
+});
