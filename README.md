@@ -1,4 +1,4 @@
-# eslint-plugin-roblox-ts-x
+# eslint-plugin-roblox-ts
 
 [![npm version][npm-version-src]][npm-version-href]
 [![npm downloads][npm-downloads-src]][npm-downloads-href]
@@ -50,16 +50,16 @@ guiding users who already know TypeScript to avoid unsupported features.
 
 <!-- Badges -->
 
-[npm-version-src]: https://img.shields.io/npm/v/eslint-plugin-roblox-ts-x?style=flat&colorA=080f12&colorB=1fa669
-[npm-version-href]: https://npmjs.com/package/eslint-plugin-roblox-ts-x
-[npm-downloads-src]: https://img.shields.io/npm/dm/eslint-plugin-roblox-ts-x?style=flat&colorA=080f12&colorB=1fa669
-[npm-downloads-href]: https://npmjs.com/package/eslint-plugin-roblox-ts-x
-[bundle-src]: https://img.shields.io/bundlephobia/minzip/eslint-plugin-roblox-ts-x?style=flat&colorA=080f12&colorB=1fa669&label=minzip
-[bundle-href]: https://bundlephobia.com/result?p=eslint-plugin-roblox-ts-x
-[license-src]: https://img.shields.io/github/license/christopher-buss/eslint-plugin-roblox-ts-x.svg?style=flat&colorA=080f12&colorB=1fa669
-[license-href]: https://github.com/christopher-buss/eslint-plugin-roblox-ts-x/blob/main/LICENSE
+[npm-version-src]: https://img.shields.io/npm/v/eslint-plugin-roblox-ts?style=flat&colorA=080f12&colorB=1fa669
+[npm-version-href]: https://npmjs.com/package/eslint-plugin-roblox-ts
+[npm-downloads-src]: https://img.shields.io/npm/dm/eslint-plugin-roblox-ts?style=flat&colorA=080f12&colorB=1fa669
+[npm-downloads-href]: https://npmjs.com/package/eslint-plugin-roblox-ts
+[bundle-src]: https://img.shields.io/bundlephobia/minzip/eslint-plugin-roblox-ts?style=flat&colorA=080f12&colorB=1fa669&label=minzip
+[bundle-href]: https://bundlephobia.com/result?p=eslint-plugin-roblox-ts
+[license-src]: https://img.shields.io/github/license/roblox-ts/eslint-plugin-roblox-ts.svg?style=flat&colorA=080f12&colorB=1fa669
+[license-href]: https://github.com/roblox-ts/eslint-plugin-roblox-ts/blob/main/LICENSE
 [jsdocs-src]: https://img.shields.io/badge/jsdocs-reference-080f12?style=flat&colorA=080f12&colorB=1fa669
-[jsdocs-href]: https://www.jsdocs.io/package/eslint-plugin-roblox-ts-x
+[jsdocs-href]: https://www.jsdocs.io/package/eslint-plugin-roblox-ts
 
 ## Installation
 
@@ -69,20 +69,20 @@ You'll first need to install [ESLint](https://eslint.org) v9.0.0 or greater:
 npm install eslint --save-dev
 ```
 
-Next, install `eslint-plugin-roblox-ts-x`:
+Next, install `eslint-plugin-roblox-ts`:
 
 ```sh
-npm install eslint-plugin-roblox-ts-x --save-dev
+npm install eslint-plugin-roblox-ts --save-dev
 ```
 
 ## Usage
 
-The easiest way to use `eslint-plugin-roblox-ts-x` is to use the ready-made config. Config files use all the rules of the current plugin, but you can override them.
+The easiest way to use `eslint-plugin-roblox-ts` is to use the ready-made config. Config files use all the rules of the current plugin, but you can override them.
 
 ### Flat Config ([`eslint.config.ts`](https://eslint.org/docs/latest/use/configure/configuration-files))
 
 ```js
-import roblox from 'eslint-plugin-roblox-ts-x'
+import roblox from 'eslint-plugin-roblox-ts'
 
 export default [
 	roblox.configs.recommended,
@@ -91,19 +91,19 @@ export default [
 
 ### Flat Config ([`eslint.config.ts`](https://eslint.org/docs/latest/use/configure/configuration-files))
 
-Altertatively, add `eslint-plugin-roblox-ts-x` to the plugins section of the ESLint
+Altertatively, add `eslint-plugin-roblox-ts` to the plugins section of the ESLint
 configuration file and define the list of rules you will use.
 
 ```js
-import roblox from 'eslint-plugin-roblox-ts-x'
+import roblox from 'eslint-plugin-roblox-ts'
 
 export default [
 	{
 		plugins: {
-			"roblox-ts-x": roblox,
+			"roblox-ts": roblox,
 		},
 		rules: {
-			"roblox-ts-x/no-any": ["error", { fixToUnknown: true }],
+			"roblox-ts/no-any": ["error", { fixToUnknown: true }],
 		},
 	},
 ]
@@ -111,5 +111,4 @@ export default [
 
 ## License
 
-[MIT](./LICENSE) License © [Christopher
-Buss](https://github.com/christopher-buss)
+[MIT](./LICENSE) License © [roblox-ts](https://github.com/roblox-ts)

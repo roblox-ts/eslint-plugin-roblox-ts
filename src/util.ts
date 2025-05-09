@@ -7,7 +7,7 @@ export interface PluginDocumentation {
 }
 
 export const createEslintRule = RuleCreator<PluginDocumentation>(name => {
-	return `https://github.com/christopher-buss/eslint-plugin-roblox-ts-x/tree/main/src/rules/${name}/documentation.md`;
+	return `https://github.com/roblox-ts/eslint-plugin-roblox-ts/tree/main/src/rules/${name}/documentation.md`;
 });
 
 export function assert(condition: any, message?: string): asserts condition {

@@ -1,6 +1,6 @@
 {
-	"name": "eslint-plugin-roblox-ts-x",
-	"version": "1.0.1",
+	"name": "eslint-plugin-roblox-ts",
+	"version": "1.0.0",
 	"description": "A collection of ESLint rules specifically targeted for roblox-ts.",
 	"keywords": [
 		"roblox",
@@ -8,11 +8,11 @@
 		"eslint-plugin",
 		"rbxts"
 	],
-	"homepage": "https://github.com/christopher-buss/eslint-plugin-roblox-ts-x#readme",
-	"bugs": "https://github.com/christopher-buss/eslint-plugin-roblox-ts-x/issues",
+	"homepage": "https://github.com/roblox-ts/eslint-plugin-roblox-ts#readme",
+	"bugs": "https://github.com/roblox-ts/eslint-plugin-roblox-ts/issues",
 	"repository": {
 		"type": "git",
-		"url": "git+https://github.com/christopher-buss/eslint-plugin-roblox-ts-x.git"
+		"url": "git+https://github.com/roblox-ts/eslint-plugin-roblox-ts.git"
 	},
 	"license": "MIT",
 	"author": "Christopher Buss <christopher.buss@pm.me> (https://github.com/christopher-buss)",
@@ -48,36 +48,36 @@
 		"*": "eslint --fix"
 	},
 	"resolutions": {
-		"eslint-plugin-roblox-ts-x": "workspace:*"
+		"eslint-plugin-roblox-ts": "workspace:*"
 	},
 	"devDependencies": {
-		"@antfu/ni": "catalog:cli",
-		"@isentinel/eslint-config": "catalog:cli",
+		"@antfu/ni": "catalog:dev",
+		"@isentinel/eslint-config": "catalog:dev",
 		"@rbxts/compiler-types": "catalog:types",
 		"@rbxts/types": "catalog:types",
 		"@types/node": "catalog:types",
-		"@typescript-eslint/eslint-plugin": "catalog:cli",
-		"@typescript-eslint/parser": "catalog:cli",
-		"@typescript-eslint/type-utils": "catalog:cli",
-		"@typescript-eslint/utils": "catalog:cli",
-		"bumpp": "catalog:cli",
-		"eslint": "catalog:cli",
+		"@typescript-eslint/eslint-plugin": "catalog:dev",
+		"@typescript-eslint/parser": "catalog:dev",
+		"@typescript-eslint/type-utils": "catalog:dev",
+		"@typescript-eslint/utils": "catalog:dev",
+		"bumpp": "catalog:dev",
+		"eslint": "catalog:dev",
 		"eslint-doc-generator": "catalog:utils",
 		"eslint-plugin-eslint-plugin": "catalog:testing",
-		"eslint-plugin-pnpm": "catalog:cli",
+		"eslint-plugin-pnpm": "catalog:dev",
 		"eslint-vitest-rule-tester": "catalog:testing",
-		"jiti": "catalog:cli",
-		"lint-staged": "catalog:cli",
-		"simple-git-hooks": "catalog:cli",
-		"ts-api-utils": "catalog:cli",
-		"tsx": "catalog:cli",
-		"typescript": "catalog:cli",
-		"unbuild": "catalog:cli",
+		"jiti": "catalog:dev",
+		"lint-staged": "catalog:dev",
+		"simple-git-hooks": "catalog:dev",
+		"ts-api-utils": "catalog:dev",
+		"tsx": "catalog:dev",
+		"typescript": "catalog:dev",
+		"unbuild": "catalog:dev",
 		"vitest": "catalog:testing",
 		"yaml": "catalog:testing"
 	},
 	"peerDependencies": {
 		"eslint": "*"
 	},
-	"packageManager": "pnpm@10.9.0"
+	"packageManager": "pnpm@10.10.0"
 }

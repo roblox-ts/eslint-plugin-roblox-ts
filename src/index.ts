@@ -24,7 +24,7 @@ import { noValueTypeof } from "./rules/no-value-typeof/rule";
 import { preferTaskLibrary } from "./rules/prefer-task-library/rule";
 import { sizeMethod } from "./rules/size-method/rule";
 
-const PLUGIN_NAME = "roblox-ts-x";
+const PLUGIN_NAME = "roblox-ts";
 
 const plugin = {
 	meta: {

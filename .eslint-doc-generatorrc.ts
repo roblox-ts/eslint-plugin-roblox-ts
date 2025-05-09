@@ -11,7 +11,7 @@ const config: GenerateOptions = {
 		'hasSuggestions',
 		'requiresTypeChecking',
 	],
-	urlConfigs: 'https://github.com/christopher-buss/eslint-plugin-roblox-ts-x',
+	urlConfigs: 'https://github.com/roblox-ts/eslint-plugin-roblox-ts',
 	pathRuleDoc: './src/rules/{name}/documentation.md',
 	pathRuleList: './README.md',
 };
