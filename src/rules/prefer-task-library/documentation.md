@@ -15,14 +15,14 @@ the former being deprecated.
 
 ```lua
 wait()
-delay(function() end)
-spawn(function() end)
+delay(() => {})
+spawn(() => {})
 ```
 
 ### ✅ Correct
 
 ```lua
 task.wait()
-task.delay(function() end)
-task.spawn(function() end)
+task.delay(() => {})
+task.spawn(() => {})
 ```
