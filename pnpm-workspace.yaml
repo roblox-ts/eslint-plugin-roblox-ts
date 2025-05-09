@@ -13,7 +13,7 @@ catalogs:
     eslint-plugin-pnpm: 0.3.1
     eslint: 9.22.0
     jiti: 2.4.2
-    lint-staged: 15.5.0
+    lint-staged: 15.5.2
     simple-git-hooks: 2.11.1
     ts-api-utils: 2.1.0
     tsx: 4.19.3
