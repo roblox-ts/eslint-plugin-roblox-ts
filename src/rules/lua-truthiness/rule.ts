@@ -20,7 +20,7 @@ const FALSY_STRING_NUMBER_CHECK = "falsy-string-number-check";
 
 const messages = {
 	[FALSY_STRING_NUMBER_CHECK]:
-		'0, NaN, and "" are falsy in TS. If intentional, disable this rule by placing `"roblox-ts-x/lua-truthiness": "off"` in your eslint.config file in the "rules" object.',
+		'0, NaN, and "" are falsy in TS. If intentional, disable this rule by placing `"roblox-ts/lua-truthiness": "off"` in your eslint.config file in the "rules" object.',
 };
 
 function checkTruthy(

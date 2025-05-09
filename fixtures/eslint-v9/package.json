@@ -1,7 +1,7 @@
 {
-  "name": "eslint-plugin-roblox-ts-x-fixture-v9",
+  "name": "eslint-plugin-roblox-ts-fixture-v9",
   "version": "1.0.0",
-  "description": "ESLint v9 fixture for testing eslint-plugin-roblox-ts-x",
+  "description": "ESLint v9 fixture for testing eslint-plugin-roblox-ts",
   "main": "dist/index.js",
   "private": true,
   "scripts": {
@@ -13,7 +13,7 @@
     "@typescript-eslint/eslint-plugin": "catalog:cli",
     "@typescript-eslint/parser": "catalog:cli",
     "eslint": "catalog:cli",
-    "eslint-plugin-roblox-ts-x": "workspace:*",
+    "eslint-plugin-roblox-ts": "workspace:*",
     "typescript": "catalog:cli"
   }
 }

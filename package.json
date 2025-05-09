@@ -1,6 +1,6 @@
 {
-	"name": "eslint-plugin-roblox-ts-x",
-	"version": "2.1.0",
+	"name": "eslint-plugin-roblox-ts",
+	"version": "1.0.0",
 	"description": "A collection of ESLint rules specifically targeted for roblox-ts.",
 	"keywords": [
 		"roblox",
@@ -8,11 +8,11 @@
 		"eslint-plugin",
 		"rbxts"
 	],
-	"homepage": "https://github.com/christopher-buss/eslint-plugin-roblox-ts-x#readme",
-	"bugs": "https://github.com/christopher-buss/eslint-plugin-roblox-ts-x/issues",
+	"homepage": "https://github.com/roblox-ts/eslint-plugin-roblox-ts#readme",
+	"bugs": "https://github.com/roblox-ts/eslint-plugin-roblox-ts/issues",
 	"repository": {
 		"type": "git",
-		"url": "git+https://github.com/christopher-buss/eslint-plugin-roblox-ts-x.git"
+		"url": "git+https://github.com/roblox-ts/eslint-plugin-roblox-ts.git"
 	},
 	"license": "MIT",
 	"author": "Christopher Buss <christopher.buss@pm.me> (https://github.com/christopher-buss)",
@@ -49,7 +49,7 @@
 		"*": "eslint --fix"
 	},
 	"resolutions": {
-		"eslint-plugin-roblox-ts-x": "workspace:*"
+		"eslint-plugin-roblox-ts": "workspace:*"
 	},
 	"dependencies": {
 		"@typescript-eslint/type-utils": "catalog:cli",

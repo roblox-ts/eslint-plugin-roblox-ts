@@ -2,7 +2,7 @@
 import js from '@eslint/js';
 import typescript from '@typescript-eslint/eslint-plugin';
 import parser from '@typescript-eslint/parser';
-import robloxTs from 'eslint-plugin-roblox-ts-x';
+import robloxTs from 'eslint-plugin-roblox-ts';
 
 export default [
   js.configs.recommended,
@@ -18,26 +18,25 @@ export default [
     },
     plugins: {
       '@typescript-eslint': typescript,
-      'roblox-ts-x': robloxTs,
+      'roblox-ts': robloxTs,
     },
     rules: {
-      // TypeScript ESLint rules
       '@typescript-eslint/no-unused-vars': 'error',
-      '@typescript-eslint/no-explicit-any': 'off', // Allow any for this example
+      '@typescript-eslint/no-explicit-any': 'off',
       
       // Roblox-TS plugin rules - covering different rule types
-      'roblox-ts-x/no-null': 'error',                    // Fixable rule
-      'roblox-ts-x/no-object-math': 'error',            // Fixable + Type-checking rule
-      'roblox-ts-x/no-array-pairs': 'error',            // Type-checking rule
-      'roblox-ts-x/lua-truthiness': 'error',            // Type-checking rule
-      'roblox-ts-x/no-any': ['error', { fixToUnknown: true }], // Fixable + Suggestion rule
-      'roblox-ts-x/no-enum-merging': 'error',           // Error-only rule
-      'roblox-ts-x/no-invalid-identifier': 'error',     // Error-only rule
-      'roblox-ts-x/prefer-task-library': 'error',       // Fixable rule
-      'roblox-ts-x/size-method': 'error',               // Fixable + Type-checking rule
-      'roblox-ts-x/no-for-in': 'error',                 // Fixable rule
-      'roblox-ts-x/no-private-identifier': 'error',     // Fixable rule
-      'roblox-ts-x/no-get-set': 'error',                // Fixable rule
+      'roblox-ts/no-null': 'error',
+      'roblox-ts/no-object-math': 'error',
+      'roblox-ts/no-array-pairs': 'error',
+      'roblox-ts/lua-truthiness': 'error',
+      'roblox-ts/no-any': ['error', { fixToUnknown: true }],
+      'roblox-ts/no-enum-merging': 'error',
+      'roblox-ts/no-invalid-identifier': 'error',
+      'roblox-ts/prefer-task-library': 'error',
+      'roblox-ts/size-method': 'error',
+      'roblox-ts/no-for-in': 'error',
+      'roblox-ts/no-private-identifier': 'error',
+      'roblox-ts/no-get-set': 'error',
     },
   },
   {

@@ -27,31 +27,31 @@ interface FixtureTest {
 const packageJson = JSON.parse(readFileSync("package.json", "utf8")) as { name: string };
 const projectName = packageJson.name;
 
-/** Expected roblox-ts-x rules that should be triggered in fixtures. */
+/** Expected roblox-ts rules that should be triggered in fixtures. */
 const EXPECTED_RULES = [
-	"roblox-ts-x/no-null",
-	"roblox-ts-x/no-any",
-	"roblox-ts-x/no-object-math",
-	"roblox-ts-x/no-array-pairs",
-	"roblox-ts-x/lua-truthiness",
-	"roblox-ts-x/no-enum-merging",
-	"roblox-ts-x/prefer-task-library",
-	"roblox-ts-x/size-method",
-	"roblox-ts-x/no-for-in",
-	"roblox-ts-x/no-private-identifier",
-	"roblox-ts-x/no-get-set",
+	"roblox-ts/no-null",
+	"roblox-ts/no-any",
+	"roblox-ts/no-object-math",
+	"roblox-ts/no-array-pairs",
+	"roblox-ts/lua-truthiness",
+	"roblox-ts/no-enum-merging",
+	"roblox-ts/prefer-task-library",
+	"roblox-ts/size-method",
+	"roblox-ts/no-for-in",
+	"roblox-ts/no-private-identifier",
+	"roblox-ts/no-get-set",
 ];
 
 /**
- * Extract and analyze roblox-ts-x messages from ESLint results.
+ * Extract and analyze roblox-ts messages from ESLint results.
  *
  * @param results - ESLint results array.
- * @returns Object with all messages and filtered roblox-ts-x messages.
+ * @returns Object with all messages and filtered roblox-ts messages.
  */
 function analyzeESLintResults(results: Array<ESLintResult>) {
 	const allMessages = results.flatMap((result) => result.messages);
 	const robloxTsMessages = allMessages.filter(
-		(message) => message.ruleId?.startsWith("roblox-ts-x/") ?? false,
+		(message) => message.ruleId?.startsWith("roblox-ts/") ?? false,
 	);
 
 	return { allMessages, robloxTsMessages };
@@ -62,8 +62,8 @@ function main(): never {
 	console.log(`🚀 Testing ${projectName} fixtures\n`);
 
 	const fixtures: Array<FixtureTest> = [
-		{ name: "eslint-plugin-roblox-ts-x-fixture-v8", version: "v8" },
-		{ name: "eslint-plugin-roblox-ts-x-fixture-v9", version: "v9" },
+		{ name: "eslint-plugin-roblox-ts-fixture-v8", version: "v8" },
+		{ name: "eslint-plugin-roblox-ts-fixture-v9", version: "v9" },
 	];
 
 	let allPassed = true;
@@ -158,10 +158,10 @@ function validateResults(
 	const { allMessages, robloxTsMessages } = analyzeESLintResults(results);
 
 	console.log(`   📊 Found ${allMessages.length} total violations`);
-	console.log(`   🎯 Found ${robloxTsMessages.length} roblox-ts-x violations`);
+	console.log(`   🎯 Found ${robloxTsMessages.length} roblox-ts violations`);
 
 	if (robloxTsMessages.length === 0) {
-		console.error(`❌ No roblox-ts-x rule violations found in ${fixtureName}`);
+		console.error(`❌ No roblox-ts rule violations found in ${fixtureName}`);
 		return false;
 	}
 
@@ -179,11 +179,11 @@ function validateResults(
 		);
 	}
 
-	// Verify plugin loaded correctly by checking we have roblox-ts-x violations
+	// Verify plugin loaded correctly by checking we have roblox-ts violations
 	const foundRulesArray = Array.from(foundRules);
 	console.log(`   ✅ Triggered rules: ${foundRulesArray.join(", ")}`);
 
-	// Success if we found roblox-ts-x violations
+	// Success if we found roblox-ts violations
 	console.log(`   ✅ ${fixtureName} working correctly with ESLint ${eslintVersion}`);
 	return true;
 }

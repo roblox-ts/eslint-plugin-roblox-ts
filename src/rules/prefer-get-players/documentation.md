@@ -83,6 +83,6 @@ Example configuration with options:
 
 ```json
 {
-	"roblox-ts-x/prefer-get-players": ["error", { "validateType": true }]
+	"roblox-ts/prefer-get-players": ["error", { "validateType": true }]
 }
 ```

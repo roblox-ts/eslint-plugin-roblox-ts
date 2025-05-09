@@ -11,7 +11,7 @@
   },
   "plugins": [
     "@typescript-eslint",
-    "roblox-ts-x"
+    "roblox-ts"
   ],
   "rules": {
     // TypeScript ESLint rules
@@ -19,18 +19,18 @@
     "@typescript-eslint/no-explicit-any": "off",
 
     // Roblox-TS plugin rules - covering different rule types
-    "roblox-ts-x/no-null": "error",
-    "roblox-ts-x/no-object-math": "error",
-    "roblox-ts-x/no-array-pairs": "error",
-    "roblox-ts-x/lua-truthiness": "error",
-    "roblox-ts-x/no-any": ["error", { "fixToUnknown": true }],
-    "roblox-ts-x/no-enum-merging": "error",
-    "roblox-ts-x/no-invalid-identifier": "error",
-    "roblox-ts-x/prefer-task-library": "error",
-    "roblox-ts-x/size-method": "error",
-    "roblox-ts-x/no-for-in": "error",
-    "roblox-ts-x/no-private-identifier": "error",
-    "roblox-ts-x/no-get-set": "error"
+    "roblox-ts/no-null": "error",
+    "roblox-ts/no-object-math": "error",
+    "roblox-ts/no-array-pairs": "error",
+    "roblox-ts/lua-truthiness": "error",
+    "roblox-ts/no-any": ["error", { "fixToUnknown": true }],
+    "roblox-ts/no-enum-merging": "error",
+    "roblox-ts/no-invalid-identifier": "error",
+    "roblox-ts/prefer-task-library": "error",
+    "roblox-ts/size-method": "error",
+    "roblox-ts/no-for-in": "error",
+    "roblox-ts/no-private-identifier": "error",
+    "roblox-ts/no-get-set": "error"
   },
   "ignorePatterns": ["dist/", "node_modules/"]
 }
