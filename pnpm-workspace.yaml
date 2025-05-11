@@ -17,7 +17,7 @@ catalogs:
     simple-git-hooks: 2.11.1
     ts-api-utils: 2.1.0
     tsx: 4.19.3
-    typescript: 5.8.2
+    typescript: 5.8.3
     unbuild: 3.5.0
   testing:
     eslint-plugin-eslint-plugin: 6.4.0
