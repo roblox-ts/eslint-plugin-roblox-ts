@@ -7,8 +7,8 @@ catalogs:
     '@isentinel/eslint-config': 1.0.1
     '@typescript-eslint/eslint-plugin': 8.31.0
     '@typescript-eslint/parser': 8.31.0
-    '@typescript-eslint/utils': 8.31.0
     '@typescript-eslint/type-utils': 8.31.0
+    '@typescript-eslint/utils': 8.31.0
     bumpp: 10.1.0
     eslint-plugin-pnpm: 0.3.1
     eslint: 9.22.0
