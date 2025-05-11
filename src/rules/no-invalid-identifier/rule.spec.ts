@@ -8,6 +8,7 @@ const valid: Array<ValidTestCase> = [
 	"let y = 'hello';",
 	"function z() {}",
 	"class MyClass {}",
+	"const Local = 5;",
 	"const my_and = true;",
 	"const isNil = false;",
 	"interface MyInterface { local: string; }",
@@ -17,6 +18,13 @@ const valid: Array<ValidTestCase> = [
 	"const obj = { and: true }; if (obj.and) { /* ... */ };",
 	"type MyType = { config: { repeat: boolean } };",
 	"type MyType = { config: { repeat: boolean } }; function check(p: MyType) { if (p.config.repeat) {} }",
+	"return $tuple(binding, motion);",
+	'import { $NODE_ENV } from "rbxts-transform-env"; print($NODE_ENV === "development");',
+	"const { and: andFixed } = { and: 1 };",
+	"const x = 5; export { x as local };",
+	"const x = { local: 5, }; print(x.local);",
+	"import { value as good } from './module';",
+	"const Rectangle = class {};",
 ];
 
 const invalidIdentifier: Array<InvalidTestCase> = [
@@ -40,6 +48,9 @@ const invalidIdentifier: Array<InvalidTestCase> = [
 	"enum elseif { A, B }",
 	"try { /* ... */ } catch (local) { /* ... */ }",
 	"Promise.try(() => {}).catch(error => { /* ... */ });",
+	"namespace local {}",
+	"let local = 5; local = 10; local = 15; local = 20;",
+	"const local = class {};",
 ].map(testCase => {
 	return {
 		code: testCase.toString(),

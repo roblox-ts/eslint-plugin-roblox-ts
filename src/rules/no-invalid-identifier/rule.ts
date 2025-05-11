@@ -31,58 +31,82 @@ const messages = {
 		"Avoid using '{{ identifier }}' as an identifier, as it is a reserved keyword in Luau.",
 };
 
+type ExpressionDeclarationNodes =
+	| TSESTree.ArrowFunctionExpression
+	| TSESTree.CatchClause
+	| TSESTree.ClassDeclaration
+	| TSESTree.ClassExpression
+	| TSESTree.FunctionDeclaration
+	| TSESTree.FunctionExpression
+	| TSESTree.TSEnumDeclaration
+	| TSESTree.TSModuleDeclaration
+	| TSESTree.VariableDeclaration;
+
 function create(context: Readonly<TSESLint.RuleContext<string, []>>): TSESLint.RuleListener {
+	const { sourceCode } = context;
+
 	return {
-		Identifier(node: TSESTree.Identifier) {
-			if (!BANNED_KEYWORDS.has(node.name) && LUAU_IDENTIFIER_REGEX.test(node.name)) {
-				return;
+		[[
+			"VariableDeclaration",
+			"FunctionDeclaration",
+			"FunctionExpression",
+			"ArrowFunctionExpression",
+			"CatchClause",
+			"TSEnumDeclaration",
+			"TSModuleDeclaration",
+		].join(",")](node: ExpressionDeclarationNodes) {
+			for (const variable of sourceCode.getDeclaredVariables(node)) {
+				validateIdentifier(context, node, variable.name);
 			}
-
-			const { name, parent } = node;
-
-			if (isAllowedContext(node, parent)) {
-				return;
+		},
+		"ClassDeclaration, ClassExpression"(
+			node: TSESTree.ClassDeclaration | TSESTree.ClassExpression,
+		) {
+			if (node.id?.name !== undefined) {
+				validateIdentifier(context, node, node.id.name);
 			}
-
-			context.report({
-				data: { identifier: name },
-				messageId: BANNED_KEYWORDS.has(name) ? INVALID_IDENTIFIER : INVALID_CHARACTERS,
-				node,
-			});
+		},
+		"ImportDeclaration"(node: TSESTree.ImportDeclaration) {
+			for (const variable of sourceCode.getDeclaredVariables(node)) {
+				validateIdentifier(context, node, variable.name, () => isImportAlias(node));
+			}
 		},
 	};
 }
 
-const PROPERTY_KEY_PARENT_TYPES = new Set([
-	AST_NODE_TYPES.MethodDefinition,
-	AST_NODE_TYPES.Property,
-	AST_NODE_TYPES.PropertyDefinition,
-	AST_NODE_TYPES.TSPropertySignature,
-]);
-
-type NodeWithKey =
-	| TSESTree.MethodDefinition
-	| TSESTree.Property
-	| TSESTree.PropertyDefinition
-	| TSESTree.TSPropertySignature;
-
-function isAllowedContext(node: TSESTree.Identifier, parent: TSESTree.Node): boolean {
-	// isPropertyKey
-	if (PROPERTY_KEY_PARENT_TYPES.has(parent.type) && (parent as NodeWithKey).key === node) {
-		return true;
+function isImportAlias(node: TSESTree.ImportDeclaration): boolean {
+	for (const specifier of node.specifiers) {
+		if (
+			specifier.type === AST_NODE_TYPES.ImportSpecifier &&
+			(specifier.imported.type !== AST_NODE_TYPES.Identifier ||
+				specifier.local.name !== specifier.imported.name)
+		) {
+			return true;
+		}
 	}
 
-	// isEnumMemberId
-	if (parent.type === AST_NODE_TYPES.TSEnumMember && parent.id === node) {
-		return true;
+	return false;
+}
+
+function isRestricted(name: string): boolean {
+	return BANNED_KEYWORDS.has(name) || !LUAU_IDENTIFIER_REGEX.test(name);
+}
+
+function validateIdentifier(
+	context: Readonly<TSESLint.RuleContext<string, []>>,
+	node: TSESTree.Node,
+	name: string,
+	validate?: () => boolean,
+): void {
+	if (!isRestricted(name) || validate?.() === false) {
+		return;
 	}
 
-	// isMemberExpressionProperty
-	return (
-		parent.type === AST_NODE_TYPES.MemberExpression &&
-		parent.property === node &&
-		!parent.computed
-	);
+	context.report({
+		data: { identifier: name },
+		messageId: BANNED_KEYWORDS.has(name) ? INVALID_IDENTIFIER : INVALID_CHARACTERS,
+		node,
+	});
 }
 
 export const noInvalidIdentifier = createEslintRule({
