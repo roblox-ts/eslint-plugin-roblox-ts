@@ -9,6 +9,7 @@ const valid: Array<ValidTestCase> = [
 	"if (game.Loaded.Wait()[0]) {}",
 	"while (game.Loaded.Wait()[0]) {}",
 	"do {} while (game.Loaded.Wait()[0]);",
+	"for (const [i] of [1, 2, 3]) {}",
 	"for (let i = 0; game.Loaded.Wait()[0]; i++) {}",
 	"if (!game.Loaded.Wait()[0]) {}",
 	"if (a && game.Loaded.Wait()[0]) {}",
@@ -52,6 +53,11 @@ const invalid: Array<InvalidTestCase> = [
 		code: "for (let i = 0; game.Loaded.Wait(); i++) {}",
 		errors: [{ messageId }],
 		output: "for (let i = 0; game.Loaded.Wait()[0]; i++) {}",
+	},
+	{
+		code: "for (const x of game.Loaded.Wait()) {}",
+		errors: [{ messageId }],
+		output: "for (const x of game.Loaded.Wait()[0]) {}",
 	},
 	{
 		code: "if (!game.Loaded.Wait()) {}",
@@ -102,6 +108,16 @@ const invalid: Array<InvalidTestCase> = [
 		code: 'let player: Player; player = game.GetService("Players").PlayerAdded.Wait();',
 		errors: [{ messageId: declarationId }],
 		output: 'let player: Player; [player] = game.GetService("Players").PlayerAdded.Wait();',
+	},
+	{
+		code: 'for (const x of "I am so cool".gmatch("%S+"));',
+		errors: [{ messageId: declarationId }],
+		output: 'for (const [x] of "I am so cool".gmatch("%S+"));',
+	},
+	{
+		code: 'let x; for (x of "I am so cool".gmatch("%S+")) {}',
+		errors: [{ messageId: declarationId }],
+		output: 'let x; for ([x] of "I am so cool".gmatch("%S+")) {}',
 	},
 ];
 

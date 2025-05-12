@@ -40,6 +40,10 @@ export function isFunction(type: Type): boolean {
 	return isTypeFlagSet(type, TypeFlags.Object) && type.getCallSignatures().length > 0;
 }
 
+export function isIterableFunctionType(program: Program, type: Type): boolean {
+	return isBuiltinSymbolLike(program, type, ["IterableFunction"]);
+}
+
 export function isMapType(program: Program, type: Type): boolean {
 	return isBuiltinSymbolLike(program, type, ["Map", "ReadonlyMap", "WeakMap"]);
 }

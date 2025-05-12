@@ -8,10 +8,11 @@ import {
 import { getParserServices } from "@typescript-eslint/utils/eslint-utils";
 import type { ReportFixFunction } from "@typescript-eslint/utils/ts-eslint";
 
-import { isArrayBindingOrAssignmentPattern } from "ts-api-utils";
+import { isArrayBindingOrAssignmentPattern, isTypeReference } from "ts-api-utils";
+import type { Type } from "typescript";
 
 import { createEslintRule } from "../../util";
-import type { TestExpression } from "../../utils/types";
+import { isIterableFunctionType, type TestExpression } from "../../utils/types";
 
 export const RULE_NAME = "misleading-lua-tuple-checks";
 
@@ -54,10 +55,11 @@ function create(context: Context): TSESLint.RuleListener {
 		) => {
 			validateAssignmentExpression(context, parserServices, node);
 		},
-		"ConditionalExpression": containsBoolean,
-		"DoWhileStatement": containsBoolean,
-		"ForStatement": containsBoolean,
-		"IfStatement": containsBoolean,
+		"ConditionalExpression, DoWhileStatement, IfStatement, ForStatement, WhileStatement":
+			containsBoolean,
+		"ForOfStatement": (node: TSESTree.ForOfStatement) => {
+			validateForOfStatement(context, parserServices, node);
+		},
 		"LogicalExpression": ({ left, right }) => {
 			checkLuaTupleUsage(context, parserServices, left);
 			checkLuaTupleUsage(context, parserServices, right);
@@ -68,7 +70,6 @@ function create(context: Context): TSESLint.RuleListener {
 		'VariableDeclarator[id.type="Identifier"]': (node: TSESTree.VariableDeclarator) => {
 			validateVariableDeclarator(context, parserServices, node);
 		},
-		"WhileStatement": containsBoolean,
 	};
 }
 
@@ -108,6 +109,37 @@ function fixIntoArrayDestructuring(
 	};
 }
 
+function handleIterableFunction(
+	context: Context,
+	parserServices: ParserServicesWithTypeInformation,
+	node: TSESTree.ForOfStatement,
+	type: Type,
+): void {
+	if (!isTypeReference(type)) {
+		return;
+	}
+
+	const checker = parserServices.program.getTypeChecker();
+	const aliasSymbol = checker.getTypeArguments(type)[0]?.aliasSymbol;
+	if (!aliasSymbol || aliasSymbol.escapedName.toString() !== "LuaTuple") {
+		return;
+	}
+
+	if (node.left.type === AST_NODE_TYPES.Identifier) {
+		ensureArrayDestructuring(context, parserServices, node.left);
+		return;
+	}
+
+	if (node.left.type !== AST_NODE_TYPES.VariableDeclaration) {
+		return;
+	}
+
+	const variableDeclarator = node.left.declarations[0];
+	if (variableDeclarator.id.type === AST_NODE_TYPES.Identifier) {
+		ensureArrayDestructuring(context, parserServices, variableDeclarator.id);
+	}
+}
+
 function isLuaTuple(
 	parserServices: ParserServicesWithTypeInformation,
 	node: TSESTree.Node,
@@ -123,6 +155,21 @@ function validateAssignmentExpression(
 ): void {
 	if (!isLuaTuple(parserServices, node.left) && isLuaTuple(parserServices, node.right)) {
 		ensureArrayDestructuring(context, parserServices, node.left as TSESTree.Identifier);
+	}
+}
+
+function validateForOfStatement(
+	context: Context,
+	parserServices: ParserServicesWithTypeInformation,
+	node: TSESTree.ForOfStatement,
+): void {
+	const rightNode = node.right;
+	const type = getConstrainedTypeAtLocation(parserServices, rightNode);
+
+	if (isIterableFunctionType(parserServices.program, type)) {
+		handleIterableFunction(context, parserServices, node, type);
+	} else {
+		checkLuaTupleUsage(context, parserServices, rightNode);
 	}
 }
 
