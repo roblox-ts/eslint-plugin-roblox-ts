@@ -15,6 +15,8 @@ const valid: Array<ValidTestCase> = [
 	"if (game.Loaded.Wait()[0] || b) {}",
 	'const [player] = game.GetService("Players").PlayerAdded.Wait();',
 	'const player = game.GetService("Players").PlayerAdded.Wait()[0];',
+	"let player: LuaTuple<[Player]>;",
+	'let player: LuaTuple<[Player]>; player = game.GetService("Players").PlayerAdded.Wait();',
 ];
 
 const messageId = "misleading-lua-tuple-check";
@@ -95,6 +97,11 @@ const invalid: Array<InvalidTestCase> = [
 		code: 'const player: LuaTuple<[Player]> = game.GetService("Players").PlayerAdded.Wait();',
 		errors: [{ messageId: declarationId }],
 		output: 'const [player]: LuaTuple<[Player]> = game.GetService("Players").PlayerAdded.Wait();',
+	},
+	{
+		code: 'let player: Player; player = game.GetService("Players").PlayerAdded.Wait();',
+		errors: [{ messageId: declarationId }],
+		output: 'let player: Player; [player] = game.GetService("Players").PlayerAdded.Wait();',
 	},
 ];
 

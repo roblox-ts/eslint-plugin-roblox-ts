@@ -49,6 +49,11 @@ function create(context: Context): TSESLint.RuleListener {
 	}
 
 	return {
+		'AssignmentExpression[operator="="][left.type="Identifier"]': (
+			node: TSESTree.AssignmentExpression,
+		) => {
+			validateAssignmentExpression(context, parserServices, node);
+		},
 		"ConditionalExpression": containsBoolean,
 		"DoWhileStatement": containsBoolean,
 		"ForStatement": containsBoolean,
@@ -60,32 +65,46 @@ function create(context: Context): TSESLint.RuleListener {
 		'UnaryExpression[operator="!"]': ({ argument }: TSESTree.UnaryExpression) => {
 			checkLuaTupleUsage(context, parserServices, argument);
 		},
-		"VariableDeclarator": (node: TSESTree.VariableDeclarator) => {
-			performCheck(context, node);
+		'VariableDeclarator[id.type="Identifier"]': (node: TSESTree.VariableDeclarator) => {
+			validateVariableDeclarator(context, parserServices, node);
 		},
 		"WhileStatement": containsBoolean,
 	};
 }
 
-function fixIntoArrayDestructuring(
+function ensureArrayDestructuring(
 	context: Context,
-	node: TSESTree.VariableDeclarator,
-): null | ReportFixFunction {
-	const { sourceCode } = context;
-	const { id: leftNode } = node;
-
-	if (leftNode.type !== AST_NODE_TYPES.Identifier) {
-		return null;
+	parserServices: ParserServicesWithTypeInformation,
+	leftNode: TSESTree.Identifier,
+): void {
+	const esNode = parserServices.esTreeNodeToTSNodeMap.get(leftNode);
+	if (isArrayBindingOrAssignmentPattern(esNode)) {
+		return;
 	}
 
-	return (fixer: TSESLint.RuleFixer) => {
-		let replacement = `[${leftNode.name}]`;
+	const fixer = fixIntoArrayDestructuring(context, leftNode);
 
-		if (leftNode.typeAnnotation) {
-			replacement += sourceCode.getText(leftNode.typeAnnotation);
+	context.report({
+		fix: fixer,
+		messageId: LUA_TUPLE_DECLARATION,
+		node: leftNode,
+	});
+}
+
+function fixIntoArrayDestructuring(
+	context: Context,
+	node: TSESTree.Identifier,
+): null | ReportFixFunction {
+	const { sourceCode } = context;
+
+	return (fixer: TSESLint.RuleFixer) => {
+		let replacement = `[${node.name}]`;
+
+		if (node.typeAnnotation) {
+			replacement += sourceCode.getText(node.typeAnnotation);
 		}
 
-		return fixer.replaceText(leftNode, replacement);
+		return fixer.replaceText(node, replacement);
 	};
 }
 
@@ -97,26 +116,24 @@ function isLuaTuple(
 	return (aliasSymbol && aliasSymbol.escapedName.toString() === "LuaTuple") ?? false;
 }
 
-function performCheck(context: Context, node: TSESTree.VariableDeclarator): void {
-	const { id: leftNode } = node;
-
-	const parserServices = getParserServices(context);
-	if (!isLuaTuple(parserServices, leftNode)) {
-		return;
+function validateAssignmentExpression(
+	context: Context,
+	parserServices: ParserServicesWithTypeInformation,
+	node: TSESTree.AssignmentExpression,
+): void {
+	if (!isLuaTuple(parserServices, node.left) && isLuaTuple(parserServices, node.right)) {
+		ensureArrayDestructuring(context, parserServices, node.left as TSESTree.Identifier);
 	}
+}
 
-	const esNode = parserServices.esTreeNodeToTSNodeMap.get(leftNode);
-	if (isArrayBindingOrAssignmentPattern(esNode)) {
-		return;
+function validateVariableDeclarator(
+	context: Context,
+	parserServices: ParserServicesWithTypeInformation,
+	node: TSESTree.VariableDeclarator,
+): void {
+	if (node.init && isLuaTuple(parserServices, node.init)) {
+		ensureArrayDestructuring(context, parserServices, node.id as TSESTree.Identifier);
 	}
-
-	const fixer = fixIntoArrayDestructuring(context, node);
-
-	context.report({
-		fix: fixer,
-		messageId: LUA_TUPLE_DECLARATION,
-		node: leftNode,
-	});
 }
 
 export const misleadingLuaTupleChecks = createEslintRule({
