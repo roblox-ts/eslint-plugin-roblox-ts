@@ -10,4 +10,7 @@ export default defineBuildConfig({
 		"@typescript-eslint/type-utils",
 		"typescript",
 	],
+	rollup: {
+		inlineDependencies: ["ts-api-utils"],
+	},
 });
