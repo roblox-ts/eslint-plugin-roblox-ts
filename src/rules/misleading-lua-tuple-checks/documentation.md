@@ -20,6 +20,11 @@ explicitly access the first element of the tuple (e.g., `myTuple[0]`) when using
 it in a conditional context. This ensures the condition evaluates based on the
 actual boolean value intended.
 
+This rule also enforces the use of destructuring for `LuaTuple` types, as it
+provides a clearer and more explicit way to access the values contained within
+the tuple. Destructuring allows you to assign the values of the tuple to
+individual variables, making your code more readable and maintainable.
+
 This rule is autofixable.
 
 ## Examples
@@ -42,12 +47,14 @@ while (!myTuple) { // ❌ Condition is always false
 if (someCondition && myTuple) { // ❌ Second part of the condition is always true
   // ...
 }
+
+const player = game.GetService("Players").PlayerAdded.Wait(); // ❌ This is not a player
 ```
 
 ### Correct
 
 ```js
-declare const myTuple: LuaTuple<[boolean, number]>;
+declare const [bool, num]: LuaTuple<[boolean, number]>;
 
 if (myTuple[0]) { // ✅ Evaluates the boolean value correctly
   // ...
@@ -65,3 +72,7 @@ if (someCondition && myTuple[0]) { // ✅ Correctly uses the first element in th
 
 const [isValid, value] = myTuple; // ✅ Destructuring is fine
 ```
+
+## Further Reading
+
+- [roblox-ts: LuaTuple](https://roblox-ts.com/docs/guides/lua-tuple)

@@ -6,78 +6,95 @@ import { misleadingLuaTupleChecks, RULE_NAME } from "./rule";
 const valid: Array<ValidTestCase> = [
 	"if (true) {}",
 	"if (someVar) {}",
-	"if (myTuple[0]) {}",
-	"const result = myTuple ? myTuple[0] : undefined;",
-	"while (myTuple[0]) {}",
-	"do {} while (myTuple[0]);",
-	"for (let i = 0; myTuple[0]; i++) {}",
-	"if (!myTuple[0]) {}",
-	"if (a && myTuple[0]) {}",
-	"if (myTuple[0] || b) {}",
+	"if (game.Loaded.Wait()[0]) {}",
+	"while (game.Loaded.Wait()[0]) {}",
+	"do {} while (game.Loaded.Wait()[0]);",
+	"for (let i = 0; game.Loaded.Wait()[0]; i++) {}",
+	"if (!game.Loaded.Wait()[0]) {}",
+	"if (a && game.Loaded.Wait()[0]) {}",
+	"if (game.Loaded.Wait()[0] || b) {}",
+	'const [player] = game.GetService("Players").PlayerAdded.Wait();',
+	'const player = game.GetService("Players").PlayerAdded.Wait()[0];',
 ];
 
 const messageId = "misleading-lua-tuple-check";
+const declarationId = "lua-tuple-declaration";
 
 const invalid: Array<InvalidTestCase> = [
 	{
-		code: "declare const myTuple: LuaTuple<[boolean, number]>; if (myTuple) {}",
+		code: "if (game.Loaded.Wait()) {}",
 		errors: [{ messageId }],
-		output: "declare const myTuple: LuaTuple<[boolean, number]>; if (myTuple[0]) {}",
+		output: "if (game.Loaded.Wait()[0]) {}",
 	},
 	{
-		code: "declare const myTuple: LuaTuple<[string]>; const result = myTuple ? 1 : 0;",
+		code: "const result = game.Loaded.Wait() ? 1 : 0;",
 		errors: [{ messageId }],
-		output: "declare const myTuple: LuaTuple<[string]>; const result = myTuple[0] ? 1 : 0;",
+		output: "const result = game.Loaded.Wait()[0] ? 1 : 0;",
 	},
 	{
-		code: "declare const myTuple: LuaTuple<[boolean]>; while (myTuple) {}",
+		code: "const result = game.Loaded.Wait() ? game.Loaded.Wait()[0] : undefined;",
 		errors: [{ messageId }],
-		output: "declare const myTuple: LuaTuple<[boolean]>; while (myTuple[0]) {}",
+		output: "const result = game.Loaded.Wait()[0] ? game.Loaded.Wait()[0] : undefined;",
 	},
 	{
-		code: "declare const myTuple: LuaTuple<[boolean]>; do {} while (myTuple);",
+		code: "while (game.Loaded.Wait()) {}",
 		errors: [{ messageId }],
-		output: "declare const myTuple: LuaTuple<[boolean]>; do {} while (myTuple[0]);",
+		output: "while (game.Loaded.Wait()[0]) {}",
 	},
 	{
-		code: "declare const myTuple: LuaTuple<[boolean]>; for (let i = 0; myTuple; i++) {}",
+		code: "do {} while (game.Loaded.Wait());",
 		errors: [{ messageId }],
-		output: "declare const myTuple: LuaTuple<[boolean]>; for (let i = 0; myTuple[0]; i++) {}",
+		output: "do {} while (game.Loaded.Wait()[0]);",
 	},
 	{
-		code: "declare const myTuple: LuaTuple<[boolean]>; if (!myTuple) {}",
+		code: "for (let i = 0; game.Loaded.Wait(); i++) {}",
 		errors: [{ messageId }],
-		output: "declare const myTuple: LuaTuple<[boolean]>; if (!myTuple[0]) {}",
+		output: "for (let i = 0; game.Loaded.Wait()[0]; i++) {}",
 	},
 	{
-		code: "declare const myTuple: LuaTuple<[boolean]>; if (a && myTuple) {}",
+		code: "if (!game.Loaded.Wait()) {}",
 		errors: [{ messageId }],
-		output: "declare const myTuple: LuaTuple<[boolean]>; if (a && myTuple[0]) {}",
+		output: "if (!game.Loaded.Wait()[0]) {}",
 	},
 	{
-		code: "declare const myTuple: LuaTuple<[boolean]>; if (myTuple || b) {}",
+		code: "if (a && game.Loaded.Wait()) {}",
 		errors: [{ messageId }],
-		output: "declare const myTuple: LuaTuple<[boolean]>; if (myTuple[0] || b) {}",
+		output: "if (a && game.Loaded.Wait()[0]) {}",
 	},
 	{
-		code: "declare const myTuple: LuaTuple<[boolean]>; if (myTuple && myTuple) {}",
+		code: "if (game.Loaded.Wait() || b) {}",
+		errors: [{ messageId }],
+		output: "if (game.Loaded.Wait()[0] || b) {}",
+	},
+	{
+		code: "if (game.Loaded.Wait() && game.Loaded.Wait()) {}",
 		errors: [{ messageId }, { messageId }],
-		output: "declare const myTuple: LuaTuple<[boolean]>; if (myTuple[0] && myTuple[0]) {}",
+		output: "if (game.Loaded.Wait()[0] && game.Loaded.Wait()[0]) {}",
 	},
 	{
-		code: "declare const myTuple: LuaTuple<[boolean]>; if (a ?? myTuple) {}",
+		code: "if (a ?? game.Loaded.Wait()) {}",
 		errors: [{ messageId }],
-		output: "declare const myTuple: LuaTuple<[boolean]>; if (a ?? myTuple[0]) {}",
+		output: "if (a ?? game.Loaded.Wait()[0]) {}",
 	},
 	{
-		code: "declare const myTuple: LuaTuple<[boolean]>; if (myTuple ?? b) {}",
+		code: "if (game.Loaded.Wait() ?? b) {}",
 		errors: [{ messageId }],
-		output: "declare const myTuple: LuaTuple<[boolean]>; if (myTuple[0] ?? b) {}",
+		output: "if (game.Loaded.Wait()[0] ?? b) {}",
 	},
 	{
-		code: "declare const myTuple: LuaTuple<[boolean]>; if (myTuple && myTuple[0]) {}",
+		code: "if (game.Loaded.Wait() && game.Loaded.Wait()[0]) {}",
 		errors: [{ messageId }],
-		output: "declare const myTuple: LuaTuple<[boolean]>; if (myTuple[0] && myTuple[0]) {}",
+		output: "if (game.Loaded.Wait()[0] && game.Loaded.Wait()[0]) {}",
+	},
+	{
+		code: 'const player = game.GetService("Players").PlayerAdded.Wait();',
+		errors: [{ messageId: declarationId }],
+		output: 'const [player] = game.GetService("Players").PlayerAdded.Wait();',
+	},
+	{
+		code: 'const player: LuaTuple<[Player]> = game.GetService("Players").PlayerAdded.Wait();',
+		errors: [{ messageId: declarationId }],
+		output: 'const [player]: LuaTuple<[Player]> = game.GetService("Players").PlayerAdded.Wait();',
 	},
 ];
 
