@@ -21,6 +21,7 @@ import { noPrecedingSpreadElement } from "./rules/no-preceding-spread-element/ru
 import { noPrivateIdentifier } from "./rules/no-private-identifier/rule";
 import { noUnsupportedSyntax } from "./rules/no-unsupported-syntax/rule";
 import { noValueTypeof } from "./rules/no-value-typeof/rule";
+import { preferGetPlayers } from "./rules/prefer-get-players/rule";
 import { preferTaskLibrary } from "./rules/prefer-task-library/rule";
 import { sizeMethod } from "./rules/size-method/rule";
 
@@ -50,6 +51,7 @@ const plugin = {
 		"no-private-identifier": noPrivateIdentifier,
 		"no-unsupported-syntax": noUnsupportedSyntax,
 		"no-value-typeof": noValueTypeof,
+		"prefer-get-players": preferGetPlayers,
 		"prefer-task-library": preferTaskLibrary,
 		"size-method": sizeMethod,
 	},
