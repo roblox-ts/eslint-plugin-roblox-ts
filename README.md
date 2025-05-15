@@ -34,6 +34,7 @@ guiding users who already know TypeScript to avoid unsupported features.
 | [no-for-in](src/rules/no-for-in/documentation.md)                                     | Disallow iterating with a for-in loop                                     | 🔧 |    |    |
 | [no-function-expression-name](src/rules/no-function-expression-name/documentation.md) | Disallow the use of function expression names                             | 🔧 |    |    |
 | [no-get-set](src/rules/no-get-set/documentation.md)                                   | Disallow getters and setters                                              | 🔧 |    |    |
+| [no-implicit-self](src/rules/no-implicit-self/documentation.md)                       | Enforce the use of `.` instead of `:` for method calls                    | 🔧 |    |    |
 | [no-invalid-identifier](src/rules/no-invalid-identifier/documentation.md)             | Disallow the use of Luau reserved keywords as identifiers                 |    |    |    |
 | [no-namespace-merging](src/rules/no-namespace-merging/documentation.md)               | Disallow merging namespace declarations                                   |    |    |    |
 | [no-null](src/rules/no-null/documentation.md)                                         | Disallow usage of the `null` keyword                                      | 🔧 |    |    |

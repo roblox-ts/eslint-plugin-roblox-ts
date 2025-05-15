@@ -12,6 +12,7 @@ import { noExportAssignableLet } from "./rules/no-export-assignment-let/rule";
 import { noForIn } from "./rules/no-for-in/rule";
 import { noFunctionExpressionName } from "./rules/no-function-expression-name/rule";
 import { noGetSet } from "./rules/no-get-set/rule";
+import { noImplicitSelf } from "./rules/no-implicit-self/rule";
 import { noInvalidIdentifier } from "./rules/no-invalid-identifier/rule";
 import { noNamespaceMerging } from "./rules/no-namespace-merging/rule";
 import { noNull } from "./rules/no-null/rule";
@@ -42,6 +43,7 @@ const plugin = {
 		"no-for-in": noForIn,
 		"no-function-expression-name": noFunctionExpressionName,
 		"no-get-set": noGetSet,
+		"no-implicit-self": noImplicitSelf,
 		"no-invalid-identifier": noInvalidIdentifier,
 		"no-namespace-merging": noNamespaceMerging,
 		"no-null": noNull,
