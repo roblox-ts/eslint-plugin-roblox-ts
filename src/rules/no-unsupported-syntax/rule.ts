@@ -6,12 +6,14 @@ import { createEslintRule } from "../../util";
 export const RULE_NAME = "no-unsupported-syntax";
 
 const GLOBAL_THIS_VIOLATION = "global-this-violation";
+const LABEL_VIOLATION = "label-violation";
 const PROTOTYPE_VIOLATION = "prototype-violation";
 const REGEX_LITERAL_VIOLATION = "regex-literal-violation";
 const SPREAD_DESTRUCTURING_VIOLATION = "spread-destructuring-violation";
 
 const messages = {
 	[GLOBAL_THIS_VIOLATION]: "`globalThis` is not supported in roblox-ts.",
+	[LABEL_VIOLATION]: "`label` is not supported in roblox-ts.",
 	[PROTOTYPE_VIOLATION]: "`.prototype` is not supported in roblox-ts.",
 	[REGEX_LITERAL_VIOLATION]: "Regex literals are not supported in roblox-ts",
 	[SPREAD_DESTRUCTURING_VIOLATION]: "Operator `...` is not supported for destructuring!",
@@ -24,6 +26,9 @@ function create(context: Readonly<TSESLint.RuleContext<string, []>>): TSESLint.R
 		},
 		Identifier: node => {
 			reportGlobalThisViolation(context, node);
+		},
+		LabeledStatement: node => {
+			reportInvalidLabeledStatement(context, node);
 		},
 		Literal: node => {
 			reportRegexViolation(context, node);
@@ -47,6 +52,16 @@ function reportGlobalThisViolation(
 			node,
 		});
 	}
+}
+
+function reportInvalidLabeledStatement(
+	context: Readonly<TSESLint.RuleContext<string, []>>,
+	node: TSESTree.LabeledStatement,
+): void {
+	context.report({
+		messageId: LABEL_VIOLATION,
+		node,
+	});
 }
 
 function reportInvalidSpreadDestructure(

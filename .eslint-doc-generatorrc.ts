@@ -4,6 +4,9 @@ import type { GenerateOptions } from "eslint-doc-generator";
 const config: GenerateOptions = {
 	ignoreDeprecatedRules: true,
 	ruleDocTitleFormat: 'desc',
+	ignoreConfig: [
+		"recommended",
+	],
 	ruleListColumns: [
 		'name',
 		'description',
