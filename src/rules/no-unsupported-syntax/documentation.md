@@ -12,8 +12,9 @@ Currently, this rule disallows:
 -   `globalThis`: This global object is not available in the Roblox environment.
 -   `.prototype`: Accessing the `prototype` property of constructors is not supported and can lead to errors.
 -   Regex Literals (`/pattern/flags`): These are not directly supported. Use the
-    `RegExp` constructor instead.
+    `RegExp` constructor instead (from `@rbxts/luau-polyfill`) or an alternative.
 -   Spread operator (`...`): Not supported for object or array destructuring.
+-   Labeled Statements (`label:`): These are not supported in roblox-ts.
 
 ## Examples
 
@@ -40,6 +41,15 @@ if (/test/.test(str)) { // ❌ Regex literals are not supported
 const { a, ...b } = { a: 1, b: 2 }; // ❌ Spread operator is not supported
 const arr = [1, 2, 3];
 const newArr = [...arr, 4]; // ❌ Spread operator is not supported
+
+// Labeled Statements
+myLabel: for (let i = 0; i < 5; i++) { // ❌ Labeled statements are not supported
+  if (i === 1) continue myLabel;
+}
+
+myBlock: { // ❌ Labeled statements are not supported
+  if (true) break myBlock;
+}
 ```
 
 ### Correct

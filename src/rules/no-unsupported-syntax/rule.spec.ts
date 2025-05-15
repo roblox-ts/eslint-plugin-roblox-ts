@@ -8,6 +8,7 @@ const GLOBAL_THIS_VIOLATION = "global-this-violation";
 const PROTOTYPE_VIOLATION = "prototype-violation";
 const REGEX_LITERAL_VIOLATION = "regex-literal-violation";
 const SPREAD_DESTRUCTURING_VIOLATION = "spread-destructuring-violation";
+const LABEL_VIOLATION = "label-violation";
 
 const valid: Array<ValidTestCase> = [
 	"const x = 1;",
@@ -84,6 +85,31 @@ const invalid: Array<InvalidTestCase> = [
 				true,
 			);
 		},
+	},
+	{
+		code: unindent`
+			let str = "";
+			loop1: for (let i = 0; i < 5; i++) {
+				if (i === 1) {
+					continue loop1;
+				}
+
+				str = str + i;
+			}
+		`,
+		errors: [{ messageId: LABEL_VIOLATION }],
+	},
+	{
+		code: "myBlock: { const x = 1; }",
+		errors: [{ messageId: LABEL_VIOLATION }],
+	},
+	{
+		code: "myBlock: { if (true) break myBlock; }",
+		errors: [{ messageId: LABEL_VIOLATION }],
+	},
+	{
+		code: "myLabel: print('test');",
+		errors: [{ messageId: LABEL_VIOLATION }],
 	},
 ];
 
