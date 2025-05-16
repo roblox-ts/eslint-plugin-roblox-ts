@@ -87,7 +87,7 @@ The easiest way to use `eslint-plugin-roblox-ts-x` is to use the ready-made conf
 import roblox from 'eslint-plugin-roblox-ts-x'
 
 export default [
-	roblox.configs.recommended,
+	roblox.config.recommended,
 ]
 ```
 
