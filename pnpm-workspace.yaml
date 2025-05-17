@@ -27,7 +27,7 @@ catalogs:
   types:
     '@rbxts/compiler-types': 3.0.0-types.0
     '@rbxts/types': 1.0.848
-    '@types/node': 22.13.10
+    '@types/node': 22.15.18
   utils:
     eslint-doc-generator: 2.1.2
 
