@@ -102,7 +102,7 @@ const invalid: Array<InvalidTestCase> = [
 	{
 		code: "type Y = LuaTuple<[string, number]>;",
 		errors: [{ messageId: luaTupleViolation }],
-		options: [{ fixToTuple: false }],
+		options: [{ shouldFix: false }],
 		output: null,
 	},
 	{

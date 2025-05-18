@@ -43,6 +43,7 @@ guiding users who already know TypeScript to avoid unsupported features.
 | [no-preceding-spread-element](src/rules/no-preceding-spread-element/documentation.md) | Disallow spread elements not last in a list of arguments                  |    |    | 💭 |
 | [no-private-identifier](src/rules/no-private-identifier/documentation.md)             | Disallow the use of private identifiers (`#`)                             | 🔧 |    |    |
 | [no-unsupported-syntax](src/rules/no-unsupported-syntax/documentation.md)             | Disallow unsupported syntax in roblox-ts                                  |    |    |    |
+| [no-user-defined-lua-tuple](src/rules/no-user-defined-lua-tuple/documentation.md)     | Disallow usage of LuaTuple type keyword and $tuple() calls                | 🔧 |    |    |
 | [no-value-typeof](src/rules/no-value-typeof/documentation.md)                         | Disallow using `typeof` to check for value types                          |    |    |    |
 | [prefer-get-players](src/rules/prefer-get-players/documentation.md)                   | Enforces the use of Players.GetPlayers() instead of Players.GetChildren() | 🔧 |    |    |
 | [prefer-task-library](src/rules/prefer-task-library/documentation.md)                 | Enforce use of task library alternatives                                  | 🔧 |    |    |

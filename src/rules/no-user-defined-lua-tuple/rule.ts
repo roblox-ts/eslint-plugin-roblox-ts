@@ -15,10 +15,10 @@ const messages = {
 type Context = Readonly<TSESLint.RuleContext<MessageIds, Options>>;
 type MessageIds = typeof LUA_TUPLE_VIOLATION | typeof MACRO_VIOLATION;
 
-type Options = [{ allowTupleMacro?: boolean; fixToTuple?: boolean }];
+type Options = [{ allowTupleMacro?: boolean; shouldFix?: boolean }];
 
 function create(context: Context): TSESLint.RuleListener {
-	const { allowTupleMacro = false, fixToTuple = true } = context.options[0];
+	const { allowTupleMacro = false, shouldFix = true } = context.options[0];
 
 	return {
 		...(!allowTupleMacro && {
@@ -43,7 +43,7 @@ function create(context: Context): TSESLint.RuleListener {
 				context,
 				node.typeName,
 				LUA_TUPLE_VIOLATION,
-				fixToTuple ? fixer => fixLuaTupleType(node, context, fixer) : null,
+				shouldFix ? fixer => fixLuaTupleType(node, context, fixer) : null,
 			);
 		},
 	};
@@ -113,14 +113,14 @@ export const noUserDefinedLuaTuple = createEslintRule({
 	defaultOptions: [
 		{
 			allowTupleMacro: false,
-			fixToTuple: true,
+			shouldFix: true,
 		},
 	],
 	meta: {
 		defaultOptions: [
 			{
 				allowTupleMacro: false,
-				fixToTuple: true,
+				shouldFix: true,
 			},
 		],
 		docs: {
@@ -136,11 +136,12 @@ export const noUserDefinedLuaTuple = createEslintRule({
 				additionalProperties: false,
 				properties: {
 					allowTupleMacro: {
-						description:
-							"Whether to enable auto-fixing in which `$tuple(...)` calls are converted to native TypeScript tuple expressions",
+						default: false,
+						description: "Whether to allow the $tuple(...) macro call",
 						type: "boolean",
 					},
-					fixToTuple: {
+					shouldFix: {
+						default: true,
 						description:
 							"Whether to enable auto-fixing in which the `LuaTuple` type is converted to a native TypeScript tuple type",
 						type: "boolean",
@@ -149,7 +150,7 @@ export const noUserDefinedLuaTuple = createEslintRule({
 				type: "object",
 			},
 		],
-		type: "problem",
+		type: "suggestion",
 	},
 	name: RULE_NAME,
 });
