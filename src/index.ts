@@ -21,6 +21,7 @@ import { noPostFixNew } from "./rules/no-post-fix-new/rule";
 import { noPrecedingSpreadElement } from "./rules/no-preceding-spread-element/rule";
 import { noPrivateIdentifier } from "./rules/no-private-identifier/rule";
 import { noUnsupportedSyntax } from "./rules/no-unsupported-syntax/rule";
+import { noUserDefinedLuaTuple } from "./rules/no-user-defined-lua-tuple/rule";
 import { noValueTypeof } from "./rules/no-value-typeof/rule";
 import { preferGetPlayers } from "./rules/prefer-get-players/rule";
 import { preferTaskLibrary } from "./rules/prefer-task-library/rule";
@@ -52,6 +53,7 @@ const plugin = {
 		"no-preceding-spread-element": noPrecedingSpreadElement,
 		"no-private-identifier": noPrivateIdentifier,
 		"no-unsupported-syntax": noUnsupportedSyntax,
+		"no-user-defined-lua-tuple": noUserDefinedLuaTuple,
 		"no-value-typeof": noValueTypeof,
 		"prefer-get-players": preferGetPlayers,
 		"prefer-task-library": preferTaskLibrary,

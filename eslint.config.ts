@@ -7,6 +7,14 @@ export default style(
 	{
 		pnpm: true,
 		roblox: false,
+		rules: {
+			"antfu/consistent-list-newline": [
+				"error",
+				{
+					CallExpression: false,
+				},
+			],
+		},
 		type: "package",
 		typescript: {
 			tsconfigPath: "tsconfig.json",
