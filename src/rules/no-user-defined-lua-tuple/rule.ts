@@ -15,10 +15,10 @@ const messages = {
 type Context = Readonly<TSESLint.RuleContext<MessageIds, Options>>;
 type MessageIds = typeof LUA_TUPLE_VIOLATION | typeof MACRO_VIOLATION;
 
-type Options = [{ allowTupleMacro?: boolean; shouldFix?: boolean }];
+type Options = [{ allowTupleMacro?: boolean; shouldFix?: boolean }?];
 
 function create(context: Context): TSESLint.RuleListener {
-	const { allowTupleMacro = false, shouldFix = true } = context.options[0];
+	const { allowTupleMacro = false, shouldFix = true } = context.options[0] ?? {};
 
 	return {
 		...(!allowTupleMacro && {
