@@ -11,6 +11,11 @@ const valid: Array<ValidTestCase> = [
 	"if (undefined) {}",
 	'if ("hello") {}',
 	"const x: number | undefined = undefined; const y = x ?? 0;",
+	"for (let i = 0; i < 10; i++) {}",
+	"let active = true; for (;active;) { active = false; }",
+	"for (;undefined;) {}",
+	"const arr = [1,2,3]; for (const item of arr) {}",
+	"const obj = {a:1, b:2}; for (const key in obj) {}",
 ];
 
 const errorMessage = "falsy-string-number-check";
@@ -228,6 +233,62 @@ const invalid: Array<InvalidTestCase> = [
 
 			const x: string | 0 = f(0, "Hello");
 		`,
+		errors(errors) {
+			expect(errors).toHaveLength(1);
+			expect(errors[0]!.messageId).toEqual(errorMessage);
+		},
+	},
+	{
+		code: "for (;0;) {}",
+		errors(errors) {
+			expect(errors).toHaveLength(1);
+			expect(errors[0]!.messageId).toEqual(errorMessage);
+		},
+	},
+	{
+		code: "for (;'';) {}",
+		errors(errors) {
+			expect(errors).toHaveLength(1);
+			expect(errors[0]!.messageId).toEqual(errorMessage);
+		},
+	},
+	{
+		code: "for (;NaN;) {}",
+		errors(errors) {
+			expect(errors).toHaveLength(1);
+			expect(errors[0]!.messageId).toEqual(errorMessage);
+		},
+	},
+	{
+		code: "for (let i = 5; i; i--) {}",
+		errors(errors) {
+			expect(errors).toHaveLength(1);
+			expect(errors[0]!.messageId).toEqual(errorMessage);
+		},
+	},
+	{
+		code: "let x = 0; for (;x;) {}",
+		errors(errors) {
+			expect(errors).toHaveLength(1);
+			expect(errors[0]!.messageId).toEqual(errorMessage);
+		},
+	},
+	{
+		code: "let y = ''; for (;y;) {}",
+		errors(errors) {
+			expect(errors).toHaveLength(1);
+			expect(errors[0]!.messageId).toEqual(errorMessage);
+		},
+	},
+	{
+		code: "for (;!0;) { break; }",
+		errors(errors) {
+			expect(errors).toHaveLength(1);
+			expect(errors[0]!.messageId).toEqual(errorMessage);
+		},
+	},
+	{
+		code: "for (;!'';) { break; }",
 		errors(errors) {
 			expect(errors).toHaveLength(1);
 			expect(errors[0]!.messageId).toEqual(errorMessage);
