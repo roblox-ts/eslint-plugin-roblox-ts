@@ -4,43 +4,52 @@ import { createEslintRule } from "../../util";
 
 export const RULE_NAME = "no-user-defined-lua-tuple";
 
-const MESSAGE_ID = "violation";
+const LUA_TUPLE_VIOLATION = "lua-tuple-violation";
+const MACRO_VIOLATION = "tuple-macro-violation";
 
 const messages = {
-	[MESSAGE_ID]: "Disallow usage of the LuaTuple type keyword.",
+	[LUA_TUPLE_VIOLATION]: "Disallow usage of the LuaTuple type keyword",
+	[MACRO_VIOLATION]: "Disallow usage of the $tuple(...) call",
 };
 
-type Context = Readonly<TSESLint.RuleContext<typeof MESSAGE_ID, [{ fixToTuple: boolean }]>>;
+type Context = Readonly<TSESLint.RuleContext<MessageIds, Options>>;
+type MessageIds = typeof LUA_TUPLE_VIOLATION | typeof MACRO_VIOLATION;
+
+type Options = [{ allowTupleMacro?: boolean; fixToTuple?: boolean }];
 
 function create(context: Context): TSESLint.RuleListener {
-	const { fixToTuple } = context.options[0];
+	const { allowTupleMacro = false, fixToTuple = true } = context.options[0];
 
 	return {
+		...(!allowTupleMacro && {
+			'CallExpression[callee.type="Identifier"][callee.name="$tuple"]'(
+				node: TSESTree.CallExpression,
+			) {
+				report(context, node.callee, MACRO_VIOLATION, fixer =>
+					fixTupleMacroCall(node, context, fixer),
+				);
+			},
+		}),
 		'TSInterfaceDeclaration[id.name="LuaTuple"]': (node: TSESTree.TSInterfaceDeclaration) => {
-			context.report({
-				messageId: MESSAGE_ID,
-				node: node.id,
-			});
+			report(context, node.id, LUA_TUPLE_VIOLATION);
 		},
 		'TSTypeAliasDeclaration[id.name="LuaTuple"]': (node: TSESTree.TSTypeAliasDeclaration) => {
-			context.report({
-				messageId: MESSAGE_ID,
-				node: node.id,
-			});
+			report(context, node.id, LUA_TUPLE_VIOLATION);
 		},
 		'TSTypeReference[typeName.name="LuaTuple"][typeName.type="Identifier"]': (
 			node: TSESTree.TSTypeReference,
 		) => {
-			context.report({
-				fix: fixToTuple ? fixer => fixLuaTuple(node, context, fixer) : null,
-				messageId: MESSAGE_ID,
-				node: node.typeName,
-			});
+			report(
+				context,
+				node.typeName,
+				LUA_TUPLE_VIOLATION,
+				fixToTuple ? fixer => fixLuaTupleType(node, context, fixer) : null,
+			);
 		},
 	};
 }
 
-function fixLuaTuple(
+function fixLuaTupleType(
 	node: TSESTree.TSTypeReference,
 	context: Context,
 	fixer: TSESLint.RuleFixer,
@@ -50,7 +59,8 @@ function fixLuaTuple(
 		return null;
 	}
 
-	const typeArgumentText = context.sourceCode.getText(typeArgumentNode);
+	const { sourceCode } = context;
+	const typeArgumentText = sourceCode.getText(typeArgumentNode);
 	const { parent } = node;
 
 	if (parent.type === TSESTree.AST_NODE_TYPES.TSAsExpression && parent.typeAnnotation === node) {
@@ -68,21 +78,53 @@ function fixLuaTuple(
 	return fixer.replaceText(node, typeArgumentText);
 }
 
+function fixTupleMacroCall(
+	node: TSESTree.CallExpression,
+	context: Context,
+	fixer: TSESLint.RuleFixer,
+): null | TSESLint.RuleFix {
+	const { arguments: args } = node;
+	if (args.length === 0) {
+		return fixer.replaceText(node, "[]");
+	}
+
+	const { sourceCode } = context;
+	const tupleElements = args.map(argument => sourceCode.getText(argument)).join(", ");
+	const replacementText = `[${tupleElements}]`;
+
+	return fixer.replaceText(node, replacementText);
+}
+
+function report(
+	context: Context,
+	node: TSESTree.Node,
+	messageId: MessageIds,
+	fix: null | TSESLint.ReportFixFunction = null,
+): void {
+	context.report({
+		fix,
+		messageId,
+		node,
+	});
+}
+
 export const noUserDefinedLuaTuple = createEslintRule({
 	create,
 	defaultOptions: [
 		{
+			allowTupleMacro: false,
 			fixToTuple: true,
 		},
 	],
 	meta: {
 		defaultOptions: [
 			{
+				allowTupleMacro: false,
 				fixToTuple: true,
 			},
 		],
 		docs: {
-			description: "Disallow usage of the LuaTuple type keyword",
+			description: "Disallow usage of LuaTuple type keyword and $tuple() calls",
 			recommended: true,
 			requiresTypeChecking: false,
 		},
@@ -93,9 +135,14 @@ export const noUserDefinedLuaTuple = createEslintRule({
 			{
 				additionalProperties: false,
 				properties: {
+					allowTupleMacro: {
+						description:
+							"Whether to enable auto-fixing in which `$tuple(...)` calls are converted to native TypeScript tuple expressions",
+						type: "boolean",
+					},
 					fixToTuple: {
 						description:
-							"Whether to enable auto-fixing in which the `LuaTuple` type is converted to a native TypeScript tuple type.",
+							"Whether to enable auto-fixing in which the `LuaTuple` type is converted to a native TypeScript tuple type",
 						type: "boolean",
 					},
 				},
