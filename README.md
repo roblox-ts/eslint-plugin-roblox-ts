@@ -112,6 +112,17 @@ export default [
 ]
 ```
 
+## Versioning Policy
+
+This plugin is following [Semantic Versioning](https://semver.org/) and
+[ESLint's Semantic Versioning
+Policy](https://github.com/eslint/eslint#semantic-versioning-policy).
+
+## Contributing
+
+See [Contributing
+Guide](https://github.com/christopher-buss/eslint-plugin-roblox-ts-x/blob/main/CONTRIBUTING.md).
+
 ## License
 
 [MIT](./LICENSE) License © [Christopher

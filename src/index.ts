@@ -67,13 +67,6 @@ export type RuleOptions = {
 
 export default {
 	...plugin,
-	/**
-	 * @ignore
-	 * @deprecated - Use `configs` instead.
-	 */
-	config: {
-		recommended: createConfig(),
-	},
 	configs: {
 		recommended: createConfig(),
 	},
