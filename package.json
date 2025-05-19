@@ -81,7 +81,7 @@
 	},
 	"peerDependencies": {
 		"eslint": "*",
-		"typescript": ">=5.0.0 <5.9.0"
+		"typescript": ">=5.2.0 <5.9.0"
 	},
 	"packageManager": "pnpm@10.9.0",
 	"engines": {
