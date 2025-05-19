@@ -29,9 +29,9 @@
 		"dist"
 	],
 	"scripts": {
-		"build": "unbuild",
+		"build": "tsdown",
 		"create-rule": "tsx scripts/create-rule.ts",
-		"dev": "unbuild --stub",
+		"dev": "tsdown --stub",
 		"eslint-docs": "eslint-doc-generator",
 		"lint": "eslint",
 		"prepare": "simple-git-hooks",
@@ -50,6 +50,10 @@
 	"resolutions": {
 		"eslint-plugin-roblox-ts-x": "workspace:*"
 	},
+	"dependencies": {
+		"@typescript-eslint/type-utils": "catalog:cli",
+		"@typescript-eslint/utils": "catalog:cli"
+	},
 	"devDependencies": {
 		"@antfu/ni": "catalog:cli",
 		"@isentinel/eslint-config": "catalog:cli",
@@ -58,8 +62,6 @@
 		"@types/node": "catalog:types",
 		"@typescript-eslint/eslint-plugin": "catalog:cli",
 		"@typescript-eslint/parser": "catalog:cli",
-		"@typescript-eslint/type-utils": "catalog:cli",
-		"@typescript-eslint/utils": "catalog:cli",
 		"bumpp": "catalog:cli",
 		"eslint": "catalog:cli",
 		"eslint-doc-generator": "catalog:utils",
@@ -68,16 +70,24 @@
 		"eslint-vitest-rule-tester": "catalog:testing",
 		"jiti": "catalog:cli",
 		"lint-staged": "catalog:cli",
+		"publint": "catalog:testing",
 		"simple-git-hooks": "catalog:cli",
 		"ts-api-utils": "catalog:cli",
+		"tsdown": "catalog:cli",
 		"tsx": "catalog:cli",
 		"typescript": "catalog:cli",
-		"unbuild": "catalog:cli",
-		"vitest": "catalog:testing",
-		"yaml": "catalog:testing"
+		"unplugin-unused": "catalog:testing",
+		"vitest": "catalog:testing"
 	},
 	"peerDependencies": {
-		"eslint": "*"
+		"eslint": "*",
+		"typescript": ">=5.2.0 <5.9.0"
 	},
-	"packageManager": "pnpm@10.9.0"
+	"packageManager": "pnpm@10.9.0",
+	"engines": {
+		"node": "^18.18.0 || ^20.9.0 || >=22.5.1"
+	},
+	"publishConfig": {
+		"provenance": true
+	}
 }

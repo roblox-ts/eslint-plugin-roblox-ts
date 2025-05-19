@@ -32,5 +32,13 @@
 		"jsonc",
 		"yaml"
 	],
-	"typescript.tsdk": "node_modules\\typescript\\lib"
+
+	"typescript.tsdk": "node_modules\\typescript\\lib",
+	"npm.packageManager": "pnpm",
+
+	"git.branchProtection": ["main", "develop"],
+	"git.branchProtectionPrompt": "alwaysCommitToNewBranch",
+	"git.inputValidation": true,
+	"git.inputValidationLength": 100,
+	"git.inputValidationSubjectLength": 72
 }
