@@ -26,6 +26,77 @@ const valid: Array<ValidTestCase> = [
 			namespace Inner { export const y = 2; }
 		}
 	`,
+	unindent`
+		namespace FooBar {
+			export type Foo = "Bar";
+		}
+
+		namespace FooBar {
+			export type Bar = "Foo";
+		}
+	`,
+	unindent`
+		namespace TypeOnly {
+			export interface UserData {
+				id: number;
+				name: string;
+			}
+		}
+
+		namespace TypeOnly {
+			export type Status = "active" | "inactive";
+		}
+	`,
+	unindent`
+		namespace Mixed {
+			type Internal = string;
+		}
+
+		namespace Mixed {
+			interface Config {
+				value: boolean;
+			}
+		}
+	`,
+	unindent`
+		namespace Nested {
+			export type Outer = {
+				inner: Inner;
+			};
+		}
+
+		namespace Nested {
+			export interface Inner {
+				value: number;
+			}
+		}
+	`,
+	unindent`
+		namespace Empty {
+		}
+
+		namespace Empty {
+			export type Something = unknown;
+		}
+	`,
+	unindent`
+		namespace TypeOnlyExports {
+			export type { SomeType } from './types';
+		}
+
+		namespace TypeOnlyExports {
+			export { type AnotherType } from './other';
+		}
+	`,
+	unindent`
+		namespace TypeKeyword {
+			export type { A, B, C };
+		}
+
+		namespace TypeKeyword {
+			export type D = string;
+		}
+	`,
 ];
 
 const invalid: Array<InvalidTestCase> = [
@@ -123,6 +194,39 @@ const invalid: Array<InvalidTestCase> = [
 		errors(errors) {
 			expect(errors).toHaveLength(1);
 			expect(errors[0]!.messageId).toBe(messageId);
+		},
+	},
+	{
+		code: unindent`
+			namespace MixedBad {
+				export type TypeMember = string;
+			}
+			namespace MixedBad {
+				export const valueMember = 42;
+			}
+		`,
+		errors(errors) {
+			expect(errors).toHaveLength(2);
+			expect(errors.every(err => err.messageId === messageId)).toBe(true);
+		},
+	},
+	{
+		code: unindent`
+			namespace TypeFirst {
+				export interface Config {
+					name: string;
+				}
+			}
+			namespace TypeFirst {
+				export type Status = "ok";
+			}
+			namespace TypeFirst {
+				export const defaultValue = "test";
+			}
+		`,
+		errors(errors) {
+			expect(errors).toHaveLength(3);
+			expect(errors.every(err => err.messageId === messageId)).toBe(true);
 		},
 	},
 ];
