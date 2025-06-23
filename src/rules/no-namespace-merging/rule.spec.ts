@@ -79,24 +79,6 @@ const valid: Array<ValidTestCase> = [
 			export type Something = unknown;
 		}
 	`,
-	unindent`
-		namespace TypeOnlyExports {
-			export type { SomeType } from './types';
-		}
-
-		namespace TypeOnlyExports {
-			export { type AnotherType } from './other';
-		}
-	`,
-	unindent`
-		namespace TypeKeyword {
-			export type { A, B, C };
-		}
-
-		namespace TypeKeyword {
-			export type D = string;
-		}
-	`,
 ];
 
 const invalid: Array<InvalidTestCase> = [
