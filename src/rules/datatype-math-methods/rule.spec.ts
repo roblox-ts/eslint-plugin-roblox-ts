@@ -21,6 +21,17 @@ const valid: Array<ValidTestCase> = [
 		const cf2 = new CFrame();
 		const result = cf1.mul(cf2);
 	`,
+	// Chained operations using proper methods
+	unindent`
+		const v1 = new Vector2(1, 2);
+		const v2 = new Vector2(3, 4);
+		const v3 = new Vector2(5, 6);
+		const result = v1.add(v2).mul(v3);
+	`,
+	unindent`
+		const pos = new Vector3(1, 2, 3);
+		const chained = pos.mul(2).add(new Vector3(1, 1, 1)).div(3);
+	`,
 	unindent`
 		const a = 1;
 		const b = 2;
@@ -107,6 +118,67 @@ const invalid: Array<InvalidTestCase> = [
 				"const cf1 = new CFrame();
 				const cf2 = new CFrame();
 				const result = cf1.mul(cf2);"
+			`);
+		},
+	},
+	// Simple chained operations - currently only detects one operator at a time
+	{
+		code: unindent`
+			const v1 = new Vector2(1, 2);
+			const v2 = new Vector2(3, 4);
+			const v3 = new Vector2(5, 6);
+			const result = v1 + v2 + v3;
+		`,
+		errors: [{ messageId }],
+		output: output => {
+			expect(output).toMatchInlineSnapshot(`
+				"const v1 = new Vector2(1, 2);
+				const v2 = new Vector2(3, 4);
+				const v3 = new Vector2(5, 6);
+				const result = v1.add(v2).add(v3);"
+			`);
+		},
+	},
+	{
+		code: unindent`
+			const pos = new Vector3(1, 2, 3);
+			const result = pos * 2 + new Vector3(1, 1, 1);
+		`,
+		errors: [{ messageId }],
+		output: output => {
+			expect(output).toMatchInlineSnapshot(`
+				"const pos = new Vector3(1, 2, 3);
+				const result = pos.mul(2).add(new Vector3(1, 1, 1));"
+			`);
+		},
+	},
+	{
+		code: unindent`
+			const v1 = new Vector2(10, 20);
+			const v2 = new Vector2(5, 5);
+			const complex = v1 - v2 * 2;
+		`,
+		errors: [{ messageId }, { messageId }],
+		output: output => {
+			expect(output).toMatchInlineSnapshot(`
+				"const v1 = new Vector2(10, 20);
+				const v2 = new Vector2(5, 5);
+				const complex = v1.sub(v2.mul(2));"
+			`);
+		},
+	},
+	{
+		code: unindent`
+			const cf = new CFrame();
+			const vector = new Vector3(1, 2, 3);
+			const combined = cf * vector + vector;
+		`,
+		errors: [{ messageId }],
+		output: output => {
+			expect(output).toMatchInlineSnapshot(`
+				"const cf = new CFrame();
+				const vector = new Vector3(1, 2, 3);
+				const combined = cf.mul(vector).add(vector);"
 			`);
 		},
 	},
