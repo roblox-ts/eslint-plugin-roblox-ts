@@ -3,6 +3,7 @@ import type { TSESLint } from "@typescript-eslint/utils";
 import type { Linter } from "eslint";
 
 import { version } from "../package.json";
+import { datatypeMathMethods } from "./rules/datatype-math-methods/rule";
 import { luaTruthiness } from "./rules/lua-truthiness/rule";
 import { misleadingLuaTupleChecks } from "./rules/misleading-lua-tuple-checks/rule";
 import { noAny } from "./rules/no-any/rule";
@@ -55,6 +56,7 @@ const plugin = {
 		"no-unsupported-syntax": noUnsupportedSyntax,
 		"no-user-defined-lua-tuple": noUserDefinedLuaTuple,
 		"no-value-typeof": noValueTypeof,
+		"prefer-datatype-math-methods": datatypeMathMethods,
 		"prefer-get-players": preferGetPlayers,
 		"prefer-task-library": preferTaskLibrary,
 		"size-method": sizeMethod,
