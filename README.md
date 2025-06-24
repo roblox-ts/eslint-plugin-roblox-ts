@@ -38,7 +38,7 @@ guiding users who already know TypeScript to avoid unsupported features.
 | [no-invalid-identifier](src/rules/no-invalid-identifier/documentation.md)             | Disallow the use of Luau reserved keywords as identifiers                 |    |    |    |
 | [no-namespace-merging](src/rules/no-namespace-merging/documentation.md)               | Disallow merging namespace declarations                                   |    |    |    |
 | [no-null](src/rules/no-null/documentation.md)                                         | Disallow usage of the `null` keyword                                      | 🔧 |    |    |
-| [no-object-math](src/rules/no-object-math/documentation.md)                           | Disallow using objects in mathematical operations                         | 🔧 |    | 💭 |
+| [no-object-math](src/rules/no-object-math/documentation.md)                           | Enforce DataType math methods over operators                              | 🔧 |    | 💭 |
 | [no-post-fix-new](src/rules/no-post-fix-new/documentation.md)                         | Disallow .new() on objects without a .new() method                        | 🔧 |    | 💭 |
 | [no-preceding-spread-element](src/rules/no-preceding-spread-element/documentation.md) | Disallow spread elements not last in a list of arguments                  |    |    | 💭 |
 | [no-private-identifier](src/rules/no-private-identifier/documentation.md)             | Disallow the use of private identifiers (`#`)                             | 🔧 |    |    |
