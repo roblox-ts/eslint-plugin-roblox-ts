@@ -53,10 +53,42 @@ const valid: Array<ValidTestCase> = [
 		const pos = new Vector3(1, 2, 3);
 		const chained = pos.mul(2).add(new Vector3(1, 1, 1)).div(3);
 	`,
-	"const v3 = new Vector3(1, 2, 3); const v4 = new Vector3(4, 5, 6); const sum = v3.add(v4);",
-	"const cf1 = new CFrame(); const cf2 = new CFrame(); const product = cf1.mul(cf2);",
-	"const u1 = new UDim2(); const u2 = new UDim2(); const diff = u1.sub(u2);",
-	"const vec2 = new Vector2(10, 10); const quotient = vec2.div(2);",
+	unindent`
+		const v3 = new Vector3(1, 2, 3);
+		const v4 = new Vector3(4, 5, 6);
+		const sum = v3.add(v4);
+	`,
+	unindent`
+		const cf1 = new CFrame();
+		const cf2 = new CFrame();
+		const product = cf1.mul(cf2);
+	`,
+	unindent`
+		const u1 = new UDim2();
+		const u2 = new UDim2();
+		const diff = u1.sub(u2);
+	`,
+	unindent`
+		const vec2 = new Vector2(10, 10);
+		const quotient = vec2.div(2);
+	`,
+	unindent`
+		const v = new Vector3(1, 2, 3);
+		const result = v.add(new Vector3(1, 1, 1)).mul(2);
+	`,
+	unindent`
+		const cf = new CFrame();
+		const v3 = new Vector3(1, 2, 3);
+		const result = cf.mul(v3);
+	`,
+	unindent`
+		const maybeVector: Vector3 | undefined = undefined;
+		const result = maybeVector === undefined;
+	`,
+	unindent`
+		const vectorOrUndefined: Vector3 | undefined = undefined;
+		const check = vectorOrUndefined !== undefined;
+	`,
 ];
 
 const invalid: Array<InvalidTestCase> = [
@@ -144,7 +176,7 @@ const invalid: Array<InvalidTestCase> = [
 				"const v1 = new Vector2(1, 2);
 				const v2 = new Vector2(3, 4);
 				const v3 = new Vector2(5, 6);
-				const result = v3.add(v1.add(v2));"
+				const result = v1.add(v2).add(v3);"
 			`);
 		},
 	},
@@ -157,7 +189,7 @@ const invalid: Array<InvalidTestCase> = [
 		output: output => {
 			expect(output).toMatchInlineSnapshot(`
 				"const pos = new Vector3(1, 2, 3);
-				const result = new Vector3(1, 1, 1).add(pos.mul(2));"
+				const result = pos.mul(2).add(new Vector3(1, 1, 1));"
 			`);
 		},
 	},
@@ -187,7 +219,7 @@ const invalid: Array<InvalidTestCase> = [
 			expect(output).toMatchInlineSnapshot(`
 				"const cf = new CFrame();
 				const vector = new Vector3(1, 2, 3);
-				const combined = vector.add(cf.mul(vector));"
+				const combined = cf.mul(vector).add(vector);"
 			`);
 		},
 	},
@@ -221,22 +253,16 @@ const invalid: Array<InvalidTestCase> = [
 				"const v1 = new Vector2(10, 10);
 				const v2 = new Vector2(2, 2);
 				const v3 = new Vector2(3, 3);
-				const result = v3.add(v1.div(v2));"
+				const result = v1.div(v2).add(v3);"
 			`);
 		},
 	},
 	{
 		code: unindent`
 			const v = new Vector2(10, 10);
-			const result = v * 2 + 3 * 4;
+			const result = v + 3 * 4;
 		`,
-		errors: [{ messageId }],
-		output: output => {
-			expect(output).toMatchInlineSnapshot(`
-				"const v = new Vector2(10, 10);
-				const result = v.mul(2).add(3 * 4);"
-			`);
-		},
+		errors: [{ messageId: otherViolation }],
 	},
 	{
 		code: unindent`
@@ -253,7 +279,7 @@ const invalid: Array<InvalidTestCase> = [
 				const b = new Vector2(2, 2);
 				const c = new Vector2(3, 3);
 				const d = new Vector2(4, 4);
-				const result = d.sub(a.add(b.mul(c)));"
+				const result = a.add(b.mul(c)).sub(d);"
 			`);
 		},
 	},
@@ -263,7 +289,7 @@ const invalid: Array<InvalidTestCase> = [
 			const v2 = new Vector2(3, 4);
 			const result = (v1 + v2) * 2;
 		`,
-		errors: [{ messageId }],
+		errors: [{ messageId }, { messageId }],
 		output: output => {
 			expect(output).toMatchInlineSnapshot(`
 				"const v1 = new Vector2(1, 2);
@@ -344,12 +370,7 @@ const invalid: Array<InvalidTestCase> = [
 	},
 	{
 		code: "const cf = new CFrame(); const result = -1 * cf;",
-		errors: [{ messageId }],
-		output: output => {
-			expect(output).toMatchInlineSnapshot(`
-				"const cf = new CFrame(); const result = cf.mul(-1);"
-			`);
-		},
+		errors: [{ messageId: otherViolation }],
 	},
 	{
 		code: "const v = new Vector2(1, 2); const result = 2 * v;",
@@ -362,12 +383,7 @@ const invalid: Array<InvalidTestCase> = [
 	},
 	{
 		code: "const cf1 = new CFrame(); const cf2 = new CFrame(); const result = -1 * cf1 * cf2;",
-		errors: [{ messageId }, { messageId }],
-		output: output => {
-			expect(output).toMatchInlineSnapshot(`
-				"const cf1 = new CFrame(); const cf2 = new CFrame(); const result = cf2.mul(cf1.mul(-1));"
-			`);
-		},
+		errors: [{ messageId: otherViolation }, { messageId: otherViolation }],
 	},
 	{
 		code: "const v1 = new Vector3(1, 2, 3); const v2 = new Vector3(4, 5, 6); const result = 2 * v1 + v2;",
@@ -376,6 +392,96 @@ const invalid: Array<InvalidTestCase> = [
 			expect(output).toMatchInlineSnapshot(`
 				"const v1 = new Vector3(1, 2, 3); const v2 = new Vector3(4, 5, 6); const result = v1.mul(2).add(v2);"
 			`);
+		},
+	},
+	{
+		code: "const vector = new Vector3(1, 2, 3); const negated = -vector;",
+		errors: [{ messageId }],
+		output: output => {
+			expect(output).toMatchInlineSnapshot(`
+				"const vector = new Vector3(1, 2, 3); const negated = vector.mul(-1);"
+			`);
+		},
+	},
+	{
+		code: "const cf = new CFrame(); const negated = -cf;",
+		errors: [{ messageId: otherViolation }],
+	},
+	{
+		code: "function getVector() { return new Vector3(); } const result = getVector() + new Vector3();",
+		errors: [{ messageId }],
+		output: output => {
+			expect(output).toMatchInlineSnapshot(`
+				"function getVector() { return new Vector3(); } const result = getVector().add(new Vector3());"
+			`);
+		},
+	},
+	{
+		code: "const v2 = new Vector2(); const v3 = new Vector3(); const result = v2 + v3;",
+		errors: [{ messageId: otherViolation }],
+	},
+	{
+		code: unindent`
+			function testUnion() {
+				const maybeVector: Vector3 | undefined = new Vector3(1, 2, 3);
+				if (maybeVector) {
+					const result = maybeVector + new Vector3(1, 1, 1);
+				}
+			}
+		`,
+		errors: [{ messageId }],
+		output: output => {
+			expect(output).toMatchInlineSnapshot(`
+				"function testUnion() {
+					const maybeVector: Vector3 | undefined = new Vector3(1, 2, 3);
+					if (maybeVector) {
+						const result = maybeVector.add(new Vector3(1, 1, 1));
+					}
+				}"
+			`);
+		},
+	},
+	{
+		code: unindent`
+			interface WithMetadata { readonly metadata: string; }
+			function processVector(vec: Vector3 & WithMetadata) {
+				// This should be detected as Vector3 math and flagged
+				const scaled = vec * 2;
+				return scaled;
+			}
+		`,
+		errors: [{ messageId }],
+		output: output => {
+			expect(output.includes("vec.mul(2)")).toBe(true);
+		},
+	},
+	{
+		code: unindent`
+			interface Container { position?: Vector3; }
+			function testOptional(container: Container) {
+				if (container.position) {
+					const newPos = container.position + new Vector3(1, 0, 0);
+				}
+			}
+		`,
+		errors: [{ messageId }],
+		output: output => {
+			expect(output.includes("container.position.add(")).toBe(true);
+		},
+	},
+	{
+		code: unindent`
+			function getVector(): Vector3 | undefined { return new Vector3(1, 2, 3); }
+			function test() {
+				const vec = getVector();
+				if (vec) {
+					const result = vec * 2;
+				}
+			}
+		`,
+		errors: [{ messageId }],
+		output: output => {
+			expect(output.includes("vec.mul(2)")).toBe(true);
 		},
 	},
 ];

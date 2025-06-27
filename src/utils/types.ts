@@ -10,6 +10,42 @@ export type TestExpression =
 	| TSESTree.IfStatement
 	| TSESTree.WhileStatement;
 
+const robloxTypes = new Set([
+	"CFrame",
+	"UDim",
+	"UDim2",
+	"Vector2",
+	"Vector2int16",
+	"Vector3",
+	"Vector3int16",
+]);
+
+export function getRobloxDataTypeName(type: Type): string | undefined {
+	const symbol = type.getSymbol();
+	if (!symbol) {
+		return undefined;
+	}
+
+	const name = symbol.getName();
+	return robloxTypes.has(name) ? name : undefined;
+}
+
+export function getRobloxDataTypeNameRecursive(type: Type): string | undefined {
+	let foundType: string | undefined;
+
+	isTypeRecursive(type, innerType => {
+		const directResult = getRobloxDataTypeName(innerType);
+		if (directResult === undefined) {
+			return false;
+		}
+
+		foundType = directResult;
+		return true;
+	});
+
+	return foundType;
+}
+
 export function isArrayType(checker: TypeChecker, type: Type): boolean {
 	return isTypeRecursive(
 		type,
