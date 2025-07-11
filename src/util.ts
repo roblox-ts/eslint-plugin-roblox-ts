@@ -6,7 +6,7 @@ export interface PluginDocumentation {
 	requiresTypeChecking: boolean;
 }
 
-export const createEslintRule = RuleCreator<PluginDocumentation>(name => {
+export const createEslintRule = RuleCreator<PluginDocumentation>((name) => {
 	return `https://github.com/christopher-buss/eslint-plugin-roblox-ts-x/tree/main/src/rules/${name}/documentation.md`;
 });
 

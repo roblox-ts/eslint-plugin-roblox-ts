@@ -254,10 +254,10 @@ function create(context: Readonly<TSESLint.RuleContext<string, []>>): TSESLint.R
 	const parserServices = getParserServices(context);
 
 	return {
-		"BinaryExpression": node => {
+		"BinaryExpression": (node) => {
 			handleBinaryExpression(node, context, parserServices);
 		},
-		'UnaryExpression[operator="-"]': node => {
+		'UnaryExpression[operator="-"]': (node) => {
 			handleUnaryExpression(node, context, parserServices);
 		},
 	};
@@ -562,7 +562,7 @@ function reportViolation(violationContext: ViolationContext): void {
 
 	context.report({
 		data,
-		fix: fixer => {
+		fix: (fixer) => {
 			return createOperatorFix({
 				context,
 				fixer,

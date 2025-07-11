@@ -33,7 +33,7 @@ export function getRobloxDataTypeName(type: Type): string | undefined {
 export function getRobloxDataTypeNameRecursive(type: Type): string | undefined {
 	let foundType: string | undefined;
 
-	isTypeRecursive(type, innerType => {
+	isTypeRecursive(type, (innerType) => {
 		const directResult = getRobloxDataTypeName(innerType);
 		if (directResult === undefined) {
 			return false;
@@ -49,7 +49,7 @@ export function getRobloxDataTypeNameRecursive(type: Type): string | undefined {
 export function isArrayType(checker: TypeChecker, type: Type): boolean {
 	return isTypeRecursive(
 		type,
-		inner => checker.isArrayLikeType(inner) && !isUnconstrainedType(inner),
+		(inner) => checker.isArrayLikeType(inner) && !isUnconstrainedType(inner),
 	);
 }
 
@@ -98,7 +98,7 @@ export function isNumberType(type: Type): boolean {
 
 export function isPossiblyType(type: Type, callback: (type: Type) => boolean): boolean {
 	const constrainedType = type.getConstraint() ?? type;
-	return isTypeRecursive(constrainedType, innerType => {
+	return isTypeRecursive(constrainedType, (innerType) => {
 		return isUnconstrainedType(innerType) || isDefinedType(innerType) || callback(innerType);
 	});
 }
@@ -117,7 +117,7 @@ export function isUnconstrainedType(type: Type): boolean {
 
 function isTypeRecursive(type: Type, predicate: (t: Type) => boolean): boolean {
 	if (type.isUnionOrIntersection()) {
-		return type.types.some(inner => isTypeRecursive(inner, predicate));
+		return type.types.some((inner) => isTypeRecursive(inner, predicate));
 	}
 
 	return predicate(type);

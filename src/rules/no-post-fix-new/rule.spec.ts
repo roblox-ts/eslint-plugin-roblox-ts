@@ -52,19 +52,19 @@ const valid: Array<ValidTestCase> = [
 const invalid: Array<InvalidTestCase> = [
 	{
 		code: "const c = CFrame.new();",
-		output: output => {
+		output: (output) => {
 			expect(output).toMatchInlineSnapshot('"const c = new CFrame();"');
 		},
 	},
 	{
 		code: "const v = Vector3.new(1,2,3);",
-		output: output => {
+		output: (output) => {
 			expect(output).toMatchInlineSnapshot('"const v = new Vector3(1,2,3);"');
 		},
 	},
 	{
 		code: "const u = UDim2.new(0,0,1,0);",
-		output: output => {
+		output: (output) => {
 			expect(output).toMatchInlineSnapshot('"const u = new UDim2(0,0,1,0);"');
 		},
 	},
@@ -84,7 +84,7 @@ const invalid: Array<InvalidTestCase> = [
 			
 			const v = Vector2.new(1, 2);
 		`,
-		output: output => {
+		output: (output) => {
 			expect(output).toMatchInlineSnapshot(`
 				"interface Vector2 {
 					readonly _nominal_Vector2: unique symbol;
@@ -107,7 +107,7 @@ const invalid: Array<InvalidTestCase> = [
 			class Bar {}
 			Bar.new();
 		`,
-		output: output => {
+		output: (output) => {
 			expect(output).toMatchInlineSnapshot(
 				unindent`
 					"class Bar {}
@@ -121,7 +121,7 @@ const invalid: Array<InvalidTestCase> = [
 			const obj = { new: 123 };
 			obj.new();
 		`,
-		output: output => {
+		output: (output) => {
 			expect(output).toMatchInlineSnapshot(
 				unindent`
 					"const obj = { new: 123 };
@@ -135,7 +135,7 @@ const invalid: Array<InvalidTestCase> = [
 			function getClass() { return class {}; }
 			getClass().new();
 		`,
-		output: output => {
+		output: (output) => {
 			expect(output).toMatchInlineSnapshot(
 				unindent`
 					"function getClass() { return class {}; }

@@ -19,10 +19,12 @@ function create(context: Readonly<TSESLint.RuleContext<string, []>>): TSESLint.R
 			}
 
 			const variable = context.sourceCode.getScope(node).set.get(id.name);
-			const referenced = variable?.references.some(ref => ref.identifier !== id) ?? false;
+			const referenced = variable?.references.some((ref) => ref.identifier !== id) ?? false;
 
 			context.report({
-				fix: referenced ? null : fixer => fixer.removeRange([id.range[0] - 1, id.range[1]]),
+				fix: referenced
+					? null
+					: (fixer) => fixer.removeRange([id.range[0] - 1, id.range[1]]),
 				messageId: FUNCTION_EXPRESSION_VIOLATION,
 				node: id,
 			});

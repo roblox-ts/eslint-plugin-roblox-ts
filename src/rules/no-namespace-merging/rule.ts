@@ -25,7 +25,7 @@ function checkNamespaceMerging(
 		return;
 	}
 
-	const allTypeOnly = variable.defs.every(definition => {
+	const allTypeOnly = variable.defs.every((definition) => {
 		return (
 			definition.node.type === AST_NODE_TYPES.TSModuleDeclaration &&
 			isTypeOnlyNamespace(definition.node)
@@ -72,7 +72,7 @@ function isTypeOnlyNamespace(node: TSESTree.TSModuleDeclaration): boolean {
 		return true;
 	}
 
-	return node.body.body.every(statement => {
+	return node.body.body.every((statement) => {
 		if (statement.type === AST_NODE_TYPES.ExportNamedDeclaration) {
 			if (statement.declaration) {
 				return (

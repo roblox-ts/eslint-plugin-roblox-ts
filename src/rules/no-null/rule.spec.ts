@@ -21,7 +21,7 @@ const invalid: Array<InvalidTestCase> = [
 			expect(errors).toHaveLength(1);
 			expect(errors[0]!.messageId).toEqual(errorMessage);
 		},
-		output: output => {
+		output: (output) => {
 			expect(output).toBe("let a = undefined;");
 		},
 	},
@@ -31,7 +31,7 @@ const invalid: Array<InvalidTestCase> = [
 			expect(errors).toHaveLength(1);
 			expect(errors[0]!.messageId).toEqual(errorMessage);
 		},
-		output: output => {
+		output: (output) => {
 			expect(output).toBe("if (foo === undefined) {}");
 		},
 	},
@@ -41,7 +41,7 @@ const invalid: Array<InvalidTestCase> = [
 			expect(errors).toHaveLength(1);
 			expect(errors[0]!.messageId).toEqual(errorMessage);
 		},
-		output: output => {
+		output: (output) => {
 			expect(output).toBe("const obj = { value: undefined };");
 		},
 	},
@@ -53,9 +53,9 @@ const invalid: Array<InvalidTestCase> = [
 		`,
 		errors(errors) {
 			expect(errors.length).toBeGreaterThanOrEqual(1);
-			expect(errors.every(e => e.messageId === errorMessage)).toBe(true);
+			expect(errors.every((e) => e.messageId === errorMessage)).toBe(true);
 		},
-		output: output => {
+		output: (output) => {
 			expect(output).toContain("number | undefined");
 			expect(output).toContain("x === undefined ? 0 : x;");
 		},
@@ -66,7 +66,7 @@ const invalid: Array<InvalidTestCase> = [
 			expect(errors).toHaveLength(1);
 			expect(errors[0]!.messageId).toEqual(errorMessage);
 		},
-		output: output => {
+		output: (output) => {
 			expect(output).toBe("let n = undefined, u = undefined;");
 		},
 	},

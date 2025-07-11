@@ -101,7 +101,7 @@ const invalid: Array<InvalidTestCase> = [
 	},
 	{
 		code: "const x: any = 1;",
-		errors: errors => {
+		errors: (errors) => {
 			expect(errors).toHaveLength(1);
 			expect(errors[0]!.messageId).toBe(messageId);
 			expect(errors[0]!.suggestions).toHaveLength(1);
@@ -111,7 +111,7 @@ const invalid: Array<InvalidTestCase> = [
 	},
 	{
 		code: "function foo(param: any) {}",
-		errors: errors => {
+		errors: (errors) => {
 			expect(errors).toHaveLength(1);
 			expect(errors[0]!.messageId).toBe(messageId);
 			expect(errors[0]!.suggestions).toHaveLength(1);

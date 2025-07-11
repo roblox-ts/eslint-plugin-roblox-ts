@@ -15,7 +15,7 @@ function create(context: Readonly<TSESLint.RuleContext<string, []>>): TSESLint.R
 	return {
 		PrivateIdentifier(node: TSESTree.PrivateIdentifier) {
 			context.report({
-				fix: fixer => fixer.replaceText(node, `private ${node.name}`),
+				fix: (fixer) => fixer.replaceText(node, `private ${node.name}`),
 				messageId: PRIVATE_IDENTIFIER_VIOLATION,
 				node,
 			});

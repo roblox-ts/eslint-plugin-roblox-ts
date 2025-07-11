@@ -109,7 +109,7 @@ export default [
 			"roblox-ts-x/no-any": ["error", { fixToUnknown: true }],
 		},
 	},
-]
+];
 ```
 
 ## Versioning Policy

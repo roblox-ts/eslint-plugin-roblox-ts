@@ -17,31 +17,31 @@ const valid: Array<ValidTestCase> = [
 const invalid: Array<InvalidTestCase> = [
 	{
 		code: "wait()",
-		output: output => {
+		output: (output) => {
 			expect(output).toMatchInlineSnapshot('"task.wait()"');
 		},
 	},
 	{
 		code: "delay(() => {})",
-		output: output => {
+		output: (output) => {
 			expect(output).toMatchInlineSnapshot('"task.delay(() => {})"');
 		},
 	},
 	{
 		code: "spawn(() => {})",
-		output: output => {
+		output: (output) => {
 			expect(output).toMatchInlineSnapshot('"task.spawn(() => {})"');
 		},
 	},
 	{
 		code: "const a = wait()",
-		output: output => {
+		output: (output) => {
 			expect(output).toMatchInlineSnapshot('"const a = task.wait()"');
 		},
 	},
 	{
 		code: "foo(); wait(); bar();",
-		output: output => {
+		output: (output) => {
 			expect(output).toMatchInlineSnapshot('"foo(); task.wait(); bar();"');
 		},
 	},

@@ -22,7 +22,7 @@ function create(
 	[{ fixToUnknown }]: readonly [{ fixToUnknown: boolean }],
 ): TSESLint.RuleListener {
 	return {
-		TSAnyKeyword: node => {
+		TSAnyKeyword: (node) => {
 			const isKeyofAny = isNodeWithinKeyofAny(node);
 			if (isKeyofAny) {
 				return;
@@ -32,10 +32,10 @@ function create(
 				fix: null | TSESLint.ReportFixFunction;
 				suggest: null | TSESLint.ReportSuggestionArray<MessageIds>;
 			} = {
-				fix: fixToUnknown ? fixer => fixer.replaceText(node, "unknown") : null,
+				fix: fixToUnknown ? (fixer) => fixer.replaceText(node, "unknown") : null,
 				suggest: [
 					{
-						fix: fixer => fixer.replaceText(node, "unknown"),
+						fix: (fixer) => fixer.replaceText(node, "unknown"),
 						messageId: SUGGEST_UNKNOWN,
 					},
 				],

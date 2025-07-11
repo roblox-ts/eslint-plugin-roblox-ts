@@ -40,7 +40,7 @@ const invalid: Array<InvalidTestCase> = [
 		`,
 		errors(errors) {
 			expect(errors).toHaveLength(2);
-			expect(errors.every(err => err.messageId === messageId)).toBe(true);
+			expect(errors.every((err) => err.messageId === messageId)).toBe(true);
 		},
 	},
 	{
@@ -51,7 +51,7 @@ const invalid: Array<InvalidTestCase> = [
 		`,
 		errors(errors) {
 			expect(errors).toHaveLength(2);
-			expect(errors.every(err => err.messageId === messageId)).toBe(true);
+			expect(errors.every((err) => err.messageId === messageId)).toBe(true);
 		},
 	},
 	{
@@ -63,7 +63,7 @@ const invalid: Array<InvalidTestCase> = [
 		`,
 		errors(errors) {
 			expect(errors).toHaveLength(2);
-			expect(errors.every(err => err.messageId === messageId)).toBe(true);
+			expect(errors.every((err) => err.messageId === messageId)).toBe(true);
 		},
 	},
 	{
@@ -75,7 +75,7 @@ const invalid: Array<InvalidTestCase> = [
 		`,
 		errors(errors) {
 			expect(errors).toHaveLength(2);
-			expect(errors.every(err => err.messageId === messageId)).toBe(true);
+			expect(errors.every((err) => err.messageId === messageId)).toBe(true);
 		},
 	},
 	{
@@ -86,7 +86,7 @@ const invalid: Array<InvalidTestCase> = [
 		`,
 		errors(errors) {
 			expect(errors).toHaveLength(3);
-			expect(errors.every(err => err.messageId === messageId)).toBe(true);
+			expect(errors.every((err) => err.messageId === messageId)).toBe(true);
 		},
 	},
 ];

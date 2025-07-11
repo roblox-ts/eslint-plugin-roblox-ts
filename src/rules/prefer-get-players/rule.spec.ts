@@ -65,7 +65,7 @@ const invalidTypeChecked: Array<InvalidTestCase<RuleOptions>> = [
 run({
 	invalid: [
 		...invalid,
-		...invalidTypeChecked.map(test => {
+		...invalidTypeChecked.map((test) => {
 			return {
 				...(typeof test === "object" ? test : undefined),
 				code: typeof test === "string" ? test : test.code,
@@ -77,7 +77,7 @@ run({
 	rule: preferGetPlayers,
 	valid: [
 		...valid,
-		...validTypeChecked.map(test => {
+		...validTypeChecked.map((test) => {
 			return {
 				...(typeof test === "object" ? test : undefined),
 				code: typeof test === "string" ? test : test.code,

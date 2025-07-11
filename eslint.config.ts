@@ -1,10 +1,10 @@
-import style, { GLOB_TESTS } from "@isentinel/eslint-config";
+import style from "@isentinel/eslint-config";
 
-// @ts-expect-error -- eslint-plugin-eslint-plugin is not typed
 import eslintPlugin from "eslint-plugin-eslint-plugin";
 
 export default style(
 	{
+		markdown: false,
 		pnpm: true,
 		roblox: false,
 		rules: {
@@ -16,19 +16,9 @@ export default style(
 			],
 		},
 		type: "package",
-		typescript: {
-			tsconfigPath: "tsconfig.json",
-		},
 	},
 	{
 		ignores: [".eslint-doc-generatorrc.ts", "fixture/**", "scripts/template/**"],
-	},
-	{
-		files: GLOB_TESTS,
-		rules: {
-			"max-lines": "off",
-			"ts/no-non-null-assertion": "off",
-		},
 	},
 	/* eslint-disable ts/no-unsafe-assignment, ts/no-unsafe-argument, ts/no-unsafe-member-access -- No types. */
 	{

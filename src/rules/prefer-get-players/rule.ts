@@ -24,7 +24,7 @@ function check(
 	callee: TSESTree.MemberExpression,
 ): void {
 	context.report({
-		fix: fixer => fixer.replaceText(callee.property, "GetPlayers"),
+		fix: (fixer) => fixer.replaceText(callee.property, "GetPlayers"),
 		messageId: MESSAGE_ID,
 		node,
 	});

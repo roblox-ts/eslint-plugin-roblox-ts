@@ -29,7 +29,7 @@ function replaceNull(
 	node: TSESTree.Node,
 ): void {
 	context.report({
-		fix: fixer => fixer.replaceText(node, "undefined"),
+		fix: (fixer) => fixer.replaceText(node, "undefined"),
 		messageId: NULL_VIOLATION,
 		node,
 	});

@@ -51,7 +51,7 @@ const invalidIdentifier: Array<InvalidTestCase> = [
 	"namespace local {}",
 	"let local = 5; local = 10; local = 15; local = 20;",
 	"const local = class {};",
-].map(testCase => {
+].map((testCase) => {
 	return {
 		code: testCase.toString(),
 		errors: [{ messageId: "invalid-identifier" }],
@@ -59,7 +59,7 @@ const invalidIdentifier: Array<InvalidTestCase> = [
 });
 
 const invalidCharacters: Array<InvalidTestCase> = ["let $path = 5;", "const π = 3.14159;"].map(
-	testCase => {
+	(testCase) => {
 		return {
 			code: testCase.toString(),
 			errors: [{ messageId: "invalid-characters" }],

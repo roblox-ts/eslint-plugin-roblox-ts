@@ -25,43 +25,43 @@ const valid: Array<ValidTestCase> = [
 const invalid: Array<InvalidTestCase> = [
 	{
 		code: "const n = new Array().length;",
-		output: output => {
+		output: (output) => {
 			expect(output).toMatchInlineSnapshot('"const n = new Array().size();"');
 		},
 	},
 	{
 		code: "const n = [].length;",
-		output: output => {
+		output: (output) => {
 			expect(output).toMatchInlineSnapshot('"const n = [].size();"');
 		},
 	},
 	{
 		code: 'const n = "".length;',
-		output: output => {
+		output: (output) => {
 			expect(output).toMatchInlineSnapshot('"const n = "".size();"');
 		},
 	},
 	{
 		code: "const y = new Set().size;",
-		output: output => {
+		output: (output) => {
 			expect(output).toMatchInlineSnapshot('"const y = new Set().size();"');
 		},
 	},
 	{
 		code: "const n = new Set(); print(n.size);",
-		output: output => {
+		output: (output) => {
 			expect(output).toMatchInlineSnapshot('"const n = new Set(); print(n.size());"');
 		},
 	},
 	{
 		code: "const n = new Map().size;",
-		output: output => {
+		output: (output) => {
 			expect(output).toMatchInlineSnapshot('"const n = new Map().size();"');
 		},
 	},
 	{
 		code: "const n = new WeakSet().size;",
-		output: output => {
+		output: (output) => {
 			expect(output).toMatchInlineSnapshot('"const n = new WeakSet().size();"');
 		},
 	},
@@ -73,7 +73,7 @@ const invalid: Array<InvalidTestCase> = [
 			);
 			print(x.length)
 		`,
-		output: output => {
+		output: (output) => {
 			expect(output).toMatchInlineSnapshot(
 				unindent`
 					"const x: ReadVoxelsArray<Enum.Material> = Object.assign(

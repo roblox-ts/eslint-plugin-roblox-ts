@@ -48,7 +48,8 @@ function create(context: Readonly<TSESLint.RuleContext<string, []>>): TSESLint.R
 			}
 
 			context.report({
-				fix: fixer => fixer.replaceText(node, sourceCode.getText(node.object) + ".size()"),
+				fix: (fixer) =>
+					fixer.replaceText(node, sourceCode.getText(node.object) + ".size()"),
 				messageId: USE_SIZE_METHOD,
 				node: node.property,
 			});

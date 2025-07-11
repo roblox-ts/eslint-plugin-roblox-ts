@@ -99,7 +99,7 @@ const invalid: Array<InvalidTestCase> = [
 			const result = vector1 + vector2;
 		`,
 		errors: [{ messageId }],
-		output: output => {
+		output: (output) => {
 			expect(output).toMatchInlineSnapshot(`
 				"const vector1 = new Vector2(1, 2);
 				const vector2 = new Vector2(3, 4);
@@ -113,7 +113,7 @@ const invalid: Array<InvalidTestCase> = [
 			const scaled = vector * 2;
 		`,
 		errors: [{ messageId }],
-		output: output => {
+		output: (output) => {
 			expect(output).toMatchInlineSnapshot(`
 				"const vector = new Vector2(1, 2);
 				const scaled = vector.mul(2);"
@@ -127,7 +127,7 @@ const invalid: Array<InvalidTestCase> = [
 			const combined = pos1 - pos2;
 		`,
 		errors: [{ messageId }],
-		output: output => {
+		output: (output) => {
 			expect(output).toMatchInlineSnapshot(`
 				"const pos1 = new Vector3(1, 2, 3);
 				const pos2 = new Vector3(4, 5, 6);
@@ -141,7 +141,7 @@ const invalid: Array<InvalidTestCase> = [
 			const divided = position / 2;
 		`,
 		errors: [{ messageId }],
-		output: output => {
+		output: (output) => {
 			expect(output).toMatchInlineSnapshot(`
 				"const position = new Vector3(1, 2, 3);
 				const divided = position.div(2);"
@@ -155,7 +155,7 @@ const invalid: Array<InvalidTestCase> = [
 			const result = cf1 * cf2;
 		`,
 		errors: [{ messageId }],
-		output: output => {
+		output: (output) => {
 			expect(output).toMatchInlineSnapshot(`
 				"const cf1 = new CFrame();
 				const cf2 = new CFrame();
@@ -171,7 +171,7 @@ const invalid: Array<InvalidTestCase> = [
 			const result = v1 + v2 + v3;
 		`,
 		errors: [{ messageId }, { messageId }],
-		output: output => {
+		output: (output) => {
 			expect(output).toMatchInlineSnapshot(`
 				"const v1 = new Vector2(1, 2);
 				const v2 = new Vector2(3, 4);
@@ -186,7 +186,7 @@ const invalid: Array<InvalidTestCase> = [
 			const result = pos * 2 + new Vector3(1, 1, 1);
 		`,
 		errors: [{ messageId }, { messageId }],
-		output: output => {
+		output: (output) => {
 			expect(output).toMatchInlineSnapshot(`
 				"const pos = new Vector3(1, 2, 3);
 				const result = pos.mul(2).add(new Vector3(1, 1, 1));"
@@ -200,7 +200,7 @@ const invalid: Array<InvalidTestCase> = [
 			const complex = v1 - v2 * 2;
 		`,
 		errors: [{ messageId }, { messageId }],
-		output: output => {
+		output: (output) => {
 			expect(output).toMatchInlineSnapshot(`
 				"const v1 = new Vector2(10, 20);
 				const v2 = new Vector2(5, 5);
@@ -215,7 +215,7 @@ const invalid: Array<InvalidTestCase> = [
 			const combined = cf * vector + vector;
 		`,
 		errors: [{ messageId }, { messageId }],
-		output: output => {
+		output: (output) => {
 			expect(output).toMatchInlineSnapshot(`
 				"const cf = new CFrame();
 				const vector = new Vector3(1, 2, 3);
@@ -231,7 +231,7 @@ const invalid: Array<InvalidTestCase> = [
 			const result = v1 + v2 * v3;
 		`,
 		errors: [{ messageId }, { messageId }],
-		output: output => {
+		output: (output) => {
 			expect(output).toMatchInlineSnapshot(`
 				"const v1 = new Vector2(1, 2);
 				const v2 = new Vector2(3, 4);
@@ -248,7 +248,7 @@ const invalid: Array<InvalidTestCase> = [
 			const result = v1 / v2 + v3;
 		`,
 		errors: [{ messageId }, { messageId }],
-		output: output => {
+		output: (output) => {
 			expect(output).toMatchInlineSnapshot(`
 				"const v1 = new Vector2(10, 10);
 				const v2 = new Vector2(2, 2);
@@ -273,7 +273,7 @@ const invalid: Array<InvalidTestCase> = [
 			const result = a + b * c - d;
 		`,
 		errors: [{ messageId }, { messageId }, { messageId }],
-		output: output => {
+		output: (output) => {
 			expect(output).toMatchInlineSnapshot(`
 				"const a = new Vector2(1, 1);
 				const b = new Vector2(2, 2);
@@ -290,7 +290,7 @@ const invalid: Array<InvalidTestCase> = [
 			const result = (v1 + v2) * 2;
 		`,
 		errors: [{ messageId }, { messageId }],
-		output: output => {
+		output: (output) => {
 			expect(output).toMatchInlineSnapshot(`
 				"const v1 = new Vector2(1, 2);
 				const v2 = new Vector2(3, 4);
@@ -301,7 +301,7 @@ const invalid: Array<InvalidTestCase> = [
 	{
 		code: "const v1 = new Vector3(); const v2 = new Vector3(); const result = v1 + v2;",
 		errors: [{ data: { method: "add", operator: "+" }, messageId }],
-		output: output => {
+		output: (output) => {
 			expect(output).toBe(
 				"const v1 = new Vector3(); const v2 = new Vector3(); const result = v1.add(v2);",
 			);
@@ -310,7 +310,7 @@ const invalid: Array<InvalidTestCase> = [
 	{
 		code: "const c1 = new CFrame(); const v3 = new Vector3(); const result = c1 * v3;",
 		errors: [{ data: { method: "mul", operator: "*" }, messageId }],
-		output: output => {
+		output: (output) => {
 			expect(output).toBe(
 				"const c1 = new CFrame(); const v3 = new Vector3(); const result = c1.mul(v3);",
 			);
@@ -319,7 +319,7 @@ const invalid: Array<InvalidTestCase> = [
 	{
 		code: "const u1 = new UDim2(); const u2 = new UDim2(); const result = u1 - u2;",
 		errors: [{ data: { method: "sub", operator: "-" }, messageId }],
-		output: output => {
+		output: (output) => {
 			expect(output).toBe(
 				"const u1 = new UDim2(); const u2 = new UDim2(); const result = u1.sub(u2);",
 			);
@@ -328,7 +328,7 @@ const invalid: Array<InvalidTestCase> = [
 	{
 		code: "const vec2 = new Vector2(); const result = vec2 / 2;",
 		errors: [{ data: { method: "div", operator: "/" }, messageId }],
-		output: output => {
+		output: (output) => {
 			expect(output).toBe("const vec2 = new Vector2(); const result = vec2.div(2);");
 		},
 	},
@@ -375,7 +375,7 @@ const invalid: Array<InvalidTestCase> = [
 	{
 		code: "const v = new Vector2(1, 2); const result = 2 * v;",
 		errors: [{ messageId }],
-		output: output => {
+		output: (output) => {
 			expect(output).toMatchInlineSnapshot(`
 				"const v = new Vector2(1, 2); const result = v.mul(2);"
 			`);
@@ -388,7 +388,7 @@ const invalid: Array<InvalidTestCase> = [
 	{
 		code: "const v1 = new Vector3(1, 2, 3); const v2 = new Vector3(4, 5, 6); const result = 2 * v1 + v2;",
 		errors: [{ messageId }, { messageId }],
-		output: output => {
+		output: (output) => {
 			expect(output).toMatchInlineSnapshot(`
 				"const v1 = new Vector3(1, 2, 3); const v2 = new Vector3(4, 5, 6); const result = v1.mul(2).add(v2);"
 			`);
@@ -397,7 +397,7 @@ const invalid: Array<InvalidTestCase> = [
 	{
 		code: "const vector = new Vector3(1, 2, 3); const negated = -vector;",
 		errors: [{ messageId }],
-		output: output => {
+		output: (output) => {
 			expect(output).toMatchInlineSnapshot(`
 				"const vector = new Vector3(1, 2, 3); const negated = vector.mul(-1);"
 			`);
@@ -410,7 +410,7 @@ const invalid: Array<InvalidTestCase> = [
 	{
 		code: "function getVector() { return new Vector3(); } const result = getVector() + new Vector3();",
 		errors: [{ messageId }],
-		output: output => {
+		output: (output) => {
 			expect(output).toMatchInlineSnapshot(`
 				"function getVector() { return new Vector3(); } const result = getVector().add(new Vector3());"
 			`);
@@ -430,7 +430,7 @@ const invalid: Array<InvalidTestCase> = [
 			}
 		`,
 		errors: [{ messageId }],
-		output: output => {
+		output: (output) => {
 			expect(output).toMatchInlineSnapshot(`
 				"function testUnion() {
 					const maybeVector: Vector3 | undefined = new Vector3(1, 2, 3);
@@ -451,7 +451,7 @@ const invalid: Array<InvalidTestCase> = [
 			}
 		`,
 		errors: [{ messageId }],
-		output: output => {
+		output: (output) => {
 			expect(output.includes("vec.mul(2)")).toBe(true);
 		},
 	},
@@ -465,7 +465,7 @@ const invalid: Array<InvalidTestCase> = [
 			}
 		`,
 		errors: [{ messageId }],
-		output: output => {
+		output: (output) => {
 			expect(output.includes("container.position.add(")).toBe(true);
 		},
 	},
@@ -480,7 +480,7 @@ const invalid: Array<InvalidTestCase> = [
 			}
 		`,
 		errors: [{ messageId }],
-		output: output => {
+		output: (output) => {
 			expect(output.includes("vec.mul(2)")).toBe(true);
 		},
 	},

@@ -81,7 +81,7 @@ const invalid: Array<InvalidTestCase> = [
 		code: "[a, ...[b, ...[c]]] = [1, 2, 3];",
 		errors(errors) {
 			expect(errors).toHaveLength(2);
-			expect(errors.every(err => err.messageId === SPREAD_DESTRUCTURING_VIOLATION)).toBe(
+			expect(errors.every((err) => err.messageId === SPREAD_DESTRUCTURING_VIOLATION)).toBe(
 				true,
 			);
 		},
