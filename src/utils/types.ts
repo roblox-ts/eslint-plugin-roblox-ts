@@ -33,7 +33,7 @@ export function getRobloxDataTypeName(type: Type): string | undefined {
 export function getRobloxDataTypeNameRecursive(type: Type): string | undefined {
 	let foundType: string | undefined;
 
-	isTypeRecursive(type, innerType => {
+	isTypeRecursive(type, (innerType) => {
 		const directResult = getRobloxDataTypeName(innerType);
 		if (directResult === undefined) {
 			return false;
