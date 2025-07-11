@@ -18,7 +18,7 @@ const invalid: Array<InvalidTestCase> = [
 	{
 		code: "const x = function foo() {};",
 		errors: [{ messageId }],
-		output: output => {
+		output: (output) => {
 			expect(output).toMatchInlineSnapshot('"const x = function() {};"');
 		},
 	},
@@ -29,7 +29,7 @@ const invalid: Array<InvalidTestCase> = [
             };
         `,
 		errors: [{ messageId }],
-		output: output => {
+		output: (output) => {
 			expect(output).toMatchInlineSnapshot(`
                 "const obj = {
                     method: function() {}
@@ -40,7 +40,7 @@ const invalid: Array<InvalidTestCase> = [
 	{
 		code: "(function baz() {}())",
 		errors: [{ messageId }],
-		output: output => {
+		output: (output) => {
 			expect(output).toMatchInlineSnapshot('"(function() {}())"');
 		},
 	},
@@ -65,14 +65,14 @@ const invalid: Array<InvalidTestCase> = [
 	{
 		code: "doSomething(function cbName() {});",
 		errors: [{ messageId }],
-		output: output => {
+		output: (output) => {
 			expect(output).toMatchInlineSnapshot('"doSomething(function() {});"');
 		},
 	},
 	{
 		code: "const funcs = [function arrFunc() {}];",
 		errors: [{ messageId }],
-		output: output => {
+		output: (output) => {
 			expect(output).toMatchInlineSnapshot('"const funcs = [function() {}];"');
 		},
 	},
@@ -84,9 +84,9 @@ const invalid: Array<InvalidTestCase> = [
         `,
 		errors(errors) {
 			expect(errors).toHaveLength(2);
-			expect(errors.every(err => err.messageId === messageId)).toBe(true);
+			expect(errors.every((err) => err.messageId === messageId)).toBe(true);
 		},
-		output: output => {
+		output: (output) => {
 			expect(output).toMatchInlineSnapshot(`
                 "const outer = function() {
                     const inner = function() {};
@@ -113,7 +113,7 @@ const invalid: Array<InvalidTestCase> = [
 			})();
 		`,
 		errors: [{ messageId }],
-		output: output => {
+		output: (output) => {
 			expect(output).toMatchInlineSnapshot(
 				unindent`
 					"(function() {

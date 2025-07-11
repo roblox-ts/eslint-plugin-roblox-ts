@@ -15,7 +15,8 @@ function create(context: Readonly<TSESLint.RuleContext<string, []>>): TSESLint.R
 	return {
 		ForInStatement(node) {
 			context.report({
-				fix: fix => fix.replaceTextRange([node.left.range[1], node.right.range[0]], " of "),
+				fix: (fix) =>
+					fix.replaceTextRange([node.left.range[1], node.right.range[0]], " of "),
 				messageId: FOR_IN_VIOLATION,
 				node,
 			});

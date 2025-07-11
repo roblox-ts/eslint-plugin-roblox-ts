@@ -23,7 +23,7 @@ function create(context: Readonly<TSESLint.RuleContext<string, []>>): TSESLint.R
 				(node.kind === "get" || node.kind === "set")
 			) {
 				context.report({
-					fix: fixer => fixer.removeRange([node.key.range[0] - 1, node.key.range[0]]),
+					fix: (fixer) => fixer.removeRange([node.key.range[0] - 1, node.key.range[0]]),
 					messageId: GET_SET_VIOLATION,
 					node,
 				});
@@ -32,10 +32,10 @@ function create(context: Readonly<TSESLint.RuleContext<string, []>>): TSESLint.R
 	}
 
 	return {
-		ClassBody: node => {
+		ClassBody: (node) => {
 			checkMethodDefinition(node.body);
 		},
-		ObjectExpression: node => {
+		ObjectExpression: (node) => {
 			checkMethodDefinition(node.properties);
 		},
 	};

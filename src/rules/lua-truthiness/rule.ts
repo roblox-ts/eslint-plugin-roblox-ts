@@ -30,8 +30,8 @@ function checkTruthy(
 ): void {
 	const type = getConstrainedTypeAtLocation(parserServices, node);
 
-	const isAssignableToZero = isPossiblyType(type, inner => isNumberLiteralType(inner, 0));
-	const isAssignableToEmptyString = isPossiblyType(type, inner => isEmptyStringType(inner));
+	const isAssignableToZero = isPossiblyType(type, (inner) => isNumberLiteralType(inner, 0));
+	const isAssignableToEmptyString = isPossiblyType(type, (inner) => isEmptyStringType(inner));
 
 	if (isAssignableToZero || isAssignableToEmptyString) {
 		context.report({

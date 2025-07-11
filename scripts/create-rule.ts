@@ -17,10 +17,13 @@ if (!/^[a-z]+(?:-[a-z]+)*$/.test(ruleName)) {
 	process.exit(1);
 }
 
-const ruleNameCamelCase = ruleName.replace(/-([a-z])/g, name => name[1]?.toUpperCase() ?? "ERROR");
+const ruleNameCamelCase = ruleName.replace(
+	/-([a-z])/g,
+	(name) => name[1]?.toUpperCase() ?? "ERROR",
+);
 const ruleDescription = ruleName
 	.split("-")
-	.map(word => word.charAt(0).toUpperCase() + word.slice(1))
+	.map((word) => word.charAt(0).toUpperCase() + word.slice(1))
 	.join(" ");
 
 const rootDirectory = resolve(directoryName, "..");

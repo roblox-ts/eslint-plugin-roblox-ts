@@ -19,14 +19,14 @@ const invalid: Array<InvalidTestCase> = [
 	{
 		code: "class A { get prop() { return 1; } }",
 		errors: [{ messageId }],
-		output: output => {
+		output: (output) => {
 			expect(output).toMatchInlineSnapshot('"class A { getprop() { return 1; } }"');
 		},
 	},
 	{
 		code: "class B { set prop(value: number) {} }",
 		errors: [{ messageId }],
-		output: output => {
+		output: (output) => {
 			expect(output).toMatchInlineSnapshot('"class B { setprop(value: number) {} }"');
 		},
 	},
@@ -38,7 +38,7 @@ const invalid: Array<InvalidTestCase> = [
 	        };
 	    `,
 		errors: [{ messageId }, { messageId }],
-		output: output => {
+		output: (output) => {
 			expect(output).toMatchInlineSnapshot(`
 				"const obj = {
 				    getvalue() { return this._value; },
@@ -50,7 +50,7 @@ const invalid: Array<InvalidTestCase> = [
 	{
 		code: "class C { static get staticProp() { return 2; } }",
 		errors: [{ messageId }],
-		output: output => {
+		output: (output) => {
 			expect(output).toMatchInlineSnapshot(
 				'"class C { static getstaticProp() { return 2; } }"',
 			);
@@ -59,7 +59,7 @@ const invalid: Array<InvalidTestCase> = [
 	{
 		code: "class D { static set staticProp(value: number) {} }",
 		errors: [{ messageId }],
-		output: output => {
+		output: (output) => {
 			expect(output).toMatchInlineSnapshot(
 				'"class D { static setstaticProp(value: number) {} }"',
 			);
@@ -73,7 +73,7 @@ const invalid: Array<InvalidTestCase> = [
 	        };
 	    `,
 		errors: [{ messageId }, { messageId }],
-		output: output => {
+		output: (output) => {
 			expect(output).toMatchInlineSnapshot(`
 				"const obj = {
 				    getvalue() { return this._value; },
@@ -85,21 +85,21 @@ const invalid: Array<InvalidTestCase> = [
 	{
 		code: "class E { public get prop() { return 3; } }",
 		errors: [{ messageId }],
-		output: output => {
+		output: (output) => {
 			expect(output).toMatchInlineSnapshot('"class E { public getprop() { return 3; } }"');
 		},
 	},
 	{
 		code: "class F { private get prop() { return 3; } }",
 		errors: [{ messageId }],
-		output: output => {
+		output: (output) => {
 			expect(output).toMatchInlineSnapshot('"class F { private getprop() { return 3; } }"');
 		},
 	},
 	{
 		code: "class G { protected get prop() { return 4; } }",
 		errors: [{ messageId }],
-		output: output => {
+		output: (output) => {
 			expect(output).toMatchInlineSnapshot('"class G { protected getprop() { return 4; } }"');
 		},
 	},

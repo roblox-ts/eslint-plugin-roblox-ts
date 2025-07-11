@@ -33,7 +33,7 @@ function checkLuaTupleUsage(
 ): void {
 	if (isLuaTuple(parserServices, node)) {
 		context.report({
-			fix: fixer => fixer.insertTextAfter(node, "[0]"),
+			fix: (fixer) => fixer.insertTextAfter(node, "[0]"),
 			messageId: BANNED_LUA_TUPLE_CHECK,
 			node,
 		});

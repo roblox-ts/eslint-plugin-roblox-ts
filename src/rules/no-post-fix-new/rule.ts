@@ -60,7 +60,7 @@ function replaceWithNewExpression(
 	node: TSESTree.CallExpression,
 ): void {
 	context.report({
-		fix: fixer => {
+		fix: (fixer) => {
 			const { sourceCode } = context;
 			const accessNode = node.callee as TSESTree.MemberExpression;
 

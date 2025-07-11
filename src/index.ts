@@ -89,6 +89,6 @@ function createConfig(): TSESLint.FlatConfig.Config {
 
 function getRules(): Linter.RulesRecord {
 	return Object.fromEntries(
-		Object.keys(plugin.rules).map(ruleName => [`${PLUGIN_NAME}/${ruleName}`, "error"]),
+		Object.keys(plugin.rules).map((ruleName) => [`${PLUGIN_NAME}/${ruleName}`, "error"]),
 	);
 }

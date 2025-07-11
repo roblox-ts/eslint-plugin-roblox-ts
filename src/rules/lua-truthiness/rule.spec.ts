@@ -77,21 +77,21 @@ const invalid: Array<InvalidTestCase> = [
 		code: "if (!0 && !'') {}",
 		errors(errors) {
 			expect(errors).toHaveLength(2);
-			expect(errors.every(err => err.messageId === errorMessage)).toBe(true);
+			expect(errors.every((err) => err.messageId === errorMessage)).toBe(true);
 		},
 	},
 	{
 		code: "if (0 && '') {}",
 		errors(errors) {
 			expect(errors).toHaveLength(1);
-			expect(errors.every(err => err.messageId === errorMessage)).toBe(true);
+			expect(errors.every((err) => err.messageId === errorMessage)).toBe(true);
 		},
 	},
 	{
 		code: "if (0 || '') {}",
 		errors(errors) {
 			expect(errors).toHaveLength(1);
-			expect(errors.every(err => err.messageId === errorMessage)).toBe(true);
+			expect(errors.every((err) => err.messageId === errorMessage)).toBe(true);
 		},
 	},
 	{
@@ -124,7 +124,7 @@ const invalid: Array<InvalidTestCase> = [
 				if (a) {}
 			}
 		`,
-		errors: errors => {
+		errors: (errors) => {
 			expect(errors).toHaveLength(1);
 			expect(errors[0]!.messageId).toEqual(errorMessage);
 		},
@@ -154,14 +154,14 @@ const invalid: Array<InvalidTestCase> = [
 		code: "if (a && 0) {}",
 		errors(errors) {
 			expect(errors).toHaveLength(1);
-			expect(errors.every(err => err.messageId === errorMessage)).toBe(true);
+			expect(errors.every((err) => err.messageId === errorMessage)).toBe(true);
 		},
 	},
 	{
 		code: "if (a || '') {}",
 		errors(errors) {
 			expect(errors).toHaveLength(1);
-			expect(errors.every(err => err.messageId === errorMessage)).toBe(true);
+			expect(errors.every((err) => err.messageId === errorMessage)).toBe(true);
 		},
 	},
 	{

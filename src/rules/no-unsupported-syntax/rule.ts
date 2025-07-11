@@ -21,22 +21,22 @@ const messages = {
 
 function create(context: Readonly<TSESLint.RuleContext<string, []>>): TSESLint.RuleListener {
 	return {
-		ArrayPattern: node => {
+		ArrayPattern: (node) => {
 			reportInvalidSpreadDestructure(context, node);
 		},
-		Identifier: node => {
+		Identifier: (node) => {
 			reportGlobalThisViolation(context, node);
 		},
-		LabeledStatement: node => {
+		LabeledStatement: (node) => {
 			reportInvalidLabeledStatement(context, node);
 		},
-		Literal: node => {
+		Literal: (node) => {
 			reportRegexViolation(context, node);
 		},
-		MemberExpression: node => {
+		MemberExpression: (node) => {
 			reportPrototypeViolation(context, node);
 		},
-		ObjectPattern: node => {
+		ObjectPattern: (node) => {
 			reportInvalidSpreadDestructure(context, node);
 		},
 	};

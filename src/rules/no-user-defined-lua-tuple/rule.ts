@@ -25,7 +25,7 @@ function create(context: Context): TSESLint.RuleListener {
 			'CallExpression[callee.type="Identifier"][callee.name="$tuple"]'(
 				node: TSESTree.CallExpression,
 			) {
-				report(context, node.callee, MACRO_VIOLATION, fixer =>
+				report(context, node.callee, MACRO_VIOLATION, (fixer) =>
 					fixTupleMacroCall(node, context, fixer),
 				);
 			},
@@ -43,7 +43,7 @@ function create(context: Context): TSESLint.RuleListener {
 				context,
 				node.typeName,
 				LUA_TUPLE_VIOLATION,
-				shouldFix ? fixer => fixLuaTupleType(node, context, fixer) : null,
+				shouldFix ? (fixer) => fixLuaTupleType(node, context, fixer) : null,
 			);
 		},
 	};
@@ -89,7 +89,7 @@ function fixTupleMacroCall(
 	}
 
 	const { sourceCode } = context;
-	const tupleElements = args.map(argument => sourceCode.getText(argument)).join(", ");
+	const tupleElements = args.map((argument) => sourceCode.getText(argument)).join(", ");
 	const replacementText = `[${tupleElements}]`;
 
 	return fixer.replaceText(node, replacementText);
