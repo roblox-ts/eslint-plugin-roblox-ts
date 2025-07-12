@@ -39,6 +39,7 @@
 		"release": "bumpp",
 		"start": "tsx src/index.ts",
 		"test": "vitest",
+		"test:fixtures": "tsx scripts/test-fixtures.ts",
 		"typecheck": "tsc --noEmit"
 	},
 	"simple-git-hooks": {
@@ -64,6 +65,7 @@
 		"@typescript-eslint/parser": "catalog:cli",
 		"bumpp": "catalog:cli",
 		"eslint": "catalog:cli",
+		"eslint-8": "catalog:testing",
 		"eslint-doc-generator": "catalog:utils",
 		"eslint-plugin-eslint-plugin": "catalog:testing",
 		"eslint-plugin-pnpm": "catalog:cli",
@@ -80,7 +82,7 @@
 		"vitest": "catalog:testing"
 	},
 	"peerDependencies": {
-		"eslint": "*",
+		"eslint": ">=8.0.0",
 		"typescript": ">=5.2.0 <5.9.0"
 	},
 	"packageManager": "pnpm@10.13.1",

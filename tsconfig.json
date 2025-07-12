@@ -18,5 +18,9 @@
 		"skipDefaultLibCheck": true,
 		"skipLibCheck": true
 	},
-	"include": ["**/*/*.*"]
+	"include": ["**/*/*.*"],
+	"exclude": [
+		"./fixtures/**/*.*",
+		"./_fixtures/**/*.*"
+	]
 }
