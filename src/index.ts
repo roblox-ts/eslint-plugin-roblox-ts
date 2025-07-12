@@ -2,7 +2,7 @@ import type { TSESLint } from "@typescript-eslint/utils";
 
 import type { Linter } from "eslint";
 
-import { version } from "../package.json";
+import { name as packageName, version as packageVersion } from "../package.json";
 import { luaTruthiness } from "./rules/lua-truthiness/rule";
 import { misleadingLuaTupleChecks } from "./rules/misleading-lua-tuple-checks/rule";
 import { noAny } from "./rules/no-any/rule";
@@ -27,12 +27,28 @@ import { preferGetPlayers } from "./rules/prefer-get-players/rule";
 import { preferTaskLibrary } from "./rules/prefer-task-library/rule";
 import { sizeMethod } from "./rules/size-method/rule";
 
-const PLUGIN_NAME = "roblox-ts-x";
+const PLUGIN_NAME = packageName.replace(/^eslint-plugin-/, "");
+
+/**
+ * Generates a rules record where all plugin rules are set to "error".
+ *
+ * @param pluginName - The plugin identifier used to prefix rule names.
+ * @param rules - The rules record to transform.
+ * @returns A Linter.RulesRecord with all rules enabled.
+ */
+function getRules(
+	pluginName: string,
+	rules: Record<string, TSESLint.RuleModule<any, any>>,
+): Linter.RulesRecord {
+	return Object.fromEntries(
+		Object.keys(rules).map((ruleName) => [`${pluginName}/${ruleName}`, "error"]),
+	);
+}
 
 const plugin = {
 	meta: {
 		name: PLUGIN_NAME,
-		version,
+		version: packageVersion,
 	},
 	rules: {
 		"lua-truthiness": luaTruthiness,
@@ -61,34 +77,63 @@ const plugin = {
 	},
 } satisfies TSESLint.FlatConfig.Plugin;
 
-export type RuleOptions = {
-	[K in keyof RuleDefinitions]: RuleDefinitions[K]["defaultOptions"];
+const allRules = getRules(PLUGIN_NAME, plugin.rules);
+
+const configs = {
+	/**
+	 * Recommended configuration for ESLint v9+ (flat config). Enables all
+	 * plugin rules.
+	 *
+	 * @example
+	 *
+	 * ```ts
+	 * // eslint.config.js
+	 * import roblox from "eslint-plugin-roblox-ts-x";
+	 *
+	 * export default [roblox.configs.recommended];
+	 * ```
+	 */
+	"recommended": {
+		plugins: {
+			[PLUGIN_NAME]: plugin,
+		},
+		rules: allRules,
+	} satisfies TSESLint.FlatConfig.Config,
+
+	/**
+	 * Recommended configuration for legacy ESLint v8. Enables all plugin rules.
+	 *
+	 * @example
+	 *
+	 * ```ts
+	 * // .eslintrc.js
+	 * module.exports = {
+	 * 	extends: ["plugin:roblox-ts-x/recommended-legacy"],
+	 * };
+	 * ```
+	 */
+	"recommended-legacy": {
+		plugins: [PLUGIN_NAME],
+		rules: allRules,
+	} satisfies Linter.LegacyConfig,
 };
 
+// Default export for ESLint v9+ (flat config)
 export default {
 	...plugin,
-	configs: {
-		recommended: createConfig(),
-	},
+	configs,
+};
+
+// Named exports for ESLint v8 (legacy config)
+export const { rules } = plugin;
+export { configs };
+
+export type RuleOptions = {
+	[K in keyof RuleDefinitions]: RuleDefinitions[K]["defaultOptions"];
 };
 
 export type Rules = {
 	[K in keyof RuleOptions]: Linter.RuleEntry<RuleOptions[K]>;
 };
 
-type RuleDefinitions = (typeof plugin)["rules"];
-
-function createConfig(): TSESLint.FlatConfig.Config {
-	return {
-		plugins: {
-			[PLUGIN_NAME]: plugin,
-		},
-		rules: getRules(),
-	};
-}
-
-function getRules(): Linter.RulesRecord {
-	return Object.fromEntries(
-		Object.keys(plugin.rules).map((ruleName) => [`${PLUGIN_NAME}/${ruleName}`, "error"]),
-	);
-}
+type RuleDefinitions = typeof plugin.rules;

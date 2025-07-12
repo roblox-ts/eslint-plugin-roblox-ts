@@ -18,7 +18,7 @@ export default style(
 		type: "package",
 	},
 	{
-		ignores: [".eslint-doc-generatorrc.ts", "fixture/**", "scripts/template/**"],
+		ignores: [".eslint-doc-generatorrc.ts", "fixture/**", "fixtures/**", "scripts/template/**"],
 	},
 	/* eslint-disable ts/no-unsafe-assignment, ts/no-unsafe-argument, ts/no-unsafe-member-access -- No types. */
 	{

@@ -66,11 +66,15 @@ guiding users who already know TypeScript to avoid unsupported features.
 
 ## Installation
 
-You'll first need to install [ESLint](https://eslint.org) v9.0.0 or greater:
+You'll first need to install [ESLint](https://eslint.org) v8.0.0 or greater:
 
 ```sh
 npm install eslint --save-dev
 ```
+
+**ESLint Version Support:**
+- ESLint v8.x: ✅ Fully supported
+- ESLint v9.x: ✅ Fully supported
 
 Next, install `eslint-plugin-roblox-ts-x`:
 
@@ -92,7 +96,15 @@ export default [
 ]
 ```
 
-### Flat Config ([`eslint.config.ts`](https://eslint.org/docs/latest/use/configure/configuration-files))
+### Legacy Config ([`.eslintrc`](https://eslint.org/docs/latest/use/configure/configuration-files-deprecated))
+
+```json
+{
+	"extends": ["plugin:roblox-ts-x/recommended-legacy"]
+}
+```
+
+### Manual Configuration
 
 Altertatively, add `eslint-plugin-roblox-ts-x` to the plugins section of the ESLint
 configuration file and define the list of rules you will use.
@@ -110,6 +122,31 @@ export default [
 		},
 	},
 ];
+```
+
+### Legacy Config ([`.eslintrc`](https://eslint.org/docs/latest/use/configure/configuration-files-deprecated))
+
+<!-- prettier-ignore -->
+```json
+{
+	"extends": ["plugin:roblox-ts-x/recommended-legacy"]
+}
+```
+
+Alternatively, add `eslint-plugin-roblox-ts-x` to the plugins section of your `.eslintrc` configuration file and configure the rules you want to use.
+
+<!-- prettier-ignore -->
+```json
+{
+	"plugins": [
+		"roblox-ts-x"
+	],
+	"rules": {
+		"roblox-ts-x/no-any": ["error", { "fixToUnknown": true }],
+		"roblox-ts-x/no-null": "error",
+		"roblox-ts-x/no-object-math": "error"
+	}
+}
 ```
 
 ## Versioning Policy
