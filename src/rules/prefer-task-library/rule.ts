@@ -1,6 +1,8 @@
 import { AST_NODE_TYPES, type TSESLint, type TSESTree } from "@typescript-eslint/utils";
 
-import { assert, createEslintRule } from "../../util";
+import assert from "assert";
+
+import { createEslintRule } from "../../util";
 
 export const RULE_NAME = "prefer-task-library";
 
