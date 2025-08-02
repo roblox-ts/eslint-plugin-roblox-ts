@@ -1,14 +1,14 @@
-# Contributing to eslint-plugin-roblox-ts-x
+# Contributing to eslint-plugin-roblox-ts
 
-First off, thank you for considering contributing to `eslint-plugin-roblox-ts-x`!
+First off, thank you for considering contributing to `eslint-plugin-roblox-ts`!
 
 ## Getting Started
 
-1.  **Fork the repository:** Click the "Fork" button on the top right of the [repository page](https://github.com/christopher-buss/eslint-plugin-roblox-ts-x).
+1.  **Fork the repository:** Click the "Fork" button on the top right of the [repository page](https://github.com/roblox-ts/eslint-plugin-roblox-ts).
 2.  **Clone your fork:**
     ```bash
-    git clone https://github.com/YOUR_USERNAME/eslint-plugin-roblox-ts-x.git
-    cd eslint-plugin-roblox-ts-x
+    git clone https://github.com/YOUR_USERNAME/eslint-plugin-roblox-ts.git
+    cd eslint-plugin-roblox-ts
     ```
 3.  **Install dependencies:** This project uses `pnpm` for package management.
     ```bash
@@ -79,7 +79,7 @@ If you are adding a new ESLint rule:
 
 ## Reporting Bugs
 
-If you find a bug, please open an issue on the [GitHub Issues page](https://github.com/christopher-buss/eslint-plugin-roblox-ts-x/issues). Include:
+If you find a bug, please open an issue on the [GitHub Issues page](https://github.com/roblox-ts/eslint-plugin-roblox-ts/issues). Include:
 
 *   A clear and descriptive title.
 *   Steps to reproduce the bug.
@@ -90,7 +90,7 @@ If you find a bug, please open an issue on the [GitHub Issues page](https://gith
 
 ## Suggesting Enhancements
 
-If you have an idea for a new feature or an improvement to an existing one, please open an issue on the [GitHub Issues page](https://github.com/christopher-buss/eslint-plugin-roblox-ts-x/issues). Describe your suggestion clearly and explain why it would be beneficial.
+If you have an idea for a new feature or an improvement to an existing one, please open an issue on the [GitHub Issues page](https://github.com/roblox-ts/eslint-plugin-roblox-ts/issues). Describe your suggestion clearly and explain why it would be beneficial.
 
 ## License
 

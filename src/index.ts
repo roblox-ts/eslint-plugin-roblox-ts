@@ -88,7 +88,7 @@ const configs = {
 	 *
 	 * ```ts
 	 * // eslint.config.js
-	 * import roblox from "eslint-plugin-roblox-ts-x";
+	 * import roblox from "eslint-plugin-roblox-ts";
 	 *
 	 * export default [roblox.configs.recommended];
 	 * ```
@@ -108,7 +108,7 @@ const configs = {
 	 * ```ts
 	 * // .eslintrc.js
 	 * module.exports = {
-	 * 	extends: ["plugin:roblox-ts-x/recommended-legacy"],
+	 * 	extends: ["plugin:roblox-ts/recommended-legacy"],
 	 * };
 	 * ```
 	 */

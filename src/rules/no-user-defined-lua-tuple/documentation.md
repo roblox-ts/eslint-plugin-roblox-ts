@@ -66,7 +66,7 @@ Example configuration with options:
 
 ```json
 {
-	"roblox-ts-x/no-user-defined-lua-tuple": ["error", { "shouldFix": true, "allowTupleMacro": false }]
+	"roblox-ts/no-user-defined-lua-tuple": ["error", { "shouldFix": true, "allowTupleMacro": false }]
 }
 ```
 
