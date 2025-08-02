@@ -10,8 +10,8 @@ export function run(options: RuleTesterInitOptions & TestCasesOptions): void {
 		parser: tsParser as Linter.Parser,
 		parserOptions: {
 			ecmaVersion: 2018,
-			project: path.resolve(__dirname, "../../fixture/tsconfig.json"),
-			tsconfigRootDir: path.resolve(__dirname, "../../fixture"),
+			project: path.resolve(__dirname, "../../fixtures/tsconfig.json"),
+			tsconfigRootDir: path.resolve(__dirname, "../../fixtures"),
 		},
 		...options,
 	});
