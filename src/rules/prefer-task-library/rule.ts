@@ -1,6 +1,6 @@
 import { AST_NODE_TYPES, type TSESLint, type TSESTree } from "@typescript-eslint/utils";
 
-import assert from "assert";
+import assert from "node:assert";
 
 import { createEslintRule } from "../../util";
 
