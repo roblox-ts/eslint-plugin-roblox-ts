@@ -16,6 +16,9 @@
 	},
 	"license": "MIT",
 	"author": "Christopher Buss <christopher.buss@pm.me> (https://github.com/christopher-buss)",
+	"contributors": [
+		"osyrisrblx (https://github.com/osyrisrblx)"
+	],
 	"sideEffects": false,
 	"type": "module",
 	"exports": {
