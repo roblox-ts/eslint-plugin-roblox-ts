@@ -3,7 +3,12 @@ import type { TSESLint } from "@typescript-eslint/utils";
 import type { Linter } from "eslint";
 
 import { name as packageName, version as packageVersion } from "../package.json";
-import { tsRecommendedCompat, tsRecommendedCompatLegacy } from "./configs";
+import {
+	eslintCompat,
+	eslintCompatLegacy,
+	tsRecommendedCompat,
+	tsRecommendedCompatLegacy,
+} from "./configs";
 import { luaTruthiness } from "./rules/lua-truthiness/rule";
 import { misleadingLuaTupleChecks } from "./rules/misleading-lua-tuple-checks/rule";
 import { noAny } from "./rules/no-any/rule";
@@ -83,6 +88,36 @@ const plugin = {
 const allRules = getRules(PLUGIN_NAME, plugin.rules);
 
 const configs = {
+	/**
+	 * ESLint core rules for Roblox-TS compatibility. These rules help prevent
+	 * JavaScript patterns that are incompatible with Roblox-TS.
+	 *
+	 * @example
+	 *
+	 * ```ts
+	 * // eslint.config.js
+	 * import robloxTs from "eslint-plugin-roblox-ts";
+	 *
+	 * export default [{ rules: robloxTs.configs.eslintCompat }];
+	 * ```
+	 */
+	eslintCompat,
+
+	/**
+	 * ESLint core rules for Roblox-TS compatibility. These rules help prevent
+	 * JavaScript patterns that are incompatible with Roblox-TS.
+	 *
+	 * @example
+	 *
+	 * ```ts
+	 * // .eslintrc.js
+	 * module.exports = {
+	 * 	extends: ["plugin:roblox-ts/eslint-compat-legacy"],
+	 * };
+	 * ```
+	 */
+	eslintCompatLegacy,
+
 	/**
 	 * Recommended configuration for ESLint v9+ (flat config). Enables all
 	 * plugin rules.

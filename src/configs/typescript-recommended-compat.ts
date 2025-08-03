@@ -1,22 +1,21 @@
-import type { TSESLint } from "@typescript-eslint/utils";
+import type { TSRecommendedRules } from "../types/generated";
+import { createConfig } from "../utils/create-config";
 
-import type { Linter } from "eslint";
-
-/**
- * Rules to override from TypeScript ESLint recommended config for compatibility
- * with Roblox-TS development patterns.
- */
-const TS_RECOMMENDED_COMPAT_RULES = {
+/** TypeScript ESLint rules to override for Roblox-TS compatibility. */
+const TS_RECOMMENDED_OVERRIDES = {
 	"@typescript-eslint/no-array-constructor": "off",
 	"@typescript-eslint/no-namespace": "off",
 	"@typescript-eslint/no-require-imports": "off",
 	"@typescript-eslint/no-unused-vars": "off",
 	"@typescript-eslint/triple-slash-reference": "off",
-} as const satisfies Linter.RulesRecord;
+} as const satisfies Partial<Record<TSRecommendedRules, "off">>;
+
+const { flat, legacy } = createConfig(TS_RECOMMENDED_OVERRIDES);
 
 /**
- * Flat config (ESLint v9+) that overrides TypeScript ESLint recommended rules
- * for compatibility with Roblox-TS development patterns.
+ * Flat config (ESLint v9+) that provides TypeScript ESLint recommended
+ * compatibility for Roblox-TS development patterns. Includes both ESLint core
+ * rules and TypeScript rule overrides.
  *
  * @example
  *
@@ -32,13 +31,12 @@ const TS_RECOMMENDED_COMPAT_RULES = {
  * ];
  * ```
  */
-export const tsRecommendedCompat = {
-	rules: TS_RECOMMENDED_COMPAT_RULES,
-} satisfies TSESLint.FlatConfig.Config;
+export const tsRecommendedCompat = flat;
 
 /**
- * Legacy config (ESLint v8) that overrides TypeScript ESLint recommended rules
- * for compatibility with Roblox-TS development patterns.
+ * Legacy config (ESLint v8) that provides TypeScript ESLint recommended
+ * compatibility for Roblox-TS development patterns. Includes both ESLint core
+ * rules and TypeScript rule overrides.
  *
  * @example
  *
@@ -53,6 +51,4 @@ export const tsRecommendedCompat = {
  * };
  * ```
  */
-export const tsRecommendedCompatLegacy = {
-	rules: TS_RECOMMENDED_COMPAT_RULES,
-} satisfies Linter.LegacyConfig;
+export const tsRecommendedCompatLegacy = legacy;
