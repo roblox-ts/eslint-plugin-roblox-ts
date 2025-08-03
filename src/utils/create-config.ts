@@ -10,6 +10,8 @@ interface CreateConfigResult<T extends Linter.RulesRecord = Linter.RulesRecord> 
 	legacy: Linter.LegacyConfig & { rules: Prettify<T & typeof ESLINT_COMPAT> };
 }
 
+const TYPESCRIPT_FILES = ["**/*/*.?([cm])ts", "**/*/*.?([cm])tsx"];
+
 /**
  * Creates both flat and legacy ESLint configurations with Roblox-TS
  * compatibility rules. Automatically includes ESLint core rules for Roblox-TS
@@ -28,7 +30,7 @@ export function createConfig<const T extends Linter.RulesRecord>(
 	} as const satisfies Linter.RulesRecord;
 
 	return {
-		flat: { rules },
-		legacy: { rules },
+		flat: { files: TYPESCRIPT_FILES, rules },
+		legacy: { overrides: [{ files: TYPESCRIPT_FILES }], rules },
 	};
 }
