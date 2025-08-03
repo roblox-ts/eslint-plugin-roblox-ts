@@ -3,6 +3,7 @@ import type { TSESLint } from "@typescript-eslint/utils";
 import type { Linter } from "eslint";
 
 import { name as packageName, version as packageVersion } from "../package.json";
+import { tsRecommendedCompat, tsRecommendedCompatLegacy } from "./configs";
 import { luaTruthiness } from "./rules/lua-truthiness/rule";
 import { misleadingLuaTupleChecks } from "./rules/misleading-lua-tuple-checks/rule";
 import { noAny } from "./rules/no-any/rule";
@@ -124,6 +125,46 @@ const configs = {
 		],
 		plugins: [PLUGIN_NAME],
 	} satisfies Linter.LegacyConfig,
+
+	/**
+	 * Configuration for legacy ESLint v8 that provides TypeScript ESLint
+	 * recommended compatibility overrides for Roblox-TS development patterns.
+	 *
+	 * @example
+	 *
+	 * ```ts
+	 * // .eslintrc.js
+	 * module.exports = {
+	 * 	extends: [
+	 * 		"@typescript-eslint/recommended",
+	 * 		"plugin:roblox-ts/tsRecommendedCompatLegacy",
+	 * 		"plugin:roblox-ts/recommended-legacy",
+	 * 	],
+	 * };
+	 * ```
+	 */
+	"ts-recommended-compat-legacy": tsRecommendedCompatLegacy,
+
+	/**
+	 * Configuration for ESLint v9+ (flat config) that provides TypeScript
+	 * ESLint recommended compatibility overrides for Roblox-TS development
+	 * patterns.
+	 *
+	 * @example
+	 *
+	 * ```ts
+	 * // eslint.config.js
+	 * import tseslint from "@typescript-eslint/eslint-plugin";
+	 * import robloxTs from "eslint-plugin-roblox-ts";
+	 *
+	 * export default [
+	 * 	...tseslint.configs.recommended,
+	 * 	robloxTs.configs.tsRecommendedCompat,
+	 * 	robloxTs.configs.recommended,
+	 * ];
+	 * ```
+	 */
+	tsRecommendedCompat,
 };
 
 // Default export for ESLint v9+ (flat config)
