@@ -12,10 +12,10 @@ interface ConfigDefinition {
 
 const CONFIG_DEFINITIONS: Array<ConfigDefinition> = [
 	{ configKey: "recommended", name: "recommended" },
-	{ configKey: "strict", name: "strict" },
-	{ configKey: "stylistic", name: "stylistic" },
 	{ configKey: "recommended-type-checked-only", name: "recommendedTypeChecked" },
+	{ configKey: "strict", name: "strict" },
 	{ configKey: "strict-type-checked-only", name: "strictTypeChecked" },
+	{ configKey: "stylistic", name: "stylistic" },
 	{ configKey: "stylistic-type-checked-only", name: "stylisticTypeChecked" },
 ];
 
@@ -73,12 +73,11 @@ function generateFileContent(configs: Record<string, Array<string>>): string {
  * @returns The TypeScript type definition as a string.
  */
 function generateRuleType(configName: string, rules: Array<string>): string {
-	const ruleUnion = rules.map((rule) => `\t| "${rule}"`).join("\n");
+	const sortedRules = rules.sort();
+	const ruleUnion = sortedRules.map((rule) => `\t| "${rule}"`).join("\n");
 	const typeName = `TS${configName.charAt(0).toUpperCase() + configName.slice(1)}Rules`;
 
-	return `/**
- * Rule names from TypeScript ESLint ${configName} config.
- */
+	return `/** Rule names from TypeScript ESLint ${configName} config. */
 export type ${typeName} =
 ${ruleUnion};`;
 }
@@ -89,7 +88,7 @@ async function generateTypes(): Promise<void> {
 	const content = generateFileContent(configs);
 	const outputPath = join(process.cwd(), "src", "types", "generated.ts");
 
-	await writeAndFormatFile(content, outputPath);
+	await writeFile(content, outputPath);
 }
 
 /**
@@ -98,18 +97,9 @@ async function generateTypes(): Promise<void> {
  * @param content - The file content to write.
  * @param outputPath - The path where the file should be written.
  */
-async function writeAndFormatFile(content: string, outputPath: string): Promise<void> {
+async function writeFile(content: string, outputPath: string): Promise<void> {
 	writeFileSync(outputPath, content, "utf8");
 	console.log(`✅ Generated TypeScript ESLint rule types: ${outputPath}`);
-
-	// Run ESLint with --fix on the generated file
-	const { execSync } = await import("node:child_process");
-	try {
-		execSync(`npx eslint "${outputPath}" --fix`, { stdio: "inherit" });
-		console.log("✅ Applied ESLint fixes to generated types");
-	} catch (err) {
-		console.warn(`⚠️  ESLint fixes failed: ${err}`);
-	}
 }
 
 await generateTypes();
