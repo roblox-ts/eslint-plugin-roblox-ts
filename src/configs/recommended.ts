@@ -5,12 +5,12 @@ import type { Linter } from "eslint";
 import { allRules, plugin, PLUGIN_NAME } from "../plugin";
 import { createConfig } from "../utils/create-config";
 
-// Create the base configurations with proper file constraints
 const { flat: baseFlat, legacy: baseLegacy } = createConfig(allRules);
 
 /**
  * Recommended configuration for ESLint v9+ (flat config). Enables all plugin
- * rules but only applies them to TypeScript source files, not root-level config files.
+ * rules but only applies them to TypeScript source files, not root-level config
+ * files.
  *
  * @example
  *
@@ -29,8 +29,8 @@ export const recommended = {
 } satisfies TSESLint.FlatConfig.Config;
 
 /**
- * Recommended configuration for legacy ESLint v8. Enables all plugin rules
- * but only applies them to TypeScript source files, not root-level config files.
+ * Recommended configuration for legacy ESLint v8. Enables all plugin rules but
+ * only applies them to TypeScript source files, not root-level config files.
  *
  * @example
  *
