@@ -29,6 +29,8 @@ import { sizeMethod } from "./rules/size-method/rule";
 
 const PLUGIN_NAME = packageName.replace(/^eslint-plugin-/, "");
 
+const TYPESCRIPT_FILES = ["**/*/*.?([cm])ts", "**/*/*.?([cm])tsx"];
+
 /**
  * Generates a rules record where all plugin rules are set to "error".
  *
@@ -94,6 +96,7 @@ const configs = {
 	 * ```
 	 */
 	"recommended": {
+		files: TYPESCRIPT_FILES,
 		plugins: {
 			[PLUGIN_NAME]: plugin,
 		},
@@ -113,8 +116,13 @@ const configs = {
 	 * ```
 	 */
 	"recommended-legacy": {
+		overrides: [
+			{
+				files: TYPESCRIPT_FILES,
+				rules: allRules,
+			},
+		],
 		plugins: [PLUGIN_NAME],
-		rules: allRules,
 	} satisfies Linter.LegacyConfig,
 };
 
