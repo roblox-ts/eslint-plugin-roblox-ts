@@ -32,10 +32,11 @@
 		"dist"
 	],
 	"scripts": {
-		"build": "tsdown",
+		"build": "nr generate:types && tsdown --clean --dts",
 		"create-rule": "tsx scripts/create-rule.ts",
 		"dev": "tsdown --stub",
 		"eslint-docs": "eslint-doc-generator",
+		"generate:types": "tsx scripts/generate-types.ts",
 		"lint": "eslint",
 		"prepare": "simple-git-hooks",
 		"prepublishOnly": "nr build",

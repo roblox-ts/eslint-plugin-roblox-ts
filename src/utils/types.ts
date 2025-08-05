@@ -3,6 +3,15 @@ import type { TSESTree } from "@typescript-eslint/utils";
 
 import { type Program, type Type, type TypeChecker, TypeFlags } from "typescript";
 
+/**
+ * Utility type to flatten intersection types into a single object.
+ *
+ * @template T - The type to be prettified.
+ */
+export type Prettify<T> = {
+	[K in keyof T]: T[K];
+} & {};
+
 export type TestExpression =
 	| TSESTree.ConditionalExpression
 	| TSESTree.DoWhileStatement
