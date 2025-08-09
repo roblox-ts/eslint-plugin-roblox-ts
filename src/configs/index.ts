@@ -35,7 +35,7 @@ export const configs = {
 
 	/**
 	 * Recommended configuration for ESLint v9+ (flat config). Enables all
-	 * plugin rules.
+	 * plugin rules. Requires @typescript-eslint/parser >=8.0.0.
 	 *
 	 * @example
 	 *
@@ -50,6 +50,7 @@ export const configs = {
 
 	/**
 	 * Recommended configuration for legacy ESLint v8. Enables all plugin rules.
+	 * Compatible with @typescript-eslint/parser >=6.0.0.
 	 *
 	 * @example
 	 *

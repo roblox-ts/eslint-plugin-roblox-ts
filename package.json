@@ -86,10 +86,11 @@
 		"vitest": "catalog:testing"
 	},
 	"peerDependencies": {
+		"@typescript-eslint/parser": ">=6.0.0",
 		"eslint": ">=8.0.0",
 		"typescript": ">=5.2.0 <5.9.0"
 	},
-	"packageManager": "pnpm@10.13.1",
+	"packageManager": "pnpm@10.14.0",
 	"engines": {
 		"node": "^18.18.0 || ^20.9.0 || >=22.5.1"
 	},
