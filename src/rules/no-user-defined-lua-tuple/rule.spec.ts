@@ -18,6 +18,33 @@ const valid: Array<ValidTestCase> = [
 		code: "const a = $tuple();",
 		options: [{ allowTupleMacro: true }],
 	},
+	"declare function externalFn(): LuaTuple<[string, boolean]>;",
+	unindent`
+		export declare const receive_full: {
+			call: () => LuaTuple<[buffer | undefined, Array<Array<unknown>>]>
+		};
+	`,
+	unindent`
+		interface MyClass {
+    		instanceProperty: string;
+    		instanceMethod(): LuaTuple<[number, string]>;
+		}
+
+		interface MyClassConstructor {
+    		new (): MyClass;
+    		staticProperty: string;
+    		staticMethod(): LuaTuple<[number, string]>;
+		}
+
+		declare const MyClass: MyClassConstructor;
+		export = MyClass;
+	`,
+	unindent`
+		declare class ExternalClass {
+			method(): LuaTuple<[number, string]>;
+			static staticMethod(): LuaTuple<[boolean]>;
+		}
+	`,
 ];
 
 const invalid: Array<InvalidTestCase> = [
