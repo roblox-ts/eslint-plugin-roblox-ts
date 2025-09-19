@@ -59,14 +59,14 @@ function create(context: Readonly<TSESLint.RuleContext<string, []>>): TSESLint.R
 				validateIdentifier(context, node, variable.name);
 			}
 		},
-		"ClassDeclaration, ClassExpression"(
+		"ClassDeclaration, ClassExpression": function (
 			node: TSESTree.ClassDeclaration | TSESTree.ClassExpression,
 		) {
 			if (node.id?.name !== undefined) {
 				validateIdentifier(context, node, node.id.name);
 			}
 		},
-		"ImportDeclaration"(node: TSESTree.ImportDeclaration) {
+		"ImportDeclaration": function (node: TSESTree.ImportDeclaration) {
 			for (const variable of sourceCode.getDeclaredVariables(node)) {
 				validateIdentifier(context, node, variable.name, () => isImportAlias(node));
 			}

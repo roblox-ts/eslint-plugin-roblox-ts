@@ -42,7 +42,7 @@ function checkNamespaceMerging(
 
 function create(context: Readonly<TSESLint.RuleContext<string, []>>): TSESLint.RuleListener {
 	return {
-		"TSModuleDeclaration[global!=true][id.type!='Literal']"(
+		"TSModuleDeclaration[global!=true][id.type!='Literal']": function (
 			node: TSESTree.TSModuleDeclaration,
 		): void {
 			checkNamespaceMerging(context, node);

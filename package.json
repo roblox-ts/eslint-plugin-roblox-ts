@@ -2,12 +2,7 @@
 	"name": "eslint-plugin-roblox-ts",
 	"version": "1.1.0",
 	"description": "A collection of ESLint rules specifically targeted for roblox-ts.",
-	"keywords": [
-		"roblox",
-		"roblox-ts",
-		"eslint-plugin",
-		"rbxts"
-	],
+	"keywords": ["roblox", "roblox-ts", "eslint-plugin", "rbxts"],
 	"homepage": "https://github.com/roblox-ts/eslint-plugin-roblox-ts#readme",
 	"bugs": "https://github.com/roblox-ts/eslint-plugin-roblox-ts/issues",
 	"repository": {
@@ -16,9 +11,7 @@
 	},
 	"license": "MIT",
 	"author": "Christopher Buss <christopher.buss@pm.me> (https://github.com/christopher-buss)",
-	"contributors": [
-		"osyrisrblx (https://github.com/osyrisrblx)"
-	],
+	"contributors": ["osyrisrblx (https://github.com/osyrisrblx)"],
 	"sideEffects": false,
 	"type": "module",
 	"exports": {
@@ -28,9 +21,7 @@
 	"main": "./dist/index.mjs",
 	"module": "./dist/index.mjs",
 	"types": "./dist/index.d.mts",
-	"files": [
-		"dist"
-	],
+	"files": ["dist"],
 	"scripts": {
 		"build": "nr generate:types && tsdown --clean --dts",
 		"create-rule": "tsx scripts/create-rule.ts",
@@ -72,6 +63,7 @@
 		"eslint-8": "catalog:testing",
 		"eslint-doc-generator": "catalog:utils",
 		"eslint-plugin-eslint-plugin": "catalog:testing",
+		"eslint-plugin-n": "catalog:cli",
 		"eslint-plugin-pnpm": "catalog:cli",
 		"eslint-vitest-rule-tester": "catalog:testing",
 		"jiti": "catalog:cli",

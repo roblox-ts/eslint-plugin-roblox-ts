@@ -22,7 +22,7 @@ function create(context: Context): TSESLint.RuleListener {
 
 	return {
 		...(!allowTupleMacro && {
-			'CallExpression[callee.type="Identifier"][callee.name="$tuple"]'(
+			'CallExpression[callee.type="Identifier"][callee.name="$tuple"]': function (
 				node: TSESTree.CallExpression,
 			) {
 				report(context, node.callee, MACRO_VIOLATION, (fixer) =>

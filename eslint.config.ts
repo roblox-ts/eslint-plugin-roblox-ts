@@ -1,9 +1,8 @@
-import style from "@isentinel/eslint-config";
-
-import eslintPlugin from "eslint-plugin-eslint-plugin";
+import style, { GLOB_MARKDOWN } from "@isentinel/eslint-config";
 
 export default style(
 	{
+		eslintPlugin: true,
 		markdown: false,
 		pnpm: true,
 		roblox: false,
@@ -18,23 +17,11 @@ export default style(
 		type: "package",
 	},
 	{
-		ignores: [".eslint-doc-generatorrc.ts", "fixtures/**", "scripts/template/**"],
+		ignores: ["fixtures/**", "scripts/template/**", GLOB_MARKDOWN],
 	},
-	/* eslint-disable ts/no-unsafe-assignment, ts/no-unsafe-argument, ts/no-unsafe-member-access -- No types. */
 	{
-		...eslintPlugin.configs["flat/all-type-checked"],
 		rules: {
-			...eslintPlugin.configs["flat/all-type-checked"].rules,
-			"eslint-plugin/meta-property-ordering": "off",
 			"eslint-plugin/no-meta-schema-default": "off",
-			"eslint-plugin/require-meta-docs-description": [
-				"error",
-				{
-					pattern: "^(Enforce|Require|Disallow).*[^\.!]$",
-				},
-			],
-			"eslint-plugin/require-meta-docs-url": "off",
 		},
 	},
-	/* eslint-enable */
 );

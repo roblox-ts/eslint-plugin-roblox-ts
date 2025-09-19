@@ -102,6 +102,7 @@ export type TSStrictTypeCheckedRules =
 	| "@typescript-eslint/no-unnecessary-template-expression"
 	| "@typescript-eslint/no-unnecessary-type-arguments"
 	| "@typescript-eslint/no-unnecessary-type-assertion"
+	| "@typescript-eslint/no-unnecessary-type-conversion"
 	| "@typescript-eslint/no-unnecessary-type-parameters"
 	| "@typescript-eslint/no-unsafe-argument"
 	| "@typescript-eslint/no-unsafe-assignment"

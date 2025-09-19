@@ -4,6 +4,7 @@ import tseslint from "@typescript-eslint/eslint-plugin";
 
 import { writeFileSync } from "node:fs";
 import { join } from "node:path";
+import process from "node:process";
 
 interface ConfigDefinition {
 	configKey: string;
@@ -58,11 +59,11 @@ function generateFileContent(configs: Record<string, Array<string>>): string {
 
 `;
 
-	const typeDefinitions = CONFIG_DEFINITIONS.map(({ name }) =>
-		generateRuleType(name, configs[name] ?? []),
-	).join("\n\n");
+	const typeDefinitions = CONFIG_DEFINITIONS.map(({ name }) => {
+		return generateRuleType(name, configs[name] ?? []);
+	}).join("\n\n");
 
-	return header + typeDefinitions + "\n";
+	return `${header + typeDefinitions}\n`;
 }
 
 /**
