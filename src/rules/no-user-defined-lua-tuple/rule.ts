@@ -18,7 +18,7 @@ type MessageIds = typeof LUA_TUPLE_VIOLATION | typeof MACRO_VIOLATION;
 type Options = [{ allowTupleMacro?: boolean; shouldFix?: boolean }?];
 
 function create(context: Context): TSESLint.RuleListener {
-	const { allowTupleMacro = false, shouldFix = true } = context.options[0] ?? {};
+	const { allowTupleMacro = false } = context.options[0] ?? {};
 
 	return {
 		...(!allowTupleMacro && {
@@ -39,12 +39,7 @@ function create(context: Context): TSESLint.RuleListener {
 		'TSTypeReference[typeName.name="LuaTuple"][typeName.type="Identifier"]': (
 			node: TSESTree.TSTypeReference,
 		) => {
-			report(
-				context,
-				node.typeName,
-				LUA_TUPLE_VIOLATION,
-				shouldFix ? (fixer) => fixLuaTupleType(node, context, fixer) : null,
-			);
+			handleTypeReference(context, node);
 		},
 	};
 }
@@ -93,6 +88,60 @@ function fixTupleMacroCall(
 	const replacementText = `[${tupleElements}]`;
 
 	return fixer.replaceText(node, replacementText);
+}
+
+function handleTypeReference(context: Context, node: TSESTree.TSTypeReference): void {
+	if (isInDeclareContext(node)) {
+		return;
+	}
+
+	const { shouldFix = true } = context.options[0] ?? {};
+
+	report(
+		context,
+		node.typeName,
+		LUA_TUPLE_VIOLATION,
+		shouldFix ? (fixer) => fixLuaTupleType(node, context, fixer) : null,
+	);
+}
+
+const DECLARE_CONTEXTS = new Set([
+	TSESTree.AST_NODE_TYPES.TSCallSignatureDeclaration,
+	TSESTree.AST_NODE_TYPES.TSDeclareFunction,
+	TSESTree.AST_NODE_TYPES.TSInterfaceDeclaration,
+	TSESTree.AST_NODE_TYPES.TSMethodSignature,
+	TSESTree.AST_NODE_TYPES.TSPropertySignature,
+]);
+
+function hasDeclareProperty(
+	node: TSESTree.Node,
+): node is
+	| TSESTree.ClassDeclaration
+	| TSESTree.FunctionDeclaration
+	| TSESTree.TSDeclareFunction
+	| TSESTree.TSModuleDeclaration {
+	return (
+		node.type === TSESTree.AST_NODE_TYPES.VariableDeclaration ||
+		node.type === TSESTree.AST_NODE_TYPES.FunctionDeclaration ||
+		node.type === TSESTree.AST_NODE_TYPES.ClassDeclaration ||
+		node.type === TSESTree.AST_NODE_TYPES.TSModuleDeclaration
+	);
+}
+
+function isInDeclareContext(node: TSESTree.Node): boolean {
+	let current = node.parent;
+	while (current) {
+		if (
+			DECLARE_CONTEXTS.has(current.type) ||
+			(hasDeclareProperty(current) && current.declare)
+		) {
+			return true;
+		}
+
+		current = current.parent;
+	}
+
+	return false;
 }
 
 function report(

@@ -89,6 +89,6 @@ export const legacyParserConfig = {
  */
 export const recommendedLegacy = {
 	...baseLegacy,
-	...legacyParserConfig,
 	plugins: [PLUGIN_NAME],
+	...legacyParserConfig,
 } satisfies Linter.LegacyConfig;

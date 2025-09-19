@@ -1,5 +1,7 @@
 import { RuleCreator } from "@typescript-eslint/utils/eslint-utils";
 
+export const TYPESCRIPT_FILES = ["**/*/*.?([cm])ts", "**/*/*.?([cm])tsx"];
+
 export interface PluginDocumentation {
 	description: string;
 	recommended?: boolean;

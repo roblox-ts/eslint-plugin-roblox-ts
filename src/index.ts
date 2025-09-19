@@ -26,3 +26,4 @@ type RuleDefinitions = typeof plugin.rules;
 
 export { configs } from "./configs";
 export { legacyParserConfig } from "./configs/recommended";
+export { TYPESCRIPT_FILES } from "./util";
