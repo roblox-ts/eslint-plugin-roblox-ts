@@ -3,7 +3,7 @@ import { eslintCompat, eslintCompatLegacy } from "./eslint-compat";
 import { recommended, recommendedLegacy } from "./recommended";
 import { tsRecommendedCompat, tsRecommendedCompatLegacy } from "./typescript-recommended-compat";
 
-export const configs = {
+const configsWithoutNames = {
 	/**
 	 * ESLint core rules for Roblox-TS compatibility. These rules help prevent
 	 * JavaScript patterns that are incompatible with Roblox-TS.
@@ -103,3 +103,16 @@ export const configs = {
 	 */
 	"tsRecommendedCompat": tsRecommendedCompat as CompatibleConfig,
 };
+
+function convertToKebabCase(str: string): string {
+	return str.replace(
+		/[A-Z]+(?![a-z])|[A-Z]/g,
+		(match, offset: string) => (offset ? "-" : "") + match.toLowerCase(),
+	);
+}
+
+export const configs = Object.fromEntries(
+	Object.entries(configsWithoutNames).map(([key, config]) => {
+		return [key, { ...config, name: `roblox-ts/${convertToKebabCase(key)}` }];
+	}),
+);
