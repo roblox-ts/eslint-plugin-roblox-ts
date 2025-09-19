@@ -23,3 +23,4 @@ export type Rules = {
 type RuleDefinitions = typeof plugin.rules;
 
 export { configs } from "./configs";
+export { TYPESCRIPT_FILES } from "./util";
