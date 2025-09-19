@@ -1,3 +1,4 @@
+import type { CompatibleConfig } from "../utils/compatability-types";
 import { eslintCompat, eslintCompatLegacy } from "./eslint-compat";
 import { recommended, recommendedLegacy } from "./recommended";
 import { tsRecommendedCompat, tsRecommendedCompatLegacy } from "./typescript-recommended-compat";
@@ -16,7 +17,7 @@ export const configs = {
 	 * export default [{ rules: robloxTs.configs.eslintCompat }];
 	 * ```
 	 */
-	eslintCompat,
+	"eslintCompat": eslintCompat as CompatibleConfig,
 
 	/**
 	 * ESLint core rules for Roblox-TS compatibility. These rules help prevent
@@ -31,7 +32,7 @@ export const configs = {
 	 * };
 	 * ```
 	 */
-	eslintCompatLegacy,
+	"eslintCompatLegacy": eslintCompatLegacy as CompatibleConfig,
 
 	/**
 	 * Recommended configuration for ESLint v9+ (flat config). Enables all
@@ -46,7 +47,7 @@ export const configs = {
 	 * export default [roblox.configs.recommended];
 	 * ```
 	 */
-	recommended,
+	"recommended": recommended as CompatibleConfig,
 
 	/**
 	 * Recommended configuration for legacy ESLint v8. Enables all plugin rules.
@@ -60,7 +61,7 @@ export const configs = {
 	 * };
 	 * ```
 	 */
-	"recommended-legacy": recommendedLegacy,
+	"recommended-legacy": recommendedLegacy as CompatibleConfig,
 
 	/**
 	 * Configuration for legacy ESLint v8 that provides TypeScript ESLint
@@ -79,7 +80,7 @@ export const configs = {
 	 * };
 	 * ```
 	 */
-	"ts-recommended-compat-legacy": tsRecommendedCompatLegacy,
+	"ts-recommended-compat-legacy": tsRecommendedCompatLegacy as CompatibleConfig,
 
 	/**
 	 * Configuration for ESLint v9+ (flat config) that provides TypeScript
@@ -100,5 +101,5 @@ export const configs = {
 	 * ];
 	 * ```
 	 */
-	tsRecommendedCompat,
+	"tsRecommendedCompat": tsRecommendedCompat as CompatibleConfig,
 };

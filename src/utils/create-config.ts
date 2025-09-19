@@ -3,14 +3,13 @@ import type { FlatConfig } from "@typescript-eslint/utils/ts-eslint";
 import type { Linter } from "eslint";
 
 import { ESLINT_COMPAT } from "../configs/eslint-compat";
+import { TYPESCRIPT_FILES } from "../util";
 import type { Prettify } from "./types";
 
 interface CreateConfigResult<T extends Linter.RulesRecord = Linter.RulesRecord> {
 	flat: FlatConfig.Config & { rules: Prettify<T & typeof ESLINT_COMPAT> };
 	legacy: Linter.LegacyConfig & { rules: Prettify<T & typeof ESLINT_COMPAT> };
 }
-
-const TYPESCRIPT_FILES = ["**/*/*.?([cm])ts", "**/*/*.?([cm])tsx"];
 
 /**
  * Creates both flat and legacy ESLint configurations with Roblox-TS
