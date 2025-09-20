@@ -1,6 +1,7 @@
 #!/usr/bin/env tsx
 import { execSync } from "node:child_process";
 import { join } from "node:path";
+import process from "node:process";
 
 interface ESLintMessage {
 	column: number;

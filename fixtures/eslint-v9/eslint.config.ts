@@ -1,25 +1,14 @@
 // ESLint v9 Flat Config
+// Requires @typescript-eslint/parser >=8.0.0
 import js from '@eslint/js';
 import typescript from '@typescript-eslint/eslint-plugin';
-import parser from '@typescript-eslint/parser';
 import robloxTs from 'eslint-plugin-roblox-ts';
 
 export default [
   js.configs.recommended,
+  // Use the recommended config which now includes parser configuration
   robloxTs.configs.recommended,
   {
-    files: ['**/*.ts', '**/*.tsx'],
-    languageOptions: {
-      parser: parser,
-      parserOptions: {
-        ecmaVersion: 'latest',
-        sourceType: 'module',
-        projectService: {
-					allowDefaultProject: ["*.ts"],
-					defaultProject: "./tsconfig.json",
-				},
-      },
-    },
     plugins: {
       '@typescript-eslint': typescript,
     },

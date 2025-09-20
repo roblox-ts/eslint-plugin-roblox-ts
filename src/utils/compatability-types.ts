@@ -8,3 +8,16 @@ export interface CompatibleConfig {
 }
 
 export type CompatibleConfigArray = Array<CompatibleConfig>;
+
+export interface CompatibleParser {
+	parseForESLint(text: string): {
+		ast: unknown;
+		scopeManager: unknown;
+	};
+}
+
+export interface CompatiblePlugin {
+	meta: {
+		name: string;
+	};
+}
