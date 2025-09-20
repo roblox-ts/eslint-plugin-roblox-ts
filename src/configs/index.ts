@@ -113,6 +113,10 @@ function convertToKebabCase(str: string): string {
 
 export const configs = Object.fromEntries(
 	Object.entries(configsWithoutNames).map(([key, config]) => {
+		if (key.toLowerCase().includes("legacy")) {
+			return [key, { ...config }];
+		}
+
 		return [key, { ...config, name: `roblox-ts/${convertToKebabCase(key)}` }];
 	}),
 );
