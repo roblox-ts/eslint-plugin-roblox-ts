@@ -80,7 +80,7 @@
 	"peerDependencies": {
 		"@typescript-eslint/parser": ">=6.0.0",
 		"eslint": ">=8.0.0",
-		"typescript": ">=5.2.0 <5.9.0"
+		"typescript": ">=5.2.0"
 	},
 	"packageManager": "pnpm@10.14.0",
 	"engines": {
