@@ -13,7 +13,7 @@ catalogs:
       specifier: 3.2.2
       version: 3.2.2
     '@roblox-ts/luau-ast':
-      specifier: ^2.0.0
+      specifier: 2.0.0
       version: 2.0.0
     '@typescript-eslint/eslint-plugin':
       specifier: 8.45.0

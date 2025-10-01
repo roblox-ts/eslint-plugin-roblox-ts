@@ -1,6 +1,7 @@
-import LuauAst from "@roblox-ts/luau-ast";
 import type { TSESLint, TSESTree } from "@typescript-eslint/utils";
 import { AST_NODE_TYPES } from "@typescript-eslint/utils";
+
+import { createRequire } from "node:module";
 
 import { createEslintRule } from "../../util";
 
@@ -21,6 +22,9 @@ const LUAU_KEYWORDS = new Set([
 	"then",
 	"until",
 ]);
+
+const require = createRequire(import.meta.url);
+const { default: LuauAst } = require("@roblox-ts/luau-ast") as typeof import("@roblox-ts/luau-ast");
 
 const RESERVED_KEYWORDS = new Set(Object.keys(LuauAst.globals));
 
