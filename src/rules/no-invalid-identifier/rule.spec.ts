@@ -67,8 +67,19 @@ const invalidCharacters: Array<InvalidTestCase> = ["let $path = 5;", "const π =
 	},
 );
 
+const invalidReserved: Array<InvalidTestCase> = [
+	"const next = true;",
+	"const pairs = () => {};",
+	"const setmetatable = {};",
+].map((testCase) => {
+	return {
+		code: testCase.toString(),
+		errors: [{ messageId: "reserved-identifier" }],
+	};
+});
+
 run({
-	invalid: [...invalidIdentifier, ...invalidCharacters],
+	invalid: [...invalidIdentifier, ...invalidCharacters, ...invalidReserved],
 	name: RULE_NAME,
 	rule: noInvalidIdentifier,
 	valid,

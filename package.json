@@ -47,6 +47,7 @@
 		"eslint-plugin-roblox-ts": "workspace:*"
 	},
 	"dependencies": {
+		"@roblox-ts/luau-ast": "catalog:cli",
 		"@typescript-eslint/type-utils": "catalog:cli",
 		"@typescript-eslint/utils": "catalog:cli"
 	},

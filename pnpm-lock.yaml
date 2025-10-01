@@ -12,12 +12,15 @@ catalogs:
     '@isentinel/eslint-config':
       specifier: 3.2.2
       version: 3.2.2
+    '@roblox-ts/luau-ast':
+      specifier: ^2.0.0
+      version: 2.0.0
     '@typescript-eslint/eslint-plugin':
       specifier: 8.45.0
-      version: 8.44.0
+      version: 8.45.0
     '@typescript-eslint/parser':
       specifier: 8.45.0
-      version: 8.44.0
+      version: 8.45.0
     '@typescript-eslint/type-utils':
       specifier: 8.45.0
       version: 8.45.0
@@ -29,7 +32,7 @@ catalogs:
       version: 10.2.3
     eslint:
       specifier: 9.36.0
-      version: 9.30.0
+      version: 9.36.0
     eslint-plugin-n:
       specifier: 17.23.1
       version: 17.23.1
@@ -98,6 +101,9 @@ importers:
 
   .:
     dependencies:
+      '@roblox-ts/luau-ast':
+        specifier: catalog:cli
+        version: 2.0.0
       '@typescript-eslint/type-utils':
         specifier: catalog:cli
         version: 8.45.0(eslint@9.36.0(jiti@2.6.1))(typescript@5.8.3)
@@ -1138,6 +1144,9 @@ packages:
 
   '@rbxts/types@1.0.884':
     resolution: {integrity: sha512-Y78wZYQRy49wvsZbPd+nN63zPqY2T03Ps5jCn6aT03ZRtWVRw14jjoUl5CQY0e+CpZWddsajNmKI/X3bRP0Ljg==}
+
+  '@roblox-ts/luau-ast@2.0.0':
+    resolution: {integrity: sha512-cmMi093IdwBOLVxwuordhM8AmtbyTIyRpsTbB0D/JauidW4SXsQRQowSwWjHo4QP0DRJBXvOIlxtqEQi50uNzQ==}
 
   '@rolldown/binding-android-arm64@1.0.0-beta.41':
     resolution: {integrity: sha512-Edflndd9lU7JVhVIvJlZhdCj5DkhYDJPIRn4Dx0RUdfc8asP9xHOI5gMd8MesDDx+BJpdIT/uAmVTearteU/mQ==}
@@ -4902,6 +4911,11 @@ snapshots:
       eslint: 9.36.0(jiti@2.6.1)
       ignore: 5.3.2
 
+  '@eslint-community/eslint-utils@4.7.0(eslint@8.57.1)':
+    dependencies:
+      eslint: 8.57.1
+      eslint-visitor-keys: 3.4.3
+
   '@eslint-community/eslint-utils@4.7.0(eslint@9.30.0(jiti@2.6.1))':
     dependencies:
       eslint: 9.30.0(jiti@2.6.1)
@@ -5243,6 +5257,8 @@ snapshots:
   '@rbxts/compiler-types@3.0.0-types.0': {}
 
   '@rbxts/types@1.0.884': {}
+
+  '@roblox-ts/luau-ast@2.0.0': {}
 
   '@rolldown/binding-android-arm64@1.0.0-beta.41':
     optional: true
@@ -7285,7 +7301,7 @@ snapshots:
 
   eslint@8.57.1:
     dependencies:
-      '@eslint-community/eslint-utils': 4.7.0(eslint@9.36.0(jiti@2.6.1))
+      '@eslint-community/eslint-utils': 4.7.0(eslint@8.57.1)
       '@eslint-community/regexpp': 4.12.1
       '@eslint/eslintrc': 2.1.4
       '@eslint/js': 8.57.1
