@@ -1,11 +1,15 @@
 import type { TSESLint, TSESTree } from "@typescript-eslint/utils";
 import { AST_NODE_TYPES } from "@typescript-eslint/utils";
 
+import { createRequire } from "node:module";
+
 import { createEslintRule } from "../../util";
 
 export const RULE_NAME = "no-invalid-identifier";
 
-const BANNED_KEYWORDS = new Set([
+const LUAU_IDENTIFIER_REGEX = /^[A-Za-z_][A-Za-z0-9_]*$/;
+
+const LUAU_KEYWORDS = new Set([
 	"and",
 	"elseif",
 	"end",
@@ -19,16 +23,22 @@ const BANNED_KEYWORDS = new Set([
 	"until",
 ]);
 
-const LUAU_IDENTIFIER_REGEX = /^[A-Za-z_][A-Za-z0-9_]*$/;
+const require = createRequire(import.meta.url);
+const { default: LuauAst } = require("@roblox-ts/luau-ast") as typeof import("@roblox-ts/luau-ast");
+
+const RESERVED_KEYWORDS = new Set(Object.keys(LuauAst.globals));
 
 const INVALID_CHARACTERS = "invalid-characters";
 const INVALID_IDENTIFIER = "invalid-identifier";
+const RESERVED_IDENTIFIER = "reserved-identifier";
 
 const messages = {
 	[INVALID_CHARACTERS]:
 		"Identifier '{{ identifier }}' contains invalid characters. Only letters, digits, and underscores are allowed.",
 	[INVALID_IDENTIFIER]:
 		"Avoid using '{{ identifier }}' as an identifier, as it is a reserved keyword in Luau.",
+	[RESERVED_IDENTIFIER]:
+		"Avoid using '{{ identifier }}' as an identifier, as it is a reserved for usage by the roblox-ts compiler.",
 };
 
 type ExpressionDeclarationNodes =
@@ -74,6 +84,18 @@ function create(context: Readonly<TSESLint.RuleContext<string, []>>): TSESLint.R
 	};
 }
 
+function getMessageId(name: string): string {
+	if (LUAU_KEYWORDS.has(name)) {
+		return INVALID_IDENTIFIER;
+	}
+
+	if (RESERVED_KEYWORDS.has(name)) {
+		return RESERVED_IDENTIFIER;
+	}
+
+	return INVALID_CHARACTERS;
+}
+
 function isImportAlias(node: TSESTree.ImportDeclaration): boolean {
 	for (const specifier of node.specifiers) {
 		if (
@@ -89,7 +111,9 @@ function isImportAlias(node: TSESTree.ImportDeclaration): boolean {
 }
 
 function isRestricted(name: string): boolean {
-	return BANNED_KEYWORDS.has(name) || !LUAU_IDENTIFIER_REGEX.test(name);
+	return (
+		LUAU_KEYWORDS.has(name) || RESERVED_KEYWORDS.has(name) || !LUAU_IDENTIFIER_REGEX.test(name)
+	);
 }
 
 function validateIdentifier(
@@ -104,7 +128,7 @@ function validateIdentifier(
 
 	context.report({
 		data: { identifier: name },
-		messageId: BANNED_KEYWORDS.has(name) ? INVALID_IDENTIFIER : INVALID_CHARACTERS,
+		messageId: getMessageId(name),
 		node,
 	});
 }
