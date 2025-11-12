@@ -1,7 +1,7 @@
 import type { GenerateOptions } from "eslint-doc-generator";
 
 const config: GenerateOptions = {
-	ignoreConfig: ["recommended"],
+	ignoreConfig: ["recommended", "recommended-legacy"],
 	ignoreDeprecatedRules: true,
 	pathRuleDoc: "./src/rules/{name}/documentation.md",
 	pathRuleList: "./README.md",
