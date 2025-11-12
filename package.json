@@ -53,6 +53,7 @@
 	},
 	"devDependencies": {
 		"@antfu/ni": "catalog:cli",
+		"@antfu/utils": "catalog:testing",
 		"@isentinel/eslint-config": "catalog:cli",
 		"@rbxts/compiler-types": "catalog:types",
 		"@rbxts/types": "catalog:types",
@@ -83,7 +84,7 @@
 		"eslint": ">=8.0.0",
 		"typescript": ">=5.2.0"
 	},
-	"packageManager": "pnpm@10.17.1+sha512.17c560fca4867ae9473a3899ad84a88334914f379be46d455cbf92e5cf4b39d34985d452d2583baf19967fa76cb5c17bc9e245529d0b98745721aa7200ecaf7a",
+	"packageManager": "pnpm@10.22.0+sha512.bf049efe995b28f527fd2b41ae0474ce29186f7edcb3bf545087bd61fbbebb2bf75362d1307fda09c2d288e1e499787ac12d4fcb617a974718a6051f2eee741c",
 	"engines": {
 		"node": "^18.18.0 || ^20.9.0 || >=22.5.1"
 	},

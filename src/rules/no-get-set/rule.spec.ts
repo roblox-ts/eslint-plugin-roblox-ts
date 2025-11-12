@@ -1,5 +1,7 @@
 // cspell:ignore getvalue, setvalue, getprop, setprop, setstatic, getstatic
-import { type InvalidTestCase, unindent, type ValidTestCase } from "eslint-vitest-rule-tester";
+import { unindent } from "@antfu/utils";
+
+import type { InvalidTestCase, ValidTestCase } from "eslint-vitest-rule-tester";
 import { expect } from "vitest";
 
 import { run } from "../test";
