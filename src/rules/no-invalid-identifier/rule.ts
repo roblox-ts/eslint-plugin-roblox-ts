@@ -7,22 +7,6 @@ import { createEslintRule } from "../../util";
 
 export const RULE_NAME = "no-invalid-identifier";
 
-const LUAU_IDENTIFIER_REGEX = /^[A-Za-z_][A-Za-z0-9_]*$/;
-
-const LUAU_KEYWORDS = new Set([
-	"and",
-	"elseif",
-	"end",
-	"error",
-	"local",
-	"nil",
-	"not",
-	"or",
-	"repeat",
-	"then",
-	"until",
-]);
-
 const require = createRequire(import.meta.url);
 const { default: LuauAst } = require("@roblox-ts/luau-ast") as typeof import("@roblox-ts/luau-ast");
 
@@ -85,7 +69,7 @@ function create(context: Readonly<TSESLint.RuleContext<string, []>>): TSESLint.R
 }
 
 function getMessageId(name: string): string {
-	if (LUAU_KEYWORDS.has(name)) {
+	if (LuauAst.LUAU_RESERVED_KEYWORDS.has(name)) {
 		return INVALID_IDENTIFIER;
 	}
 
@@ -112,7 +96,9 @@ function isImportAlias(node: TSESTree.ImportDeclaration): boolean {
 
 function isRestricted(name: string): boolean {
 	return (
-		LUAU_KEYWORDS.has(name) || RESERVED_KEYWORDS.has(name) || !LUAU_IDENTIFIER_REGEX.test(name)
+		LuauAst.LUAU_RESERVED_KEYWORDS.has(name) ||
+		RESERVED_KEYWORDS.has(name) ||
+		!LuauAst.LUAU_IDENTIFIER_REGEX.test(name)
 	);
 }
 

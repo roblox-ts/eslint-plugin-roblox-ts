@@ -6,7 +6,7 @@ catalogs:
   cli:
     "@antfu/ni": 26.1.0
     "@isentinel/eslint-config": 4.2.2
-    "@roblox-ts/luau-ast": 2.0.0
+    "@roblox-ts/luau-ast": 2.0.1
     "@typescript-eslint/eslint-plugin": 8.46.4
     "@typescript-eslint/parser": 8.46.4
     "@typescript-eslint/type-utils": 8.46.4

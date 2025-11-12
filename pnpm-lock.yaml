@@ -13,8 +13,8 @@ catalogs:
       specifier: 4.2.2
       version: 4.2.2
     '@roblox-ts/luau-ast':
-      specifier: 2.0.0
-      version: 2.0.0
+      specifier: 2.0.1
+      version: 2.0.1
     '@typescript-eslint/eslint-plugin':
       specifier: 8.46.4
       version: 8.44.0
@@ -106,7 +106,7 @@ importers:
     dependencies:
       '@roblox-ts/luau-ast':
         specifier: catalog:cli
-        version: 2.0.0
+        version: 2.0.1
       '@typescript-eslint/type-utils':
         specifier: catalog:cli
         version: 8.46.4(eslint@9.30.0(jiti@2.6.1))(typescript@5.8.3)
@@ -1025,8 +1025,8 @@ packages:
   '@rbxts/types@1.0.884':
     resolution: {integrity: sha512-Y78wZYQRy49wvsZbPd+nN63zPqY2T03Ps5jCn6aT03ZRtWVRw14jjoUl5CQY0e+CpZWddsajNmKI/X3bRP0Ljg==}
 
-  '@roblox-ts/luau-ast@2.0.0':
-    resolution: {integrity: sha512-cmMi093IdwBOLVxwuordhM8AmtbyTIyRpsTbB0D/JauidW4SXsQRQowSwWjHo4QP0DRJBXvOIlxtqEQi50uNzQ==}
+  '@roblox-ts/luau-ast@2.0.1':
+    resolution: {integrity: sha512-jej2mzRGwhR9wu4woAtgTwqsKADlegZYlQ+M5qVHRojvjoyJVFkLrSbhBKRr8HR+fVW5nCz0qX7kNa0tSpAY+A==}
 
   '@rolldown/binding-android-arm64@1.0.0-beta.50':
     resolution: {integrity: sha512-XlEkrOIHLyGT3avOgzfTFSjG+f+dZMw+/qd+Y3HLN86wlndrB/gSimrJCk4gOhr1XtRtEKfszpadI3Md4Z4/Ag==}
@@ -5134,7 +5134,7 @@ snapshots:
 
   '@rbxts/types@1.0.884': {}
 
-  '@roblox-ts/luau-ast@2.0.0': {}
+  '@roblox-ts/luau-ast@2.0.1': {}
 
   '@rolldown/binding-android-arm64@1.0.0-beta.50':
     optional: true
