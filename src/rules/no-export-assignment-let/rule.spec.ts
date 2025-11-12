@@ -1,4 +1,6 @@
-import { type InvalidTestCase, unindent, type ValidTestCase } from "eslint-vitest-rule-tester";
+import { unindent } from "@antfu/utils";
+
+import type { InvalidTestCase, ValidTestCase } from "eslint-vitest-rule-tester";
 
 import { run } from "../test";
 import { noExportAssignableLet, RULE_NAME } from "./rule";
