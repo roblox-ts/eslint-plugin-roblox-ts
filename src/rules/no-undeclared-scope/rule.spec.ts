@@ -7,6 +7,7 @@ import { run } from "../test";
 import { noUndeclaredScope, RULE_NAME } from "./rule";
 
 const UNDECLARED_SCOPE = "undeclaredScope";
+const SCOPE_NOT_FOUND = "scopeNotFound";
 
 const valid: Array<ValidTestCase> = [
 	// Imports from @rbxts scope (allowed by fixtures/tsconfig.json)
@@ -201,6 +202,69 @@ const invalid: Array<InvalidTestCase> = [
 			expect(errors).toHaveLength(2);
 			expect(errors[0]!.messageId).toBe(UNDECLARED_SCOPE);
 			expect(errors[1]!.messageId).toBe(UNDECLARED_SCOPE);
+		},
+	},
+
+	// Scope declared in typeRoots but not installed
+	{
+		code: 'import { Something } from "@missing/package";',
+		errors(errors) {
+			expect(errors).toHaveLength(1);
+			expect(errors[0]!.messageId).toBe(SCOPE_NOT_FOUND);
+		},
+	},
+
+	// Multiple imports from scope that is declared but not found
+	{
+		code: unindent`
+			import { Something } from "@missing/package";
+			import { Another } from "@missing/other-package";
+		`,
+		errors(errors) {
+			expect(errors).toHaveLength(2);
+			expect(errors[0]!.messageId).toBe(SCOPE_NOT_FOUND);
+			expect(errors[1]!.messageId).toBe(SCOPE_NOT_FOUND);
+		},
+	},
+
+	// Type import from missing scope
+	{
+		code: 'import type { Config } from "@missing/config";',
+		errors(errors) {
+			expect(errors).toHaveLength(1);
+			expect(errors[0]!.messageId).toBe(SCOPE_NOT_FOUND);
+		},
+	},
+
+	// Export from missing scope
+	{
+		code: 'export { Something } from "@missing/package";',
+		errors(errors) {
+			expect(errors).toHaveLength(1);
+			expect(errors[0]!.messageId).toBe(SCOPE_NOT_FOUND);
+		},
+	},
+
+	// Dynamic import from missing scope
+	{
+		code: 'const missing = await import("@missing/package");',
+		errors(errors) {
+			expect(errors).toHaveLength(1);
+			expect(errors[0]!.messageId).toBe(SCOPE_NOT_FOUND);
+		},
+	},
+
+	// Mixed: valid scope, undeclared scope, and missing scope
+	{
+		code: unindent`
+			import { Players } from "@rbxts/services";
+			import { Flamework } from "@flamework/core";
+			import { Something } from "@missing/package";
+		`,
+		errors(errors) {
+			expect(errors).toHaveLength(2);
+			expect(errors[0]!.messageId).toBe(UNDECLARED_SCOPE);
+			expect(errors[1]!.messageId).toBe(SCOPE_NOT_FOUND);
 		},
 	},
 ];

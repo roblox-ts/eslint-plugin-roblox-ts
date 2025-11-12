@@ -2,29 +2,40 @@ import type { TSESLint, TSESTree } from "@typescript-eslint/utils";
 import { AST_NODE_TYPES } from "@typescript-eslint/utils";
 import { getParserServices } from "@typescript-eslint/utils/eslint-utils";
 
+import { existsSync } from "node:fs";
+import { dirname, resolve } from "node:path";
+
 import { createEslintRule } from "../../util";
 
 export const RULE_NAME = "no-undeclared-scope";
 
 const UNDECLARED_SCOPE = "undeclaredScope";
+const SCOPE_NOT_FOUND = "scopeNotFound";
 
 const messages = {
+	[SCOPE_NOT_FOUND]: "Scope {{scope}} is declared in typeRoots but was not found at {{path}}.",
 	[UNDECLARED_SCOPE]: "You can only use npm scopes that are listed in your typeRoots.",
 };
 
 /**
- * Build a set of allowed scopes from typeRoots configuration.
+ * Build a map of allowed scopes from typeRoots configuration.
  *
  * @param typeRoots - The typeRoots from compiler options.
- * @returns Set of allowed npm scopes.
+ * @param baseDirectory - The base directory to resolve relative paths.
+ * @returns Map of allowed npm scopes to their resolved paths.
  */
-function buildAllowedScopes(typeRoots: ReadonlyArray<string> | undefined): Set<string> {
-	const allowedScopes = new Set<string>();
+function buildAllowedScopes(
+	typeRoots: ReadonlyArray<string> | undefined,
+	baseDirectory: string,
+): Map<string, string> {
+	const allowedScopes = new Map<string, string>();
 	if (typeRoots !== undefined && typeRoots.length > 0) {
 		for (const root of typeRoots) {
 			const match = root.match(/@([^/\\]+)$/);
 			if (match !== null) {
-				allowedScopes.add(`@${match[1]}`);
+				const scope = `@${match[1]}`;
+				const resolvedPath = resolve(baseDirectory, root);
+				allowedScopes.set(scope, resolvedPath);
 			}
 		}
 	}
@@ -35,13 +46,13 @@ function buildAllowedScopes(typeRoots: ReadonlyArray<string> | undefined): Set<s
 /**
  * Check if the module source is allowed based on typeRoots.
  *
- * @param allowedScopes - Set of allowed scopes.
+ * @param allowedScopes - Map of allowed scopes to their resolved paths.
  * @param node - The AST node.
  * @param source - The module source string.
  * @param context - The ESLint rule context.
  */
 function checkModuleSource(
-	allowedScopes: Set<string>,
+	allowedScopes: Map<string, string>,
 	node: TSESTree.Node,
 	source: string,
 	context: Readonly<TSESLint.RuleContext<string, []>>,
@@ -55,9 +66,19 @@ function checkModuleSource(
 		return;
 	}
 
-	if (!allowedScopes.has(scope)) {
+	const scopePath = allowedScopes.get(scope);
+
+	// If scope is not in typeRoots, report undeclared scope error
+	if (scopePath === undefined) {
+		context.report({ messageId: UNDECLARED_SCOPE, node });
+		return;
+	}
+
+	// If scope is in typeRoots, check if the directory exists
+	if (!existsSync(scopePath)) {
 		context.report({
-			messageId: UNDECLARED_SCOPE,
+			data: { path: scopePath, scope },
+			messageId: SCOPE_NOT_FOUND,
 			node,
 		});
 	}
@@ -66,7 +87,13 @@ function checkModuleSource(
 function create(context: Readonly<TSESLint.RuleContext<string, []>>): TSESLint.RuleListener {
 	const parserServices = getParserServices(context);
 	const compilerOptions = parserServices.program.getCompilerOptions();
-	const allowedScopes = buildAllowedScopes(compilerOptions.typeRoots);
+
+	// Get the base directory from the tsconfig location
+	const { configFilePath, typeRoots } = compilerOptions;
+	const baseDirectory =
+		typeof configFilePath === "string" ? dirname(configFilePath) : context.getCwd();
+
+	const allowedScopes = buildAllowedScopes(typeRoots, baseDirectory);
 
 	return {
 		ExportAllDeclaration(node: TSESTree.ExportAllDeclaration) {
