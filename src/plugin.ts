@@ -20,6 +20,7 @@ import { noObjectMath } from "./rules/no-object-math/rule";
 import { noPostFixNew } from "./rules/no-post-fix-new/rule";
 import { noPrecedingSpreadElement } from "./rules/no-preceding-spread-element/rule";
 import { noPrivateIdentifier } from "./rules/no-private-identifier/rule";
+import { noUndeclaredScope } from "./rules/no-undeclared-scope/rule";
 import { noUnsupportedSyntax } from "./rules/no-unsupported-syntax/rule";
 import { noUserDefinedLuaTuple } from "./rules/no-user-defined-lua-tuple/rule";
 import { noValueTypeof } from "./rules/no-value-typeof/rule";
@@ -68,6 +69,7 @@ export const plugin = {
 		"no-post-fix-new": noPostFixNew,
 		"no-preceding-spread-element": noPrecedingSpreadElement,
 		"no-private-identifier": noPrivateIdentifier,
+		"no-undeclared-scope": noUndeclaredScope,
 		"no-unsupported-syntax": noUnsupportedSyntax,
 		"no-user-defined-lua-tuple": noUserDefinedLuaTuple,
 		"no-value-typeof": noValueTypeof,

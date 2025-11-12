@@ -3,7 +3,7 @@
 		"target": "ESNext",
 		"module": "ESNext",
 		"moduleResolution": "Bundler",
-		"typeRoots": ["../node_modules/@rbxts"],
+		"typeRoots": ["${configDir}/../node_modules/@rbxts", "${configDir}/../node_modules/@missing"],
 		"strict": true,
 		"skipLibCheck": true
 	},
