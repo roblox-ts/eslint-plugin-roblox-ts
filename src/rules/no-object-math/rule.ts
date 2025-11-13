@@ -546,19 +546,19 @@ function processMathOperation({
 function reportViolation(violationContext: ViolationContext): void {
 	const { context, macroName, node, operator, shouldSwap = false, type } = violationContext;
 
+	const data = {
+		method: macroName ?? "UNKNOWN",
+		operator,
+	};
+
 	if (type === "unsupported") {
 		context.report({
+			data,
 			messageId: OTHER_VIOLATION,
 			node,
 		});
 		return;
 	}
-
-	// For math-operation and unary-operation types
-	const data = {
-		method: macroName ?? "mul",
-		operator,
-	};
 
 	context.report({
 		data,
@@ -566,7 +566,7 @@ function reportViolation(violationContext: ViolationContext): void {
 			return createOperatorFix({
 				context,
 				fixer,
-				macroName: macroName ?? "mul",
+				macroName: macroName ?? "UNKNOWN",
 				node,
 				shouldSwap,
 			});
