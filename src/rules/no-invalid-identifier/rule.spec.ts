@@ -47,7 +47,6 @@ const invalidIdentifier: Array<InvalidTestCase> = [
 	"class end {}",
 	"enum elseif { A, B }",
 	"try { /* ... */ } catch (local) { /* ... */ }",
-	"Promise.try(() => {}).catch(error => { /* ... */ });",
 	"namespace local {}",
 	"let local = 5; local = 10; local = 15; local = 20;",
 	"const local = class {};",
@@ -71,6 +70,7 @@ const invalidReserved: Array<InvalidTestCase> = [
 	"const next = true;",
 	"const pairs = () => {};",
 	"const setmetatable = {};",
+	"Promise.try(() => {}).catch(error => { /* ... */ });",
 ].map((testCase) => {
 	return {
 		code: testCase.toString(),
