@@ -79,4 +79,4 @@ export const plugin = {
 	},
 } satisfies TSESLint.FlatConfig.Plugin;
 
-export const allRules = getRules(PLUGIN_NAME, plugin.rules);
+export const allRules: Linter.RulesRecord = getRules(PLUGIN_NAME, plugin.rules);

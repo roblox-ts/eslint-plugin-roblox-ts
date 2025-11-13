@@ -13,6 +13,6 @@
     "@typescript-eslint/parser": "catalog:cli",
     "eslint": "^8.57.0",
     "eslint-plugin-roblox-ts": "workspace:*",
-    "typescript": "catalog:cli"
+    "typescript": "catalog:tsc"
   }
 }

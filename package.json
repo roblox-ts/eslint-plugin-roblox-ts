@@ -55,6 +55,7 @@
 		"@antfu/ni": "catalog:cli",
 		"@antfu/utils": "catalog:testing",
 		"@isentinel/eslint-config": "catalog:cli",
+		"@isentinel/tsconfig": "catalog:tsc",
 		"@rbxts/compiler-types": "catalog:types",
 		"@rbxts/types": "catalog:types",
 		"@types/node": "catalog:types",
@@ -75,7 +76,7 @@
 		"ts-api-utils": "catalog:cli",
 		"tsdown": "catalog:cli",
 		"tsx": "catalog:cli",
-		"typescript": "catalog:cli",
+		"typescript": "catalog:tsc",
 		"unplugin-unused": "catalog:testing",
 		"vitest": "catalog:testing"
 	},
