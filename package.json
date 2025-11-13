@@ -1,6 +1,6 @@
 {
 	"name": "eslint-plugin-roblox-ts",
-	"version": "1.2.1",
+	"version": "1.3.0",
 	"description": "A collection of ESLint rules specifically targeted for roblox-ts.",
 	"keywords": ["roblox", "roblox-ts", "eslint-plugin", "rbxts"],
 	"homepage": "https://github.com/roblox-ts/eslint-plugin-roblox-ts#readme",
