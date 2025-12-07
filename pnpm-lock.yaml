@@ -81,8 +81,8 @@ catalogs:
       version: 4.0.8
   tsc:
     '@isentinel/tsconfig':
-      specifier: 1.0.0
-      version: 1.0.0
+      specifier: 1.1.0
+      version: 1.1.0
     typescript:
       specifier: 5.9.3
       version: 5.9.3
@@ -129,7 +129,7 @@ importers:
         version: 4.2.2(@types/eslint@9.6.1)(@types/estree@1.0.8)(@typescript-eslint/utils@8.46.4(eslint@9.39.1(jiti@2.6.1))(typescript@5.9.3))(eslint-plugin-eslint-plugin@7.2.0(eslint@9.39.1(jiti@2.6.1)))(eslint-plugin-import@2.32.0(@typescript-eslint/parser@8.46.4(eslint@9.39.1(jiti@2.6.1))(typescript@5.9.3))(eslint@9.39.1(jiti@2.6.1)))(eslint-plugin-jest@28.14.0(@typescript-eslint/eslint-plugin@8.46.4(@typescript-eslint/parser@8.46.4(eslint@9.39.1(jiti@2.6.1))(typescript@5.9.3))(eslint@9.39.1(jiti@2.6.1))(typescript@5.9.3))(eslint@9.39.1(jiti@2.6.1))(typescript@5.9.3))(eslint-plugin-n@17.23.1(eslint@9.39.1(jiti@2.6.1))(typescript@5.9.3))(eslint-plugin-react-naming-convention@2.3.5(eslint@9.39.1(jiti@2.6.1))(typescript@5.9.3))(eslint@9.39.1(jiti@2.6.1))(typescript@5.9.3)
       '@isentinel/tsconfig':
         specifier: catalog:tsc
-        version: 1.0.0(typescript@5.9.3)
+        version: 1.1.0(typescript@5.9.3)
       '@rbxts/compiler-types':
         specifier: catalog:types
         version: 3.0.0-types.0
@@ -1026,8 +1026,8 @@ packages:
   '@isentinel/stylua@2.1.0-esm.3':
     resolution: {integrity: sha512-thwx7ptSzSGOZhzhxWD6cLOSYesk+5U3Ia/RzMrFc9djpv7LXe0spGCxJ/tWfYdJfg1ryU89rubdhhYxVlyMQg==}
 
-  '@isentinel/tsconfig@1.0.0':
-    resolution: {integrity: sha512-ENj7nEUeC1luRJ2t1QTwCyE5nRorF/kKH2xtnbFYlKCt/ILb3w1jJpwk6cgZhXPq8VEMvtEMeniHOyUwyloHvA==}
+  '@isentinel/tsconfig@1.1.0':
+    resolution: {integrity: sha512-gkhUmcyyVBM8SO76K/jit2TKi55LcjEb2KORVyEVJPf9en3KHzU+FDrzkCp7pdv0kPdFvcD4tFGfF9ftIM908g==}
     engines: {node: '>=18.0.0'}
     peerDependencies:
       typescript: ^5.5.0
@@ -5391,7 +5391,7 @@ snapshots:
     dependencies:
       rollup: 4.44.2
 
-  '@isentinel/tsconfig@1.0.0(typescript@5.9.3)':
+  '@isentinel/tsconfig@1.1.0(typescript@5.9.3)':
     dependencies:
       typescript: 5.9.3
 
