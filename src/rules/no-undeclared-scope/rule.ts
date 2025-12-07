@@ -17,6 +17,11 @@ const messages = {
 	[UNDECLARED_SCOPE]: "You can only use npm scopes that are listed in your typeRoots.",
 };
 
+interface ScopeConfig {
+	allowedScopes: Map<string, string>;
+	pathAliasScopes: Set<string>;
+}
+
 /**
  * Build a map of allowed scopes from typeRoots configuration.
  *
@@ -44,18 +49,52 @@ function buildAllowedScopes(
 }
 
 /**
- * Check if the module source is allowed based on typeRoots.
+ * Build a set of scopes from tsconfig paths configuration.
  *
- * @param allowedScopes - Map of allowed scopes to their resolved paths.
+ * @param paths - The paths mapping from compiler options.
+ * @returns Set of scopes defined as path aliases.
+ */
+function buildPathAliasScopes(
+	paths: Readonly<Record<string, Array<string>>> | undefined,
+): Set<string> {
+	const scopes = new Set<string>();
+	if (paths !== undefined) {
+		for (const alias of Object.keys(paths)) {
+			const scope = extractScope(alias);
+			if (scope !== null) {
+				scopes.add(scope);
+			}
+		}
+	}
+
+	return scopes;
+}
+
+function buildScopeConfig(context: Readonly<TSESLint.RuleContext<string, []>>): ScopeConfig {
+	const parserServices = getParserServices(context);
+	const { configFilePath, paths, typeRoots } = parserServices.program.getCompilerOptions();
+	const baseDirectory =
+		typeof configFilePath === "string" ? dirname(configFilePath) : context.cwd;
+
+	return {
+		allowedScopes: buildAllowedScopes(typeRoots, baseDirectory),
+		pathAliasScopes: buildPathAliasScopes(paths),
+	};
+}
+
+/**
+ * Check if the module source is allowed based on typeRoots and paths.
+ *
+ * @param context - The ESLint rule context.
+ * @param config - The scope configuration.
  * @param node - The AST node.
  * @param source - The module source string.
- * @param context - The ESLint rule context.
  */
 function checkModuleSource(
-	allowedScopes: Map<string, string>,
+	context: Readonly<TSESLint.RuleContext<string, []>>,
+	config: ScopeConfig,
 	node: TSESTree.Node,
 	source: string,
-	context: Readonly<TSESLint.RuleContext<string, []>>,
 ): void {
 	if (!isScopedPackage(source)) {
 		return;
@@ -66,7 +105,12 @@ function checkModuleSource(
 		return;
 	}
 
-	const scopePath = allowedScopes.get(scope);
+	// Skip validation for path aliases
+	if (config.pathAliasScopes.has(scope)) {
+		return;
+	}
+
+	const scopePath = config.allowedScopes.get(scope);
 
 	// If scope is not in typeRoots, report undeclared scope error
 	if (scopePath === undefined) {
@@ -85,34 +129,26 @@ function checkModuleSource(
 }
 
 function create(context: Readonly<TSESLint.RuleContext<string, []>>): TSESLint.RuleListener {
-	const parserServices = getParserServices(context);
-	const compilerOptions = parserServices.program.getCompilerOptions();
-
-	// Get the base directory from the tsconfig location
-	const { configFilePath, typeRoots } = compilerOptions;
-	const baseDirectory =
-		typeof configFilePath === "string" ? dirname(configFilePath) : context.getCwd();
-
-	const allowedScopes = buildAllowedScopes(typeRoots, baseDirectory);
+	const config = buildScopeConfig(context);
 
 	return {
 		ExportAllDeclaration(node: TSESTree.ExportAllDeclaration) {
-			checkModuleSource(allowedScopes, node, node.source.value, context);
+			checkModuleSource(context, config, node, node.source.value);
 		},
 		ExportNamedDeclaration(node: TSESTree.ExportNamedDeclaration) {
 			if (node.source?.value !== undefined) {
-				checkModuleSource(allowedScopes, node, node.source.value, context);
+				checkModuleSource(context, config, node, node.source.value);
 			}
 		},
 		ImportDeclaration(node: TSESTree.ImportDeclaration) {
-			checkModuleSource(allowedScopes, node, node.source.value, context);
+			checkModuleSource(context, config, node, node.source.value);
 		},
 		ImportExpression(node: TSESTree.ImportExpression) {
 			if (
 				node.source.type === AST_NODE_TYPES.Literal &&
 				typeof node.source.value === "string"
 			) {
-				checkModuleSource(allowedScopes, node, node.source.value, context);
+				checkModuleSource(context, config, node, node.source.value);
 			}
 		},
 	};

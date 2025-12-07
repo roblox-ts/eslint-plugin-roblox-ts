@@ -40,6 +40,13 @@ const valid: Array<ValidTestCase> = [
 		import { myUtil } from "./utils";
 		import lodash from "lodash";
 	`,
+
+	// Path alias imports
+	'import Foo from "@shared/bar";',
+	'import { util } from "@src/utils";',
+	'export { thing } from "@shared/thing";',
+	'export * from "@src/components";',
+	'const mod = await import("@shared/lazy");',
 ];
 
 const invalid: Array<InvalidTestCase> = [

@@ -11,6 +11,8 @@ This rule enforces that only npm packages from scopes explicitly listed in your
 `tsconfig.json`'s `typeRoots` configuration can be imported. Additionally, it
 validates that scopes declared in `typeRoots` actually exist in `node_modules`.
 
+Path aliases configured in `compilerOptions.paths` are also allowed.
+
 In roblox-ts projects, the `typeRoots` setting is required for managing which
 npm packages and their type definitions are available.
 
@@ -77,6 +79,11 @@ import config from "../../config.json"; // ✅
 
 // Dynamic imports from configured scopes
 const services = await import("@rbxts/services"); // ✅
+
+// Path aliases from tsconfig paths are allowed
+// Assuming: "paths": { "@shared/*": ["./src/shared/*"] }
+import { util } from "@shared/utils"; // ✅
+export { thing } from "@shared/components"; // ✅
 ```
 
 ## How to fix
