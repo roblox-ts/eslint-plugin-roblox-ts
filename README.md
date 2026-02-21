@@ -82,11 +82,7 @@ npm install eslint --save-dev
 
 - ESLint v8.x: ✅ Fully supported
 - ESLint v9.x: ✅ Fully supported
-
-**ESLint Version Support:**
-
-- ESLint v8.x: ✅ Fully supported
-- ESLint v9.x: ✅ Fully supported
+- ESLint v10.x: ✅ Fully supported
 
 Next, install `eslint-plugin-roblox-ts`:
 
