@@ -178,6 +178,7 @@ function isScopedPackage(source: string): boolean {
 }
 
 export const noUndeclaredScope = createEslintRule({
+	name: RULE_NAME,
 	create,
 	defaultOptions: [],
 	meta: {
@@ -190,5 +191,4 @@ export const noUndeclaredScope = createEslintRule({
 		schema: [],
 		type: "problem",
 	},
-	name: RULE_NAME,
 });

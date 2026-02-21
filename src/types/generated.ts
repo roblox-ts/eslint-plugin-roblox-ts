@@ -111,6 +111,7 @@ export type TSStrictTypeCheckedRules =
 	| "@typescript-eslint/no-unsafe-member-access"
 	| "@typescript-eslint/no-unsafe-return"
 	| "@typescript-eslint/no-unsafe-unary-minus"
+	| "@typescript-eslint/no-useless-default-assignment"
 	| "@typescript-eslint/only-throw-error"
 	| "@typescript-eslint/prefer-promise-reject-errors"
 	| "@typescript-eslint/prefer-reduce-type-parameter"

@@ -19,7 +19,7 @@ export type RuleOptions = {
 };
 
 export type Rules = {
-	[K in keyof RuleOptions]: Linter.RuleEntry<RuleOptions[K]>;
+	[K in keyof RuleOptions]: Linter.RuleEntry<Extract<RuleOptions[K], Array<unknown>>>;
 };
 
 type RuleDefinitions = typeof plugin.rules;

@@ -24,6 +24,7 @@ function create(context: Readonly<TSESLint.RuleContext<string, []>>): TSESLint.R
 }
 
 export const noPrivateIdentifier = createEslintRule({
+	name: RULE_NAME,
 	create,
 	defaultOptions: [],
 	meta: {
@@ -37,5 +38,4 @@ export const noPrivateIdentifier = createEslintRule({
 		schema: [],
 		type: "problem",
 	},
-	name: RULE_NAME,
 });

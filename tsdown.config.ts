@@ -12,7 +12,7 @@ export default defineConfig({
 	],
 	fixedExtension: true,
 	format: ["esm"],
-	noExternal: ["ts-api-utils"],
+	inlineOnly: ["ts-api-utils"],
 	onSuccess() {
 		console.info("🙏 Build succeeded!");
 	},

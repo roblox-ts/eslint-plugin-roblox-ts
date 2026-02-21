@@ -660,6 +660,7 @@ function validateOperation(context: ValidationContext): ValidationResult {
 }
 
 export const noObjectMath = createEslintRule({
+	name: RULE_NAME,
 	create,
 	defaultOptions: [],
 	meta: {
@@ -674,5 +675,4 @@ export const noObjectMath = createEslintRule({
 		schema: [],
 		type: "problem",
 	},
-	name: RULE_NAME,
 });

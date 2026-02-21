@@ -120,6 +120,7 @@ function validateIdentifier(
 }
 
 export const noInvalidIdentifier = createEslintRule({
+	name: RULE_NAME,
 	create,
 	defaultOptions: [],
 	meta: {
@@ -132,5 +133,4 @@ export const noInvalidIdentifier = createEslintRule({
 		schema: [],
 		type: "problem",
 	},
-	name: RULE_NAME,
 });

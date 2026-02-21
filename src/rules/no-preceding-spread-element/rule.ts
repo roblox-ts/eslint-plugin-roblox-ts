@@ -36,6 +36,7 @@ function create(context: Readonly<TSESLint.RuleContext<string, []>>): TSESLint.R
 }
 
 export const noPrecedingSpreadElement = createEslintRule({
+	name: RULE_NAME,
 	create,
 	defaultOptions: [],
 	meta: {
@@ -48,5 +49,4 @@ export const noPrecedingSpreadElement = createEslintRule({
 		schema: [],
 		type: "problem",
 	},
-	name: RULE_NAME,
 });

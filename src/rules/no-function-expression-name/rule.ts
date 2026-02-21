@@ -33,6 +33,7 @@ function create(context: Readonly<TSESLint.RuleContext<string, []>>): TSESLint.R
 }
 
 export const noFunctionExpressionName = createEslintRule({
+	name: RULE_NAME,
 	create,
 	defaultOptions: [],
 	meta: {
@@ -46,5 +47,4 @@ export const noFunctionExpressionName = createEslintRule({
 		schema: [],
 		type: "problem",
 	},
-	name: RULE_NAME,
 });

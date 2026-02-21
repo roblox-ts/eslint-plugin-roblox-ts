@@ -158,6 +158,7 @@ function report(
 }
 
 export const noUserDefinedLuaTuple = createEslintRule({
+	name: RULE_NAME,
 	create,
 	defaultOptions: [
 		{
@@ -201,5 +202,4 @@ export const noUserDefinedLuaTuple = createEslintRule({
 		],
 		type: "suggestion",
 	},
-	name: RULE_NAME,
 });

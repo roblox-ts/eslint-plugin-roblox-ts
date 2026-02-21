@@ -55,6 +55,7 @@ function isNodeWithinKeyofAny(node: TSESTree.TSAnyKeyword): boolean {
 }
 
 export const noAny = createEslintRule({
+	name: RULE_NAME,
 	create,
 	defaultOptions: [
 		{
@@ -90,5 +91,4 @@ export const noAny = createEslintRule({
 		],
 		type: "problem",
 	},
-	name: RULE_NAME,
 });

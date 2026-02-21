@@ -111,6 +111,7 @@ function reportRegexViolation(
 }
 
 export const noUnsupportedSyntax = createEslintRule({
+	name: RULE_NAME,
 	create,
 	defaultOptions: [],
 	meta: {
@@ -123,5 +124,4 @@ export const noUnsupportedSyntax = createEslintRule({
 		schema: [],
 		type: "problem",
 	},
-	name: RULE_NAME,
 });

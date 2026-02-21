@@ -79,8 +79,8 @@ const invalidReserved: Array<InvalidTestCase> = [
 });
 
 run({
-	invalid: [...invalidIdentifier, ...invalidCharacters, ...invalidReserved],
 	name: RULE_NAME,
+	invalid: [...invalidIdentifier, ...invalidCharacters, ...invalidReserved],
 	rule: noInvalidIdentifier,
 	valid,
 });

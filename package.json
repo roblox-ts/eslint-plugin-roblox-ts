@@ -11,7 +11,12 @@
 	},
 	"license": "MIT",
 	"author": "Christopher Buss <christopher.buss@pm.me> (https://github.com/christopher-buss)",
-	"contributors": ["osyrisrblx (https://github.com/osyrisrblx)"],
+	"contributors": [
+		{
+			"name": "osyrisrblx",
+			"url": "https://github.com/osyrisrblx"
+		}
+	],
 	"sideEffects": false,
 	"type": "module",
 	"exports": {
@@ -54,20 +59,18 @@
 	"devDependencies": {
 		"@antfu/ni": "catalog:cli",
 		"@antfu/utils": "catalog:testing",
-		"@isentinel/eslint-config": "catalog:cli",
+		"@isentinel/eslint-config": "catalog:lint",
 		"@isentinel/tsconfig": "catalog:tsc",
 		"@rbxts/compiler-types": "catalog:types",
-		"@rbxts/types": "catalog:types",
 		"@types/node": "catalog:types",
 		"@typescript-eslint/eslint-plugin": "catalog:cli",
 		"@typescript-eslint/parser": "catalog:cli",
 		"bumpp": "catalog:cli",
-		"eslint": "catalog:cli",
-		"eslint-8": "catalog:testing",
+		"eslint": "catalog:lint",
 		"eslint-doc-generator": "catalog:utils",
 		"eslint-plugin-eslint-plugin": "catalog:testing",
-		"eslint-plugin-n": "catalog:cli",
-		"eslint-plugin-pnpm": "catalog:cli",
+		"eslint-plugin-n": "catalog:lint",
+		"eslint-plugin-pnpm": "catalog:lint",
 		"eslint-vitest-rule-tester": "catalog:testing",
 		"jiti": "catalog:cli",
 		"lint-staged": "catalog:cli",

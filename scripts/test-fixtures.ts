@@ -24,9 +24,9 @@ interface FixtureTest {
 }
 
 interface TestResult {
+	name: string;
 	details?: string;
 	duration?: number;
-	name: string;
 	passed: boolean;
 }
 
@@ -59,8 +59,8 @@ function handleFixtureError(err: unknown, fixtureName: string): boolean {
 
 	if (stdout.trim() === "") {
 		testResults.push({
-			details: "No ESLint output received",
 			name: `${fixtureName} fixture`,
+			details: "No ESLint output received",
 			passed: false,
 		});
 		return false;
@@ -72,8 +72,8 @@ function handleFixtureError(err: unknown, fixtureName: string): boolean {
 	} catch (err_) {
 		const errorMessage = err_ instanceof Error ? err_.message : String(err_);
 		testResults.push({
-			details: `Failed to parse ESLint output: ${errorMessage}`,
 			name: `${fixtureName} fixture`,
+			details: `Failed to parse ESLint output: ${errorMessage}`,
 			passed: false,
 		});
 		return false;
@@ -87,6 +87,7 @@ function main(): never {
 	const fixtures: Array<FixtureTest> = [
 		{ name: "eslint-plugin-roblox-ts-fixture-v8", version: "v8" },
 		{ name: "eslint-plugin-roblox-ts-fixture-v9", version: "v9" },
+		{ name: "eslint-plugin-roblox-ts-fixture-v10", version: "v10" },
 	];
 
 	let allPassed = true;
@@ -154,8 +155,8 @@ function recordConstraintFailure(
 		.filter((ruleId): ruleId is string => ruleId !== undefined);
 	const details = `Root-level file triggered ${robloxTsMessages.length} roblox-ts rules: ${triggeredRules.join(", ")}`;
 	testResults.push({
-		details,
 		name: `${fixtureName} file constraints`,
+		details,
 		passed: false,
 	});
 }
@@ -179,7 +180,7 @@ function recordConstraintSuccess(fixtureName: string): void {
  * @returns ESLint JSON output as string.
  */
 function runESLintOnFixture(eslintVersion: string): string {
-	const fixtureDirectory = join("fixtures", eslintVersion === "v8" ? "eslint-v8" : "eslint-v9");
+	const fixtureDirectory = join("fixtures", `eslint-${eslintVersion}`);
 
 	return execSync(`cd ${fixtureDirectory} && npx eslint src/**/*.ts --format json`, {
 		encoding: "utf8",
@@ -194,7 +195,7 @@ function runESLintOnFixture(eslintVersion: string): string {
  * @returns ESLint JSON output as string.
  */
 function runESLintOnRootFile(eslintVersion: string): string {
-	const fixtureDirectory = join("fixtures", eslintVersion === "v8" ? "eslint-v8" : "eslint-v9");
+	const fixtureDirectory = join("fixtures", `eslint-${eslintVersion}`);
 
 	return execSync(`cd ${fixtureDirectory} && npx eslint config-test.ts --format json`, {
 		encoding: "utf8",
@@ -231,8 +232,8 @@ function testFixture(fixtureName: string, eslintVersion: string): boolean {
 		runESLintOnFixture(eslintVersion);
 		// If ESLint succeeds (no errors), that's unexpected for our test fixtures
 		testResults.push({
-			details: "Expected violations but none were found",
 			name: `${fixtureName} fixture`,
+			details: "Expected violations but none were found",
 			passed: false,
 		});
 		return false;
@@ -252,8 +253,8 @@ function testFixture(fixtureName: string, eslintVersion: string): boolean {
 function validateConstraintResults(stdout: string, fixtureName: string): boolean {
 	if (stdout.trim() === "") {
 		testResults.push({
-			details: "No ESLint output received",
 			name: `${fixtureName} file constraints`,
+			details: "No ESLint output received",
 			passed: false,
 		});
 		return false;
@@ -273,8 +274,8 @@ function validateConstraintResults(stdout: string, fixtureName: string): boolean
 	} catch (err) {
 		const errorMessage = err instanceof Error ? err.message : String(err);
 		testResults.push({
-			details: `Failed to parse ESLint output: ${errorMessage}`,
 			name: `${fixtureName} file constraints`,
+			details: `Failed to parse ESLint output: ${errorMessage}`,
 			passed: false,
 		});
 		return false;
@@ -293,8 +294,8 @@ function validateResults(results: Array<ESLintResult>, fixtureName: string): boo
 
 	if (robloxTsMessages.length === 0) {
 		testResults.push({
-			details: "No roblox-ts rule violations found",
 			name: `${fixtureName} fixture`,
+			details: "No roblox-ts rule violations found",
 			passed: false,
 		});
 		return false;
@@ -303,8 +304,8 @@ function validateResults(results: Array<ESLintResult>, fixtureName: string): boo
 	// Success if we found roblox-ts violations
 	const details = `${robloxTsMessages.length} roblox-ts violations found`;
 	testResults.push({
-		details,
 		name: `${fixtureName} fixture`,
+		details,
 		passed: true,
 	});
 

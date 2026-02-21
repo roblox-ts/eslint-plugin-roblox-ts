@@ -100,6 +100,7 @@ function shouldSkipNode(node: TSESTree.TSModuleDeclaration): boolean {
 }
 
 export const noNamespaceMerging = createEslintRule({
+	name: RULE_NAME,
 	create,
 	defaultOptions: [],
 	meta: {
@@ -112,5 +113,4 @@ export const noNamespaceMerging = createEslintRule({
 		schema: [],
 		type: "problem",
 	},
-	name: RULE_NAME,
 });
