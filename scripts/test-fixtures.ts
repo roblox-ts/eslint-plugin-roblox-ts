@@ -87,6 +87,7 @@ function main(): never {
 	const fixtures: Array<FixtureTest> = [
 		{ name: "eslint-plugin-roblox-ts-fixture-v8", version: "v8" },
 		{ name: "eslint-plugin-roblox-ts-fixture-v9", version: "v9" },
+		{ name: "eslint-plugin-roblox-ts-fixture-v10", version: "v10" },
 	];
 
 	let allPassed = true;
@@ -179,7 +180,7 @@ function recordConstraintSuccess(fixtureName: string): void {
  * @returns ESLint JSON output as string.
  */
 function runESLintOnFixture(eslintVersion: string): string {
-	const fixtureDirectory = join("fixtures", eslintVersion === "v8" ? "eslint-v8" : "eslint-v9");
+	const fixtureDirectory = join("fixtures", `eslint-${eslintVersion}`);
 
 	return execSync(`cd ${fixtureDirectory} && npx eslint src/**/*.ts --format json`, {
 		encoding: "utf8",
@@ -194,7 +195,7 @@ function runESLintOnFixture(eslintVersion: string): string {
  * @returns ESLint JSON output as string.
  */
 function runESLintOnRootFile(eslintVersion: string): string {
-	const fixtureDirectory = join("fixtures", eslintVersion === "v8" ? "eslint-v8" : "eslint-v9");
+	const fixtureDirectory = join("fixtures", `eslint-${eslintVersion}`);
 
 	return execSync(`cd ${fixtureDirectory} && npx eslint config-test.ts --format json`, {
 		encoding: "utf8",
