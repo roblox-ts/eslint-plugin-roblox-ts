@@ -184,6 +184,7 @@ function validateVariableDeclarator(
 }
 
 export const misleadingLuaTupleChecks = createEslintRule({
+	name: RULE_NAME,
 	create,
 	defaultOptions: [],
 	meta: {
@@ -197,5 +198,4 @@ export const misleadingLuaTupleChecks = createEslintRule({
 		schema: [],
 		type: "problem",
 	},
-	name: RULE_NAME,
 });

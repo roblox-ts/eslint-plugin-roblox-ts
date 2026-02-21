@@ -36,6 +36,7 @@ function replaceNull(
 }
 
 export const noNull = createEslintRule({
+	name: RULE_NAME,
 	create,
 	defaultOptions: [],
 	meta: {
@@ -49,5 +50,4 @@ export const noNull = createEslintRule({
 		schema: [],
 		type: "problem",
 	},
-	name: RULE_NAME,
 });

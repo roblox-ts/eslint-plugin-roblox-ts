@@ -22,6 +22,7 @@ function create(context: Readonly<TSESLint.RuleContext<string, []>>): TSESLint.R
 }
 
 export const noValueTypeof = createEslintRule({
+	name: RULE_NAME,
 	create,
 	defaultOptions: [],
 	meta: {
@@ -34,5 +35,4 @@ export const noValueTypeof = createEslintRule({
 		schema: [],
 		type: "problem",
 	},
-	name: RULE_NAME,
 });

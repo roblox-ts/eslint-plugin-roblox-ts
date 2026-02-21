@@ -83,6 +83,7 @@ function replaceWithNewExpression(
 }
 
 export const noPostFixNew = createEslintRule({
+	name: RULE_NAME,
 	create,
 	defaultOptions: [],
 	meta: {
@@ -96,5 +97,4 @@ export const noPostFixNew = createEslintRule({
 		schema: [],
 		type: "problem",
 	},
-	name: RULE_NAME,
 });

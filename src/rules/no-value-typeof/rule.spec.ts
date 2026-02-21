@@ -59,8 +59,8 @@ const invalid: Array<InvalidTestCase> = [
 ];
 
 run({
-	invalid,
 	name: RULE_NAME,
+	invalid,
 	rule: noValueTypeof,
 	valid,
 });

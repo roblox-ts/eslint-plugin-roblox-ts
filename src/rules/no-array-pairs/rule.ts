@@ -49,6 +49,7 @@ function create(
 }
 
 export const noArrayPairs = createEslintRule({
+	name: RULE_NAME,
 	create,
 	defaultOptions: [],
 	meta: {
@@ -61,5 +62,4 @@ export const noArrayPairs = createEslintRule({
 		schema: [],
 		type: "problem",
 	},
-	name: RULE_NAME,
 });

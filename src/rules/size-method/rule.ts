@@ -79,6 +79,7 @@ function isTargetType(
 }
 
 export const sizeMethod = createEslintRule({
+	name: RULE_NAME,
 	create,
 	defaultOptions: [],
 	meta: {
@@ -92,5 +93,4 @@ export const sizeMethod = createEslintRule({
 		schema: [],
 		type: "problem",
 	},
-	name: RULE_NAME,
 });

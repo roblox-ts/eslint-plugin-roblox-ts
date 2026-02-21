@@ -7,17 +7,17 @@ import { join } from "node:path";
 import process from "node:process";
 
 interface ConfigDefinition {
-	configKey: string;
 	name: string;
+	configKey: string;
 }
 
 const CONFIG_DEFINITIONS: Array<ConfigDefinition> = [
-	{ configKey: "recommended", name: "recommended" },
-	{ configKey: "recommended-type-checked-only", name: "recommendedTypeChecked" },
-	{ configKey: "strict", name: "strict" },
-	{ configKey: "strict-type-checked-only", name: "strictTypeChecked" },
-	{ configKey: "stylistic", name: "stylistic" },
-	{ configKey: "stylistic-type-checked-only", name: "stylisticTypeChecked" },
+	{ name: "recommended", configKey: "recommended" },
+	{ name: "recommendedTypeChecked", configKey: "recommended-type-checked-only" },
+	{ name: "strict", configKey: "strict" },
+	{ name: "strictTypeChecked", configKey: "strict-type-checked-only" },
+	{ name: "stylistic", configKey: "stylistic" },
+	{ name: "stylisticTypeChecked", configKey: "stylistic-type-checked-only" },
 ];
 
 /**
@@ -28,7 +28,7 @@ const CONFIG_DEFINITIONS: Array<ConfigDefinition> = [
 function extractAllConfigs(): Record<string, Array<string>> {
 	const configs: Record<string, Array<string>> = {};
 
-	for (const { configKey, name } of CONFIG_DEFINITIONS) {
+	for (const { name, configKey } of CONFIG_DEFINITIONS) {
 		const config = tseslint.configs[configKey];
 		const configRules = config?.rules ?? {};
 		configs[name] = extractTypescriptEslintRules(configRules);

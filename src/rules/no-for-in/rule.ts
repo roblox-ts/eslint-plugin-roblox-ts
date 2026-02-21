@@ -25,6 +25,7 @@ function create(context: Readonly<TSESLint.RuleContext<string, []>>): TSESLint.R
 }
 
 export const noForIn = createEslintRule({
+	name: RULE_NAME,
 	create,
 	defaultOptions: [],
 	meta: {
@@ -38,5 +39,4 @@ export const noForIn = createEslintRule({
 		schema: [],
 		type: "problem",
 	},
-	name: RULE_NAME,
 });

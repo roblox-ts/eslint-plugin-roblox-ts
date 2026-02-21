@@ -88,6 +88,7 @@ function isPlayersCallExpressionType(
 }
 
 export const preferGetPlayers = createEslintRule({
+	name: RULE_NAME,
 	create,
 	defaultOptions: [
 		{
@@ -124,5 +125,4 @@ export const preferGetPlayers = createEslintRule({
 		],
 		type: "problem",
 	},
-	name: RULE_NAME,
 });

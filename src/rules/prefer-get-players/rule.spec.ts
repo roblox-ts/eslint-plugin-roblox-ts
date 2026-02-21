@@ -63,6 +63,7 @@ const invalidTypeChecked: Array<InvalidTestCase<RuleOptions>> = [
 ];
 
 run({
+	name: RULE_NAME,
 	invalid: [
 		...invalid,
 		...invalidTypeChecked.map((test) => {
@@ -73,7 +74,6 @@ run({
 			};
 		}),
 	],
-	name: RULE_NAME,
 	rule: preferGetPlayers,
 	valid: [
 		...valid,
