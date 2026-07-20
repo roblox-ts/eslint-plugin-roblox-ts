@@ -16,6 +16,7 @@ const valid: Array<ValidTestCase> = [
 	"if (game.Loaded.Wait()[0] || b) {}",
 	'const [player] = game.GetService("Players").PlayerAdded.Wait();',
 	'const player = game.GetService("Players").PlayerAdded.Wait()[0];',
+	"if (game.Loaded.Wait()[0] === undefined) {}",
 	"let player: LuaTuple<[Player]>;",
 	'let player: LuaTuple<[Player]>; player = game.GetService("Players").PlayerAdded.Wait();',
 ];
@@ -93,6 +94,21 @@ const invalid: Array<InvalidTestCase> = [
 		code: "if (game.Loaded.Wait() && game.Loaded.Wait()[0]) {}",
 		errors: [{ messageId }],
 		output: "if (game.Loaded.Wait()[0] && game.Loaded.Wait()[0]) {}",
+	},
+	{
+		code: "if (game.Loaded.Wait() === undefined) {}",
+		errors: [{ messageId }],
+		output: "if (game.Loaded.Wait()[0] === undefined) {}",
+	},
+	{
+		code: "if (undefined === game.Loaded.Wait()) {}",
+		errors: [{ messageId }],
+		output: "if (undefined === game.Loaded.Wait()[0]) {}",
+	},
+	{
+		code: "const isDone = game.Loaded.Wait() !== undefined;",
+		errors: [{ messageId }],
+		output: "const isDone = game.Loaded.Wait()[0] !== undefined;",
 	},
 	{
 		code: 'const player = game.GetService("Players").PlayerAdded.Wait();',
