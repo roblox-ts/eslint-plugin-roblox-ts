@@ -40,14 +40,9 @@ function checkLuaTupleUsage(
 	}
 }
 
+// eslint-disable-next-line max-lines-per-function -- listener registry, grows with each context
 function create(context: Context): TSESLint.RuleListener {
 	const parserServices = getParserServices(context);
-
-	function containsBoolean({ test }: TestExpression): void {
-		if (test && test.type !== AST_NODE_TYPES.LogicalExpression) {
-			checkLuaTupleUsage(context, parserServices, test);
-		}
-	}
 
 	return {
 		'AssignmentExpression[operator="="][left.type="Identifier"]': (
@@ -55,8 +50,18 @@ function create(context: Context): TSESLint.RuleListener {
 		) => {
 			validateAssignmentExpression(context, parserServices, node);
 		},
-		"ConditionalExpression, DoWhileStatement, IfStatement, ForStatement, WhileStatement":
-			containsBoolean,
+		"BinaryExpression[operator=/^([<>]=?|[!=]==?)$/]": ({
+			left,
+			right,
+		}: TSESTree.BinaryExpression) => {
+			checkLuaTupleUsage(context, parserServices, left);
+			checkLuaTupleUsage(context, parserServices, right);
+		},
+		"ConditionalExpression, DoWhileStatement, IfStatement, ForStatement, WhileStatement": (
+			node: TestExpression,
+		) => {
+			validateTestExpression(context, parserServices, node);
+		},
 		"ForOfStatement": (node: TSESTree.ForOfStatement) => {
 			validateForOfStatement(context, parserServices, node);
 		},
@@ -170,6 +175,16 @@ function validateForOfStatement(
 		handleIterableFunction(context, parserServices, node, type);
 	} else {
 		checkLuaTupleUsage(context, parserServices, rightNode);
+	}
+}
+
+function validateTestExpression(
+	context: Context,
+	parserServices: ParserServicesWithTypeInformation,
+	{ test }: TestExpression,
+): void {
+	if (test && test.type !== AST_NODE_TYPES.LogicalExpression) {
+		checkLuaTupleUsage(context, parserServices, test);
 	}
 }
 
