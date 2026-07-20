@@ -1,6 +1,6 @@
 import type { TSESLint, TSESTree } from "@typescript-eslint/utils";
 
-import { createEslintRule } from "../../util";
+import { createRobloxRule, type RobloxRuleListener } from "../../util";
 
 export const RULE_NAME = "no-null";
 
@@ -10,7 +10,7 @@ const messages = {
 	[NULL_VIOLATION]: "Usage of 'null' is not allowed. Use 'undefined' instead.",
 };
 
-function create(context: Readonly<TSESLint.RuleContext<string, []>>): TSESLint.RuleListener {
+function createOnce(context: Readonly<TSESLint.RuleContext<string, []>>): RobloxRuleListener {
 	return {
 		Literal(node) {
 			if (node.value === null) {
@@ -35,9 +35,9 @@ function replaceNull(
 	});
 }
 
-export const noNull = createEslintRule({
+export const noNull = createRobloxRule({
 	name: RULE_NAME,
-	create,
+	createOnce,
 	defaultOptions: [],
 	meta: {
 		docs: {

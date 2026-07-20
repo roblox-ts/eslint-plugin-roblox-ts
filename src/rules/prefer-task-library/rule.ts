@@ -2,7 +2,7 @@ import { AST_NODE_TYPES, type TSESLint, type TSESTree } from "@typescript-eslint
 
 import assert from "node:assert";
 
-import { createEslintRule } from "../../util";
+import { createRobloxRule, type RobloxRuleListener } from "../../util";
 
 export const RULE_NAME = "prefer-task-library";
 
@@ -14,7 +14,7 @@ const messages = {
 
 const FN_NAMES = new Set(["delay", "spawn", "wait"]);
 
-function create(context: Readonly<TSESLint.RuleContext<string, []>>): TSESLint.RuleListener {
+function createOnce(context: Readonly<TSESLint.RuleContext<string, []>>): RobloxRuleListener {
 	return {
 		CallExpression(node: TSESTree.CallExpression) {
 			if (node.callee.type !== AST_NODE_TYPES.Identifier || !FN_NAMES.has(node.callee.name)) {
@@ -34,9 +34,9 @@ function create(context: Readonly<TSESLint.RuleContext<string, []>>): TSESLint.R
 	};
 }
 
-export const preferTaskLibrary = createEslintRule({
+export const preferTaskLibrary = createRobloxRule({
 	name: RULE_NAME,
-	create,
+	createOnce,
 	defaultOptions: [],
 	meta: {
 		docs: {

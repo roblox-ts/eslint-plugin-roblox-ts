@@ -2,7 +2,7 @@ import type { TSESLint, TSESTree } from "@typescript-eslint/utils";
 // import { AST_NODE_TYPES } from "@typescript-eslint/utils"; // Uncomment if needed
 // import { getParserServices } from "@typescript-eslint/utils/eslint-utils"; // Uncomment if needed
 
-import { createEslintRule } from "../../util";
+import { createRobloxRule, type RobloxRuleListener } from "../../util";
 // import { isTypeFlagSet, /* other type utils */ } from "../../utils/types"; // Uncomment if needed
 
 export const RULE_NAME = "{{RULE_NAME}}";
@@ -14,11 +14,18 @@ const messages = {
 	[MESSAGE_ID]: "Description of the violation for {{RULE_NAME}}.",
 };
 
-// Rule definition
-function create(context: Readonly<TSESLint.RuleContext<string, []>>): TSESLint.RuleListener {
-	// const parserServices = getParserServices(context); // Uncomment if type information is needed
-	// const checker = parserServices.program.getTypeChecker(); // Uncomment if type information is needed
-
+// Rule definition.
+//
+// `createOnce` runs once per lint run rather than once per file, which is what
+// lets the rule also run under oxlint. Two constraints follow:
+//   - Do not read `context.options`, `context.sourceCode`, `context.filename`,
+//     or `context.report` in this body — only inside a visitor (or `before`).
+//     oxlint calls `createOnce` eagerly at plugin load and throws otherwise.
+//   - Visitor keys must be static; they cannot depend on options.
+//
+// Type-aware rules cannot satisfy this, so they use `createEslintRule` with a
+// plain `create(context, optionsWithDefault)` instead.
+function createOnce(context: Readonly<TSESLint.RuleContext<string, []>>): RobloxRuleListener {
 	return {
 		// Visitor pattern: Select nodes to visit
 		// Example: Visiting Identifier nodes
@@ -38,8 +45,8 @@ function create(context: Readonly<TSESLint.RuleContext<string, []>>): TSESLint.R
 	};
 }
 
-export const {{RULE_NAME_CAMEL_CASE}} = createEslintRule({
-	create,
+export const {{RULE_NAME_CAMEL_CASE}} = createRobloxRule({
+	createOnce,
 	defaultOptions: [],
 	meta: { 
 		docs: {

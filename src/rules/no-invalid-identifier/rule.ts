@@ -3,7 +3,7 @@ import { AST_NODE_TYPES } from "@typescript-eslint/utils";
 
 import { createRequire } from "node:module";
 
-import { createEslintRule } from "../../util";
+import { createRobloxRule, type RobloxRuleListener } from "../../util";
 
 export const RULE_NAME = "no-invalid-identifier";
 
@@ -36,9 +36,7 @@ type ExpressionDeclarationNodes =
 	| TSESTree.TSModuleDeclaration
 	| TSESTree.VariableDeclaration;
 
-function create(context: Readonly<TSESLint.RuleContext<string, []>>): TSESLint.RuleListener {
-	const { sourceCode } = context;
-
+function createOnce(context: Readonly<TSESLint.RuleContext<string, []>>): RobloxRuleListener {
 	return {
 		[[
 			"VariableDeclaration",
@@ -49,7 +47,7 @@ function create(context: Readonly<TSESLint.RuleContext<string, []>>): TSESLint.R
 			"TSEnumDeclaration",
 			"TSModuleDeclaration",
 		].join(",")](node: ExpressionDeclarationNodes) {
-			for (const variable of sourceCode.getDeclaredVariables(node)) {
+			for (const variable of context.sourceCode.getDeclaredVariables(node)) {
 				validateIdentifier(context, node, variable.name);
 			}
 		},
@@ -61,7 +59,7 @@ function create(context: Readonly<TSESLint.RuleContext<string, []>>): TSESLint.R
 			}
 		},
 		"ImportDeclaration": function (node: TSESTree.ImportDeclaration) {
-			for (const variable of sourceCode.getDeclaredVariables(node)) {
+			for (const variable of context.sourceCode.getDeclaredVariables(node)) {
 				validateIdentifier(context, node, variable.name, () => isImportAlias(node));
 			}
 		},
@@ -119,9 +117,9 @@ function validateIdentifier(
 	});
 }
 
-export const noInvalidIdentifier = createEslintRule({
+export const noInvalidIdentifier = createRobloxRule({
 	name: RULE_NAME,
-	create,
+	createOnce,
 	defaultOptions: [],
 	meta: {
 		docs: {

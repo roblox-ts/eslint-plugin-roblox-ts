@@ -1,6 +1,7 @@
 import type { CompatibleConfig } from "../utils/compatability-types";
 import { eslintCompat, eslintCompatLegacy } from "./eslint-compat";
 import { recommended, recommendedLegacy } from "./recommended";
+import { recommendedNoTypeCheck, recommendedNoTypeCheckLegacy } from "./recommended-no-type-check";
 import { tsRecommendedCompat, tsRecommendedCompatLegacy } from "./typescript-recommended-compat";
 
 const configsWithoutNames = {
@@ -62,6 +63,37 @@ const configsWithoutNames = {
 	 * ```
 	 */
 	"recommended-legacy": recommendedLegacy as CompatibleConfig,
+
+	/**
+	 * Configuration for legacy ESLint v8 that enables only the rules which run
+	 * without type information.
+	 *
+	 * @example
+	 *
+	 * ```ts
+	 * // .eslintrc.js
+	 * module.exports = {
+	 * 	extends: ["plugin:roblox-ts/recommended-no-type-check-legacy"],
+	 * };
+	 * ```
+	 */
+	"recommended-no-type-check-legacy": recommendedNoTypeCheckLegacy as CompatibleConfig,
+
+	/**
+	 * Recommended configuration for ESLint v9+ (flat config) that enables only
+	 * the rules which run without type information. Skips the TypeScript
+	 * project service, so it is substantially cheaper than `recommended`.
+	 *
+	 * @example
+	 *
+	 * ```ts
+	 * // eslint.config.js
+	 * import roblox from "eslint-plugin-roblox-ts";
+	 *
+	 * export default [roblox.configs.recommendedNoTypeCheck];
+	 * ```
+	 */
+	"recommendedNoTypeCheck": recommendedNoTypeCheck as CompatibleConfig,
 
 	/**
 	 * Configuration for legacy ESLint v8 that provides TypeScript ESLint

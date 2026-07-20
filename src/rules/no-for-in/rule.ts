@@ -1,6 +1,6 @@
 import type { TSESLint } from "@typescript-eslint/utils";
 
-import { createEslintRule } from "../../util";
+import { createRobloxRule, type RobloxRuleListener } from "../../util";
 
 export const RULE_NAME = "no-for-in";
 
@@ -11,7 +11,7 @@ const messages = {
 		"For-in loops are forbidden because it always types the iterator variable as `string`. Use for-of or array.forEach instead.",
 };
 
-function create(context: Readonly<TSESLint.RuleContext<string, []>>): TSESLint.RuleListener {
+function createOnce(context: Readonly<TSESLint.RuleContext<string, []>>): RobloxRuleListener {
 	return {
 		ForInStatement(node) {
 			context.report({
@@ -24,9 +24,9 @@ function create(context: Readonly<TSESLint.RuleContext<string, []>>): TSESLint.R
 	};
 }
 
-export const noForIn = createEslintRule({
+export const noForIn = createRobloxRule({
 	name: RULE_NAME,
-	create,
+	createOnce,
 	defaultOptions: [],
 	meta: {
 		docs: {

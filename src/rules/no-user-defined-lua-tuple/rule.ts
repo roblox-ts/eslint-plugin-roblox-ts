@@ -1,6 +1,6 @@
 import { type TSESLint, TSESTree } from "@typescript-eslint/utils";
 
-import { createEslintRule } from "../../util";
+import { createRobloxRule, type RobloxRuleListener } from "../../util";
 
 export const RULE_NAME = "no-user-defined-lua-tuple";
 
@@ -17,19 +17,20 @@ type MessageIds = typeof LUA_TUPLE_VIOLATION | typeof MACRO_VIOLATION;
 
 type Options = [{ allowTupleMacro?: boolean; shouldFix?: boolean }?];
 
-function create(context: Context): TSESLint.RuleListener {
-	const { allowTupleMacro = false } = context.options[0] ?? {};
-
+function createOnce(context: Context): RobloxRuleListener {
 	return {
-		...(!allowTupleMacro && {
-			'CallExpression[callee.type="Identifier"][callee.name="$tuple"]': function (
-				node: TSESTree.CallExpression,
-			) {
-				report(context, node.callee, MACRO_VIOLATION, (fixer) =>
-					fixTupleMacroCall(node, context, fixer),
-				);
-			},
-		}),
+		'CallExpression[callee.type="Identifier"][callee.name="$tuple"]': function (
+			node: TSESTree.CallExpression,
+		) {
+			const { allowTupleMacro = false } = context.options[0] ?? {};
+			if (allowTupleMacro) {
+				return;
+			}
+
+			report(context, node.callee, MACRO_VIOLATION, (fixer) =>
+				fixTupleMacroCall(node, context, fixer),
+			);
+		},
 		'TSInterfaceDeclaration[id.name="LuaTuple"]': (node: TSESTree.TSInterfaceDeclaration) => {
 			report(context, node.id, LUA_TUPLE_VIOLATION);
 		},
@@ -157,9 +158,9 @@ function report(
 	});
 }
 
-export const noUserDefinedLuaTuple = createEslintRule({
+export const noUserDefinedLuaTuple = createRobloxRule({
 	name: RULE_NAME,
-	create,
+	createOnce,
 	defaultOptions: [
 		{
 			allowTupleMacro: false,

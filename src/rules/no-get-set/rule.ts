@@ -1,7 +1,7 @@
 import type { TSESLint, TSESTree } from "@typescript-eslint/utils";
 import { AST_NODE_TYPES } from "@typescript-eslint/utils";
 
-import { createEslintRule } from "../../util";
+import { createRobloxRule, type RobloxRuleListener } from "../../util";
 
 export const RULE_NAME = "no-get-set";
 
@@ -12,7 +12,7 @@ const messages = {
 		"Getters and Setters are not supported for performance reasons. Please use a normal method instead.",
 };
 
-function create(context: Readonly<TSESLint.RuleContext<string, []>>): TSESLint.RuleListener {
+function createOnce(context: Readonly<TSESLint.RuleContext<string, []>>): RobloxRuleListener {
 	function checkMethodDefinition(
 		nodes: Array<TSESTree.ClassElement | TSESTree.ObjectLiteralElementLike>,
 	): void {
@@ -41,9 +41,9 @@ function create(context: Readonly<TSESLint.RuleContext<string, []>>): TSESLint.R
 	};
 }
 
-export const noGetSet = createEslintRule({
+export const noGetSet = createRobloxRule({
 	name: RULE_NAME,
-	create,
+	createOnce,
 	defaultOptions: [],
 	meta: {
 		docs: {

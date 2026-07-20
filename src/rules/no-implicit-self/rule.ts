@@ -1,6 +1,6 @@
 import type { TSESLint, TSESTree } from "@typescript-eslint/utils";
 
-import { createEslintRule } from "../../util";
+import { createRobloxRule, type RobloxRuleListener } from "../../util";
 
 export const RULE_NAME = "no-implicit-self";
 
@@ -10,7 +10,7 @@ const messages = {
 	[COLON_VIOLATION]: "Enforce the use of `.` instead of `:` for method calls",
 };
 
-function create(context: Readonly<TSESLint.RuleContext<string, []>>): TSESLint.RuleListener {
+function createOnce(context: Readonly<TSESLint.RuleContext<string, []>>): RobloxRuleListener {
 	return {
 		["LabeledStatement[body.type='ExpressionStatement'][body.expression.type='CallExpression']," +
 		"LabeledStatement[body.expression.type='MemberExpression']"]: (
@@ -40,9 +40,9 @@ function create(context: Readonly<TSESLint.RuleContext<string, []>>): TSESLint.R
 	};
 }
 
-export const noImplicitSelf = createEslintRule({
+export const noImplicitSelf = createRobloxRule({
 	name: RULE_NAME,
-	create,
+	createOnce,
 	defaultOptions: [],
 	meta: {
 		docs: {

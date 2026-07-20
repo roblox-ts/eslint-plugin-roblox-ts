@@ -112,6 +112,39 @@ export default [roblox.configs.recommended];
 }
 ```
 
+### Without Type Checking
+
+`recommended` enables every rule, including those that need type information,
+which requires the TypeScript project service and is the bulk of the lint cost.
+If you want a faster pass, `recommendedNoTypeCheck` enables only the rules that
+run without types, and skips the project service entirely.
+
+```js
+import roblox from "eslint-plugin-roblox-ts";
+
+export default [roblox.configs.recommendedNoTypeCheck];
+```
+
+The legacy equivalent is `plugin:roblox-ts/recommended-no-type-check-legacy`.
+
+### oxlint
+
+The rules that run without type information are authored against oxlint's
+[`createOnce`](https://oxc.rs/docs/guide/usage/linter/js-plugins.html) API, so
+they can be loaded by oxlint as a JS plugin.
+
+```json
+{
+	"jsPlugins": ["eslint-plugin-roblox-ts"],
+	"rules": {
+		"roblox-ts/no-any": "error"
+	}
+}
+```
+
+Type-aware rules cannot run under oxlint, which has no type information; they
+are exactly the rules excluded from `recommendedNoTypeCheck`.
+
 ### Manual Configuration
 
 Altertatively, add `eslint-plugin-roblox-ts` to the plugins section of the
