@@ -1,6 +1,6 @@
 import type { TSESLint } from "@typescript-eslint/utils";
 
-import { createEslintRule } from "../../util";
+import { createRobloxRule, type RobloxRuleListener } from "../../util";
 
 export const RULE_NAME = "no-enum-merging";
 
@@ -11,7 +11,7 @@ const messages = {
 		"Enum merging is not supported in roblox-ts. Declare all members in a single enum.",
 };
 
-function create(context: Readonly<TSESLint.RuleContext<string, []>>): TSESLint.RuleListener {
+function createOnce(context: Readonly<TSESLint.RuleContext<string, []>>): RobloxRuleListener {
 	return {
 		TSEnumDeclaration(node) {
 			const currentScope = context.sourceCode.getScope(node).upper;
@@ -36,9 +36,9 @@ function create(context: Readonly<TSESLint.RuleContext<string, []>>): TSESLint.R
 	};
 }
 
-export const noEnumMerging = createEslintRule({
+export const noEnumMerging = createRobloxRule({
 	name: RULE_NAME,
-	create,
+	createOnce,
 	defaultOptions: [],
 	meta: {
 		docs: {

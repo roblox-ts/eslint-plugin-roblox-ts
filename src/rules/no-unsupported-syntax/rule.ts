@@ -1,7 +1,7 @@
 import type { TSESLint, TSESTree } from "@typescript-eslint/utils";
 import { AST_NODE_TYPES, AST_TOKEN_TYPES } from "@typescript-eslint/utils";
 
-import { createEslintRule } from "../../util";
+import { createRobloxRule, type RobloxRuleListener } from "../../util";
 
 export const RULE_NAME = "no-unsupported-syntax";
 
@@ -19,7 +19,7 @@ const messages = {
 	[SPREAD_DESTRUCTURING_VIOLATION]: "Operator `...` is not supported for destructuring!",
 };
 
-function create(context: Readonly<TSESLint.RuleContext<string, []>>): TSESLint.RuleListener {
+function createOnce(context: Readonly<TSESLint.RuleContext<string, []>>): RobloxRuleListener {
 	return {
 		ArrayPattern: (node) => {
 			reportInvalidSpreadDestructure(context, node);
@@ -110,9 +110,9 @@ function reportRegexViolation(
 	}
 }
 
-export const noUnsupportedSyntax = createEslintRule({
+export const noUnsupportedSyntax = createRobloxRule({
 	name: RULE_NAME,
-	create,
+	createOnce,
 	defaultOptions: [],
 	meta: {
 		docs: {

@@ -1,7 +1,7 @@
 import type { TSESLint, TSESTree } from "@typescript-eslint/utils";
 import { AST_NODE_TYPES } from "@typescript-eslint/utils";
 
-import { createEslintRule } from "../../util";
+import { createRobloxRule, type RobloxRuleListener } from "../../util";
 
 export const RULE_NAME = "no-namespace-merging";
 
@@ -40,7 +40,7 @@ function checkNamespaceMerging(
 	}
 }
 
-function create(context: Readonly<TSESLint.RuleContext<string, []>>): TSESLint.RuleListener {
+function createOnce(context: Readonly<TSESLint.RuleContext<string, []>>): RobloxRuleListener {
 	return {
 		"TSModuleDeclaration[global!=true][id.type!='Literal']": function (
 			node: TSESTree.TSModuleDeclaration,
@@ -99,9 +99,9 @@ function shouldSkipNode(node: TSESTree.TSModuleDeclaration): boolean {
 	);
 }
 
-export const noNamespaceMerging = createEslintRule({
+export const noNamespaceMerging = createRobloxRule({
 	name: RULE_NAME,
-	create,
+	createOnce,
 	defaultOptions: [],
 	meta: {
 		docs: {

@@ -1,6 +1,6 @@
 import { AST_NODE_TYPES, type TSESLint, type TSESTree } from "@typescript-eslint/utils";
 
-import { createEslintRule } from "../../util";
+import { createRobloxRule, type RobloxRuleListener } from "../../util";
 
 export const RULE_NAME = "no-any";
 
@@ -17,10 +17,33 @@ const messages = {
 
 type Context = Readonly<TSESLint.RuleContext<MessageIds, [{ fixToUnknown: boolean }]>>;
 
-function create(
-	context: Context,
-	[{ fixToUnknown }]: readonly [{ fixToUnknown: boolean }],
-): TSESLint.RuleListener {
+/**
+ * Builds the fix/suggestion pair for an `any` keyword.
+ *
+ * @param node - The offending `any` keyword.
+ * @param fixToUnknown - Whether the replacement is applied as an auto-fix
+ *   rather than offered only as a suggestion.
+ * @returns The `fix` and `suggest` properties to spread into the report.
+ */
+function buildFixOrSuggest(
+	node: TSESTree.TSAnyKeyword,
+	fixToUnknown: boolean,
+): {
+	fix: null | TSESLint.ReportFixFunction;
+	suggest: null | TSESLint.ReportSuggestionArray<MessageIds>;
+} {
+	return {
+		fix: fixToUnknown ? (fixer) => fixer.replaceText(node, "unknown") : null,
+		suggest: [
+			{
+				fix: (fixer) => fixer.replaceText(node, "unknown"),
+				messageId: SUGGEST_UNKNOWN,
+			},
+		],
+	};
+}
+
+function createOnce(context: Context): RobloxRuleListener {
 	return {
 		TSAnyKeyword: (node) => {
 			const isKeyofAny = isNodeWithinKeyofAny(node);
@@ -28,23 +51,12 @@ function create(
 				return;
 			}
 
-			const fixOrSuggest: {
-				fix: null | TSESLint.ReportFixFunction;
-				suggest: null | TSESLint.ReportSuggestionArray<MessageIds>;
-			} = {
-				fix: fixToUnknown ? (fixer) => fixer.replaceText(node, "unknown") : null,
-				suggest: [
-					{
-						fix: (fixer) => fixer.replaceText(node, "unknown"),
-						messageId: SUGGEST_UNKNOWN,
-					},
-				],
-			};
+			const [{ fixToUnknown }] = context.options;
 
 			context.report({
 				messageId: ANY_VIOLATION,
 				node,
-				...fixOrSuggest,
+				...buildFixOrSuggest(node, fixToUnknown),
 			});
 		},
 	};
@@ -54,9 +66,9 @@ function isNodeWithinKeyofAny(node: TSESTree.TSAnyKeyword): boolean {
 	return node.parent.type === AST_NODE_TYPES.TSTypeOperator && node.parent.operator === "keyof";
 }
 
-export const noAny = createEslintRule({
+export const noAny = createRobloxRule({
 	name: RULE_NAME,
-	create,
+	createOnce,
 	defaultOptions: [
 		{
 			fixToUnknown: true,

@@ -80,3 +80,19 @@ export const plugin = {
 } satisfies TSESLint.FlatConfig.Plugin;
 
 export const allRules: Linter.RulesRecord = getRules(PLUGIN_NAME, plugin.rules);
+
+/**
+ * Every rule that runs without type information, derived from each rule's
+ * `docs.requiresTypeChecking` metadata.
+ *
+ * These are exactly the rules authored against oxlint's `createOnce` API, so
+ * they are the set that can run under oxlint.
+ */
+export const nonTypeAwareRules: Linter.RulesRecord = getRules(
+	PLUGIN_NAME,
+	Object.fromEntries(
+		Object.entries(plugin.rules).filter(
+			([, rule]) => rule.meta.docs?.requiresTypeChecking !== true,
+		),
+	),
+);

@@ -1,6 +1,6 @@
 import type { TSESLint, TSESTree } from "@typescript-eslint/utils";
 
-import { createEslintRule } from "../../util";
+import { createRobloxRule, type RobloxRuleListener } from "../../util";
 
 export const RULE_NAME = "no-private-identifier";
 
@@ -11,7 +11,7 @@ const messages = {
 		"Private identifiers (`#`) are not supported in roblox-ts. Use the 'private' access modifier instead.",
 };
 
-function create(context: Readonly<TSESLint.RuleContext<string, []>>): TSESLint.RuleListener {
+function createOnce(context: Readonly<TSESLint.RuleContext<string, []>>): RobloxRuleListener {
 	return {
 		PrivateIdentifier(node: TSESTree.PrivateIdentifier) {
 			context.report({
@@ -23,9 +23,9 @@ function create(context: Readonly<TSESLint.RuleContext<string, []>>): TSESLint.R
 	};
 }
 
-export const noPrivateIdentifier = createEslintRule({
+export const noPrivateIdentifier = createRobloxRule({
 	name: RULE_NAME,
-	create,
+	createOnce,
 	defaultOptions: [],
 	meta: {
 		docs: {

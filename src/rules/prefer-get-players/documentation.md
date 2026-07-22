@@ -71,6 +71,8 @@ This rule has one option, `validateType`, which is a boolean.
     -   When `false`, the rule only checks for direct calls on an identifier named `Players` (e.g., `Players.GetChildren()`).
     -   When `true`, the rule uses type information to check if the object calling `GetChildren()` is actually the `Players` service. This is useful if you have aliased the `Players` service to a different variable name (e.g., `const P = game.GetService("Players"); P.GetChildren();`) or if it's accessed through an interface. This option requires TypeScript type checking to be enabled in your ESLint configuration.
 
+Because `validateType: true` needs type information, it is ESLint-only. The rest of this rule runs under oxlint, but enabling this option there will error.
+
 <!-- begin auto-generated rule options list -->
 
 | Name           | Description                                                                      | Type    | Default |

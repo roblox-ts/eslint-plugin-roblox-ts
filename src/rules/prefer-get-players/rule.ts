@@ -3,7 +3,7 @@ import type { TSESLint, TSESTree } from "@typescript-eslint/utils";
 import { AST_NODE_TYPES } from "@typescript-eslint/utils";
 import { getParserServices } from "@typescript-eslint/utils/eslint-utils";
 
-import { createEslintRule } from "../../util";
+import { createRobloxRule, type RobloxRuleListener } from "../../util";
 import { getConstrainedType } from "../../utils/types";
 
 export const RULE_NAME = "prefer-get-players";
@@ -31,10 +31,7 @@ function check(
 	});
 }
 
-function create(
-	context: Context,
-	[{ validateType }]: Readonly<RuleOptions>,
-): TSESLint.RuleListener {
+function createOnce(context: Context): RobloxRuleListener {
 	return {
 		CallExpression(node: TSESTree.CallExpression) {
 			const { callee } = node;
@@ -45,6 +42,8 @@ function create(
 			) {
 				return;
 			}
+
+			const [{ validateType }] = context.options;
 
 			if (validateType) {
 				isPlayersCallExpressionType(context, node, callee);
@@ -88,9 +87,9 @@ function isPlayersCallExpressionType(
 	check(context, node, callee);
 }
 
-export const preferGetPlayers = createEslintRule({
+export const preferGetPlayers = createRobloxRule({
 	name: RULE_NAME,
-	create,
+	createOnce,
 	defaultOptions: [
 		{
 			validateType: false,
