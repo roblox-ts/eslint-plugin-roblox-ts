@@ -1,10 +1,9 @@
-import { getConstrainedTypeAtLocation } from "@typescript-eslint/type-utils";
 import type { TSESLint, TSESTree } from "@typescript-eslint/utils";
 import { AST_NODE_TYPES } from "@typescript-eslint/utils";
 import { getParserServices } from "@typescript-eslint/utils/eslint-utils";
 
 import { createEslintRule } from "../../util";
-import { isArrayType } from "../../utils/types";
+import { getConstrainedType, isArrayType } from "../../utils/types";
 
 function makeViolationText(name: string): string {
 	return `Do not use Array<T> with ${name}(). Key values will not be shifted from 1-indexed to 0-indexed.`;
@@ -34,7 +33,7 @@ function create(
 				return;
 			}
 
-			const type = getConstrainedTypeAtLocation(parserServices, node.arguments[0]);
+			const type = getConstrainedType(parserServices, node.arguments[0]);
 			if (!isArrayType(checker, type)) {
 				return;
 			}

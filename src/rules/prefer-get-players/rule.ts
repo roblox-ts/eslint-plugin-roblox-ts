@@ -1,9 +1,10 @@
-import { getConstrainedTypeAtLocation, isBuiltinSymbolLike } from "@typescript-eslint/type-utils";
+import { isBuiltinSymbolLike } from "@typescript-eslint/type-utils";
 import type { TSESLint, TSESTree } from "@typescript-eslint/utils";
 import { AST_NODE_TYPES } from "@typescript-eslint/utils";
 import { getParserServices } from "@typescript-eslint/utils/eslint-utils";
 
 import { createEslintRule } from "../../util";
+import { getConstrainedType } from "../../utils/types";
 
 export const RULE_NAME = "prefer-get-players";
 
@@ -72,7 +73,7 @@ function isPlayersCallExpressionType(
 	callee: TSESTree.MemberExpression,
 ): void {
 	const parserServices = getParserServices(context);
-	const type = getConstrainedTypeAtLocation(parserServices, callee.object);
+	const type = getConstrainedType(parserServices, callee.object);
 
 	const isPlayersType = isBuiltinSymbolLike(parserServices.program, type, ["Players"]);
 	if (!isPlayersType) {

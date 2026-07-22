@@ -1,4 +1,3 @@
-import { getConstrainedTypeAtLocation } from "@typescript-eslint/type-utils";
 import {
 	AST_NODE_TYPES,
 	type ParserServicesWithTypeInformation,
@@ -12,7 +11,7 @@ import { isArrayBindingOrAssignmentPattern, isTypeReference } from "ts-api-utils
 import type { Type } from "typescript";
 
 import { createEslintRule } from "../../util";
-import { isIterableFunctionType, type TestExpression } from "../../utils/types";
+import { getConstrainedType, isIterableFunctionType, type TestExpression } from "../../utils/types";
 
 export const RULE_NAME = "misleading-lua-tuple-checks";
 
@@ -26,17 +25,47 @@ const messages = {
 
 type Context = Readonly<TSESLint.RuleContext<string, []>>;
 
+const LUA_TUPLE_CANDIDATES: ReadonlySet<AST_NODE_TYPES> = new Set([
+	AST_NODE_TYPES.AssignmentExpression,
+	AST_NODE_TYPES.AwaitExpression,
+	AST_NODE_TYPES.CallExpression,
+	AST_NODE_TYPES.ChainExpression,
+	AST_NODE_TYPES.ConditionalExpression,
+	AST_NODE_TYPES.LogicalExpression,
+	AST_NODE_TYPES.MemberExpression,
+	AST_NODE_TYPES.SequenceExpression,
+	AST_NODE_TYPES.TaggedTemplateExpression,
+	AST_NODE_TYPES.TSAsExpression,
+	AST_NODE_TYPES.TSNonNullExpression,
+	AST_NODE_TYPES.TSSatisfiesExpression,
+	AST_NODE_TYPES.TSTypeAssertion,
+	AST_NODE_TYPES.YieldExpression,
+]);
+
+/**
+ * Syntactic pre-filter: only these expression kinds can ever have a `LuaTuple`
+ * type, so everything else (literals, comparisons, arithmetic, functions,
+ * object/array literals, ...) skips the type checker entirely. Identifiers are
+ * handled separately so the ubiquitous `undefined` stays free as well.
+ *
+ * @param node - The expression node to test.
+ * @returns Whether the node could possibly be typed as `LuaTuple`.
+ */
+function canBeLuaTuple(node: TSESTree.Node): boolean {
+	if (node.type === AST_NODE_TYPES.Identifier) {
+		return node.name !== "undefined";
+	}
+
+	return LUA_TUPLE_CANDIDATES.has(node.type);
+}
+
 function checkLuaTupleUsage(
 	context: Context,
 	parserServices: ParserServicesWithTypeInformation,
 	node: TSESTree.Node,
 ): void {
 	if (isLuaTuple(parserServices, node)) {
-		context.report({
-			fix: (fixer) => fixer.insertTextAfter(node, "[0]"),
-			messageId: BANNED_LUA_TUPLE_CHECK,
-			node,
-		});
+		reportLuaTupleUsage(context, node);
 	}
 }
 
@@ -50,10 +79,8 @@ function create(context: Context): TSESLint.RuleListener {
 		) => {
 			validateAssignmentExpression(context, parserServices, node);
 		},
-		"BinaryExpression[operator=/^([<>]=?|[!=]==?)$/]": ({
-			left,
-			right,
-		}: TSESTree.BinaryExpression) => {
+		"BinaryExpression[operator=/^[!=]==?$/]": ({ left, right }: TSESTree.BinaryExpression) => {
+			// Equality only: tsc rejects relational comparisons on LuaTuple
 			checkLuaTupleUsage(context, parserServices, left);
 			checkLuaTupleUsage(context, parserServices, right);
 		},
@@ -125,8 +152,8 @@ function handleIterableFunction(
 	}
 
 	const checker = parserServices.program.getTypeChecker();
-	const aliasSymbol = checker.getTypeArguments(type)[0]?.aliasSymbol;
-	if (!aliasSymbol || aliasSymbol.escapedName.toString() !== "LuaTuple") {
+	const typeArgument = checker.getTypeArguments(type)[0];
+	if (!typeArgument || !isLuaTupleAlias(typeArgument)) {
 		return;
 	}
 
@@ -148,9 +175,44 @@ function handleIterableFunction(
 function isLuaTuple(
 	parserServices: ParserServicesWithTypeInformation,
 	node: TSESTree.Node,
+	precomputedType?: Type,
 ): boolean {
-	const { aliasSymbol } = getConstrainedTypeAtLocation(parserServices, node);
-	return (aliasSymbol && aliasSymbol.escapedName.toString() === "LuaTuple") ?? false;
+	return (
+		canBeLuaTuple(node) &&
+		isLuaTupleAlias(precomputedType ?? getConstrainedType(parserServices, node))
+	);
+}
+
+function isLuaTupleAlias(type: Type): boolean {
+	const { aliasSymbol } = type;
+	return aliasSymbol !== undefined && (aliasSymbol.escapedName as string) === "LuaTuple";
+}
+
+/** Node kinds that bind looser than member access and need parens before [0]. */
+const NEEDS_PARENS: ReadonlySet<AST_NODE_TYPES> = new Set([
+	AST_NODE_TYPES.AssignmentExpression,
+	AST_NODE_TYPES.AwaitExpression,
+	AST_NODE_TYPES.ConditionalExpression,
+	AST_NODE_TYPES.LogicalExpression,
+	AST_NODE_TYPES.SequenceExpression,
+	AST_NODE_TYPES.TSAsExpression,
+	AST_NODE_TYPES.TSSatisfiesExpression,
+	AST_NODE_TYPES.TSTypeAssertion,
+	AST_NODE_TYPES.YieldExpression,
+]);
+
+function reportLuaTupleUsage(context: Context, node: TSESTree.Node): void {
+	context.report({
+		fix: (fixer) => {
+			if (NEEDS_PARENS.has(node.type)) {
+				return fixer.replaceText(node, `(${context.sourceCode.getText(node)})[0]`);
+			}
+
+			return fixer.insertTextAfter(node, "[0]");
+		},
+		messageId: BANNED_LUA_TUPLE_CHECK,
+		node,
+	});
 }
 
 function validateAssignmentExpression(
@@ -158,7 +220,9 @@ function validateAssignmentExpression(
 	parserServices: ParserServicesWithTypeInformation,
 	node: TSESTree.AssignmentExpression,
 ): void {
-	if (!isLuaTuple(parserServices, node.left) && isLuaTuple(parserServices, node.right)) {
+	// Check the right side first: it is usually a literal or other cheap
+	// non-candidate, which lets us skip the type query on the left entirely.
+	if (isLuaTuple(parserServices, node.right) && !isLuaTuple(parserServices, node.left)) {
 		ensureArrayDestructuring(context, parserServices, node.left as TSESTree.Identifier);
 	}
 }
@@ -169,12 +233,12 @@ function validateForOfStatement(
 	node: TSESTree.ForOfStatement,
 ): void {
 	const rightNode = node.right;
-	const type = getConstrainedTypeAtLocation(parserServices, rightNode);
+	const type = getConstrainedType(parserServices, rightNode);
 
 	if (isIterableFunctionType(parserServices.program, type)) {
 		handleIterableFunction(context, parserServices, node, type);
-	} else {
-		checkLuaTupleUsage(context, parserServices, rightNode);
+	} else if (isLuaTuple(parserServices, rightNode, type)) {
+		reportLuaTupleUsage(context, rightNode);
 	}
 }
 

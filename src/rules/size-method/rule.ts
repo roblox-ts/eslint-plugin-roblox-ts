@@ -1,4 +1,3 @@
-import { getConstrainedTypeAtLocation } from "@typescript-eslint/type-utils";
 import {
 	AST_NODE_TYPES,
 	type ParserServicesWithTypeInformation,
@@ -10,7 +9,13 @@ import { getParserServices } from "@typescript-eslint/utils/eslint-utils";
 import type { Type, TypeChecker } from "typescript";
 
 import { createEslintRule } from "../../util";
-import { isArrayType, isMapType, isSetType, isStringType } from "../../utils/types";
+import {
+	getConstrainedType,
+	isArrayType,
+	isMapType,
+	isSetType,
+	isStringType,
+} from "../../utils/types";
 
 export const RULE_NAME = "size-method";
 
@@ -41,7 +46,7 @@ function create(context: Readonly<TSESLint.RuleContext<string, []>>): TSESLint.R
 				return;
 			}
 
-			const type = getConstrainedTypeAtLocation(parserServices, node.object);
+			const type = getConstrainedType(parserServices, node.object);
 			const propertyName = node.property.name;
 			if (!isTargetType(type, parserServices, checker, propertyName)) {
 				return;
