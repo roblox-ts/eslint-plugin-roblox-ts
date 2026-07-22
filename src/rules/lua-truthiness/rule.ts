@@ -1,4 +1,3 @@
-import { getConstrainedTypeAtLocation } from "@typescript-eslint/type-utils";
 import {
 	type ParserServicesWithTypeInformation,
 	type TSESLint,
@@ -8,6 +7,7 @@ import { getParserServices } from "@typescript-eslint/utils/eslint-utils";
 
 import { createEslintRule } from "../../util";
 import {
+	getConstrainedType,
 	isEmptyStringType,
 	isNumberLiteralType,
 	isPossiblyType,
@@ -28,7 +28,7 @@ function checkTruthy(
 	parserServices: ParserServicesWithTypeInformation,
 	node: TSESTree.Node,
 ): void {
-	const type = getConstrainedTypeAtLocation(parserServices, node);
+	const type = getConstrainedType(parserServices, node);
 
 	const isAssignableToZero = isPossiblyType(type, (inner) => isNumberLiteralType(inner, 0));
 	const isAssignableToEmptyString = isPossiblyType(type, (inner) => isEmptyStringType(inner));

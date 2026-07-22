@@ -1,5 +1,4 @@
 /* eslint-disable max-lines -- Complex rule with many type definitions and constraint mappings */
-import { getConstrainedTypeAtLocation } from "@typescript-eslint/type-utils";
 import {
 	AST_NODE_TYPES,
 	type ParserServicesWithTypeInformation,
@@ -9,7 +8,7 @@ import {
 import { getParserServices } from "@typescript-eslint/utils/eslint-utils";
 
 import { createEslintRule } from "../../util";
-import { getRobloxDataTypeNameRecursive } from "../../utils/types";
+import { getConstrainedType, getRobloxDataTypeNameRecursive } from "../../utils/types";
 
 export const RULE_NAME = "no-object-math";
 
@@ -416,7 +415,7 @@ function getSimpleRobloxType(
 	node: TSESTree.Node,
 	parserServices: ParserServicesWithTypeInformation,
 ): string | undefined {
-	const type = getConstrainedTypeAtLocation(parserServices, node);
+	const type = getConstrainedType(parserServices, node);
 	return getRobloxDataTypeNameRecursive(type);
 }
 

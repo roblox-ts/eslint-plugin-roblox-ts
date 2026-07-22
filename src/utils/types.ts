@@ -1,5 +1,5 @@
 import { isBuiltinSymbolLike, isTypeFlagSet } from "@typescript-eslint/type-utils";
-import type { TSESTree } from "@typescript-eslint/utils";
+import type { ParserServicesWithTypeInformation, TSESTree } from "@typescript-eslint/utils";
 
 import { type Program, type Type, type TypeChecker, TypeFlags } from "typescript";
 
@@ -28,6 +28,31 @@ const robloxTypes = new Set([
 	"Vector3",
 	"Vector3int16",
 ]);
+
+/**
+ * Faster variant of type-utils' getConstrainedTypeAtLocation: only instantiable
+ * types (generics, conditional and indexed-access types) can hide behind a
+ * constraint, so the costly getBaseConstraintOfType call is skipped for
+ * concrete types. Unlike the type-utils helper, unions/intersections that
+ * contain type variables are returned as-is rather than constraint-resolved,
+ * which preserves their alias symbol.
+ *
+ * @param parserServices - The parser services with type information.
+ * @param node - The node to get the constrained type of.
+ * @returns The base constraint for instantiable types, otherwise the type
+ *   itself.
+ */
+export function getConstrainedType(
+	parserServices: ParserServicesWithTypeInformation,
+	node: TSESTree.Node,
+): Type {
+	const type = parserServices.getTypeAtLocation(node);
+	if (!isTypeFlagSet(type, TypeFlags.Instantiable)) {
+		return type;
+	}
+
+	return parserServices.program.getTypeChecker().getBaseConstraintOfType(type) ?? type;
+}
 
 export function getRobloxDataTypeName(type: Type): string | undefined {
 	const symbol = type.getSymbol();
@@ -85,8 +110,10 @@ export function isFunction(type: Type): boolean {
 	return isTypeFlagSet(type, TypeFlags.Object) && type.getCallSignatures().length > 0;
 }
 
+const ITERABLE_FUNCTION_NAMES = ["IterableFunction"];
+
 export function isIterableFunctionType(program: Program, type: Type): boolean {
-	return isBuiltinSymbolLike(program, type, ["IterableFunction"]);
+	return isBuiltinSymbolLike(program, type, ITERABLE_FUNCTION_NAMES);
 }
 
 export function isMapType(program: Program, type: Type): boolean {
