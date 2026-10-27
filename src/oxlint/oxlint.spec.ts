@@ -116,6 +116,18 @@ describe("oxlint integration", () => {
 				runOxlint({ code: GET_CHILDREN_FIXTURE, rule: "prefer-get-players" }).fixed,
 			).toBe("Players.GetPlayers();\n");
 		});
+
+		it.each([
+			"class A { #value = 1; read() { return this.#value; } }",
+			"class A { static #x = 1; static read() { return A.#x; } }",
+			"class A { #x = 1; has(obj: object) { return #x in obj; } }",
+			"class A { #x = 1; x = 2; read() { return this.#x; } }",
+		])("reports private identifiers without fixing %s", (code) => {
+			const { diagnostics, fixed } = runOxlint({ code, rule: "no-private-identifier" });
+
+			expect(diagnostics).toHaveLength(2);
+			expect(fixed).toBe(code);
+		});
 	});
 
 	it("interpolates {{data}} placeholders", () => {

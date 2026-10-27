@@ -18,24 +18,43 @@ const invalid: Array<InvalidTestCase> = [
 	{
 		code: "class MyClass { #privateField = 1; }",
 		errors: [{ messageId }],
-		output: "class MyClass { private privateField = 1; }",
+		output: null,
 	},
 	{
 		code: "class MyClass { #privateMethod() {} }",
 		errors: [{ messageId }],
-		output: "class MyClass { private privateMethod() {} }",
+		output: null,
 	},
-	// TODO: Correct access modifier order
-	// {
-	// 	code: "class MyClass { static #privateStaticMethod() {} }",
-	// 	errors: [{ messageId }],
-	// 	output: "class MyClass { private static privateStaticMethod() {} }",
-	// },
-	// {
-	// 	code: "class A { static readonly #privateStaticMethod = 5; }",
-	// 	errors: [{ messageId }],
-	// 	output: "class A { private static readonly privateStaticMethod = 5; }",
-	// },
+	{
+		code: "class MyClass { static #privateStaticMethod() {} }",
+		errors: [{ messageId }],
+		output: null,
+	},
+	{
+		code: "class A { static readonly #value = 5; }",
+		errors: [{ messageId }],
+		output: null,
+	},
+	{
+		code: "class A { #value = 1; read() { return this.#value; } }",
+		errors: [{ messageId }, { messageId }],
+		output: null,
+	},
+	{
+		code: "class A { static #x = 1; static read() { return A.#x; } }",
+		errors: [{ messageId }, { messageId }],
+		output: null,
+	},
+	{
+		code: "class A { #x = 1; has(obj: object) { return #x in obj; } }",
+		errors: [{ messageId }, { messageId }],
+		output: null,
+	},
+	{
+		code: "class A { #x = 1; x = 2; read() { return this.#x; } }",
+		errors: [{ messageId }, { messageId }],
+		output: null,
+	},
 ];
 
 run({

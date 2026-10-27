@@ -15,7 +15,6 @@ function createOnce(context: Readonly<TSESLint.RuleContext<string, []>>): Roblox
 	return {
 		PrivateIdentifier(node: TSESTree.PrivateIdentifier) {
 			context.report({
-				fix: (fixer) => fixer.replaceText(node, `private ${node.name}`),
 				messageId: PRIVATE_IDENTIFIER_VIOLATION,
 				node,
 			});
@@ -33,7 +32,6 @@ export const noPrivateIdentifier = createRobloxRule({
 			recommended: true,
 			requiresTypeChecking: false,
 		},
-		fixable: "code",
 		messages,
 		schema: [],
 		type: "problem",

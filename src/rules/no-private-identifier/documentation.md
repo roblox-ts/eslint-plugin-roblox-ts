@@ -1,7 +1,5 @@
 # Disallow the use of private identifiers (`#`)
 
-🔧 This rule is automatically fixable by the [`--fix` CLI option](https://eslint.org/docs/latest/user-guide/command-line-interface#--fix).
-
 <!-- end auto-generated rule header -->
 <!-- Do not manually modify this header. Run: `npm run eslint-docs` -->
 
@@ -9,6 +7,10 @@
 
 This rule bans the use of private identifiers (e.g., `#fieldName`) in classes,
 as they are not supported in roblox-ts.
+
+This rule does not provide an autofix. Converting private identifiers requires
+updating declarations and uses together, preserving modifier order, and checking
+for name collisions and brand checks.
 
 ## Examples
 

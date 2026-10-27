@@ -40,7 +40,7 @@ guiding users who already know TypeScript to avoid unsupported features.
 | [no-object-math](src/rules/no-object-math/documentation.md)                           | Enforce DataType math methods over operators                              | 🔧 |    | 💭 |
 | [no-post-fix-new](src/rules/no-post-fix-new/documentation.md)                         | Disallow .new() on objects without a .new() method                        | 🔧 |    | 💭 |
 | [no-preceding-spread-element](src/rules/no-preceding-spread-element/documentation.md) | Disallow spread elements not last in a list of arguments                  |    |    | 💭 |
-| [no-private-identifier](src/rules/no-private-identifier/documentation.md)             | Disallow the use of private identifiers (`#`)                             | 🔧 |    |    |
+| [no-private-identifier](src/rules/no-private-identifier/documentation.md)             | Disallow the use of private identifiers (`#`)                             |    |    |    |
 | [no-undeclared-scope](src/rules/no-undeclared-scope/documentation.md)                 | Enforce that only npm scopes listed in typeRoots can be imported          |    |    | 💭 |
 | [no-unsupported-syntax](src/rules/no-unsupported-syntax/documentation.md)             | Disallow unsupported syntax in roblox-ts                                  |    |    |    |
 | [no-user-defined-lua-tuple](src/rules/no-user-defined-lua-tuple/documentation.md)     | Disallow usage of LuaTuple type keyword and $tuple() calls                | 🔧 |    |    |

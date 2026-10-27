@@ -50,7 +50,7 @@ for (const key in obj) { // Should use for (const key of Object.keys(obj))
   print(key);
 }
 
-// 11. no-private-identifier rule violation (fixable)
+// 11. no-private-identifier rule violation (report only)
 class TestClass {
   #privateField = "private"; // Should use private privateField
   
