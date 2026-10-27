@@ -1,8 +1,4 @@
-// cspell:ignore getvalue, setvalue, getprop, setprop, setstatic, getstatic
-import { unindent } from "@antfu/utils";
-
 import type { InvalidTestCase, ValidTestCase } from "eslint-vitest-rule-tester";
-import { expect } from "vitest";
 
 import { run } from "../test";
 import { noGetSet, RULE_NAME } from "./rule";
@@ -21,89 +17,122 @@ const invalid: Array<InvalidTestCase> = [
 	{
 		code: "class A { get prop() { return 1; } }",
 		errors: [{ messageId }],
-		output: (output) => {
-			expect(output).toMatchInlineSnapshot('"class A { getprop() { return 1; } }"');
-		},
+		output: "class A { prop() { return 1; } }",
 	},
 	{
 		code: "class B { set prop(value: number) {} }",
 		errors: [{ messageId }],
-		output: (output) => {
-			expect(output).toMatchInlineSnapshot('"class B { setprop(value: number) {} }"');
-		},
+		output: "class B { prop(value: number) {} }",
 	},
 	{
-		code: unindent`
-	        const obj = {
-	            get value() { return this._value; },
-	            set value(v) { this._value = v; }
-	        };
-	    `,
+		code: "const obj = { get value() { return this._value; }, set value(v) { this._value = v; } };",
 		errors: [{ messageId }, { messageId }],
-		output: (output) => {
-			expect(output).toMatchInlineSnapshot(`
-				"const obj = {
-				    getvalue() { return this._value; },
-				    setvalue(v) { this._value = v; }
-				};"
-			`);
-		},
+		output: null,
 	},
 	{
 		code: "class C { static get staticProp() { return 2; } }",
 		errors: [{ messageId }],
-		output: (output) => {
-			expect(output).toMatchInlineSnapshot(
-				'"class C { static getstaticProp() { return 2; } }"',
-			);
-		},
+		output: "class C { static staticProp() { return 2; } }",
 	},
 	{
 		code: "class D { static set staticProp(value: number) {} }",
 		errors: [{ messageId }],
-		output: (output) => {
-			expect(output).toMatchInlineSnapshot(
-				'"class D { static setstaticProp(value: number) {} }"',
-			);
-		},
-	},
-	{
-		code: unindent`
-	        const obj = {
-	            get value() { return this._value; },
-	            set value(v) { this._value = v; }
-	        };
-	    `,
-		errors: [{ messageId }, { messageId }],
-		output: (output) => {
-			expect(output).toMatchInlineSnapshot(`
-				"const obj = {
-				    getvalue() { return this._value; },
-				    setvalue(v) { this._value = v; }
-				};"
-			`);
-		},
+		output: "class D { static staticProp(value: number) {} }",
 	},
 	{
 		code: "class E { public get prop() { return 3; } }",
 		errors: [{ messageId }],
-		output: (output) => {
-			expect(output).toMatchInlineSnapshot('"class E { public getprop() { return 3; } }"');
-		},
+		output: "class E { public prop() { return 3; } }",
 	},
 	{
 		code: "class F { private get prop() { return 3; } }",
 		errors: [{ messageId }],
-		output: (output) => {
-			expect(output).toMatchInlineSnapshot('"class F { private getprop() { return 3; } }"');
-		},
+		output: "class F { private prop() { return 3; } }",
 	},
 	{
 		code: "class G { protected get prop() { return 4; } }",
 		errors: [{ messageId }],
-		output: (output) => {
-			expect(output).toMatchInlineSnapshot('"class G { protected getprop() { return 4; } }"');
-		},
+		output: "class G { protected prop() { return 4; } }",
+	},
+	{
+		code: "const obj = { get value() { return 1; } };",
+		errors: [{ messageId }],
+		output: "const obj = { value() { return 1; } };",
+	},
+	{
+		code: "const obj = { set value(v: number) {} };",
+		errors: [{ messageId }],
+		output: "const obj = { value(v: number) {} };",
+	},
+	{
+		code: "class A { get [key]() { return 1; } }",
+		errors: [{ messageId }],
+		output: "class A { [key]() { return 1; } }",
+	},
+	{
+		code: "const obj = { get [(key)]() { return 1; } };",
+		errors: [{ messageId }],
+		output: "const obj = { [(key)]() { return 1; } };",
+	},
+	{
+		code: "class A { get get() { return 1; } }",
+		errors: [{ messageId }],
+		output: "class A { get() { return 1; } }",
+	},
+	{
+		code: "class A { get value() { return 1; } set value(v: number) {} }",
+		errors: [{ messageId }, { messageId }],
+		output: null,
+	},
+	{
+		code: "class A { static get value() { return 1; } static set value(v: number) {} }",
+		errors: [{ messageId }, { messageId }],
+		output: null,
+	},
+	{
+		code: 'class A { get value() { return 1; } set ["value"](v: number) {} }',
+		errors: [{ messageId }, { messageId }],
+		output: null,
+	},
+	{
+		code: 'const obj = { get "value"() { return 1; }, set value(v: number) {} };',
+		errors: [{ messageId }, { messageId }],
+		output: null,
+	},
+	{
+		code: "class A { get #value() { return 1; } set #value(v: number) {} }",
+		errors: [{ messageId }, { messageId }],
+		output: null,
+	},
+	{
+		code: "class A { static get value() { return 1; } set value(v: number) {} }",
+		errors: [{ messageId }, { messageId }],
+		output: "class A { static value() { return 1; } value(v: number) {} }",
+	},
+	{
+		code: "class A { get value() { return 1; } } class B { set value(v: number) {} }",
+		errors: [{ messageId }, { messageId }],
+		output: "class A { value() { return 1; } } class B { value(v: number) {} }",
+	},
+	{
+		code: "class A { @decorate static get value() { return 1; } }",
+		errors: [{ messageId }],
+		output: "class A { @decorate static value() { return 1; } }",
+	},
+	{
+		code: "class A { get /* get */ value() { return 1; } }",
+		errors: [{ messageId }],
+		output: "class A { /* get */ value() { return 1; } }",
+	},
+	{
+		code: "class A { get/* comment */[key]() { return 1; } }",
+		errors: [{ messageId }],
+		output: "class A { /* comment */[key]() { return 1; } }",
+	},
+	{
+		code: "class A { get\n\tvalue() { return 1; } }",
+		errors: [{ messageId }],
+		output: "class A { value() { return 1; } }",
 	},
 ];
 

@@ -95,6 +95,32 @@ describe("oxlint integration", () => {
 	});
 
 	describe("fixes", () => {
+		it.each([
+			["class A { get value() { return 1; } }", "class A { value() { return 1; } }"],
+			["class A { set value(v: number) {} }", "class A { value(v: number) {} }"],
+			[
+				"class A { @decorate static get /* get */ [key]() { return 1; } }",
+				"class A { @decorate static /* get */ [key]() { return 1; } }",
+			],
+			["class A { get get() { return 1; } }", "class A { get() { return 1; } }"],
+			[
+				"const obj = { get value() { return 1; }, set other(v: number) {} };",
+				"const obj = { value() { return 1; }, other(v: number) {} };",
+			],
+		])("keeps accessor keys when fixing %s", (code, expected) => {
+			expect(runOxlint({ code, rule: "no-get-set" }).fixed).toBe(expected);
+		});
+
+		it.each([
+			"class A { get value() { return 1; } set value(v: number) {} }",
+			'const obj = { get value() { return 1; }, set ["value"](v: number) {} };',
+		])("reports both accessors without fixing %s", (code) => {
+			const { diagnostics, fixed } = runOxlint({ code, rule: "no-get-set" });
+
+			expect(diagnostics).toHaveLength(2);
+			expect(fixed).toBe(code);
+		});
+
 		it("applies the no-any fix", () => {
 			expect(runOxlint({ code: ANY_FIXTURE, rule: "no-any" }).fixed).toBe(ANY_FIXED);
 		});

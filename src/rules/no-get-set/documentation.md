@@ -12,6 +12,11 @@ definitions due to not being supported in roblox-ts.
 
 See [roblox-ts issue #457](https://github.com/roblox-ts/roblox-ts/issues/457) for more details.
 
+The autofix removes the accessor keyword and keeps the method's key and modifiers.
+When the same class body or object literal contains a getter and a setter with the
+same statically known name, the rule reports both without an autofix. Convert
+these pairs manually to avoid creating duplicate methods.
+
 ## Examples
 
 ### Incorrect
