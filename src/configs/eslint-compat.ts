@@ -51,4 +51,4 @@ export const eslintCompat = flat;
  * };
  * ```
  */
-export const eslintCompatLegacy = legacy;
+export const eslintCompatLegacy: Linter.LegacyConfig = legacy;

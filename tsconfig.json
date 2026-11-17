@@ -1,4 +1,7 @@
 {
 	"extends": ["@isentinel/tsconfig/typescript"],
+	"compilerOptions": {
+		"isolatedDeclarations": false
+	},
 	"exclude": ["./fixtures/**/*.*", "./_fixtures/**/*.*"]
 }

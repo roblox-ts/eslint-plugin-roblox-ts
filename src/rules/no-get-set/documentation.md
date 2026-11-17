@@ -1,6 +1,6 @@
 # Disallow getters and setters
 
-🔧 This rule is automatically fixable by the [`--fix` CLI option](https://eslint.org/docs/latest/user-guide/command-line-interface#--fix).
+💡 This rule is manually fixable by [editor suggestions](https://eslint.org/docs/latest/use/core-concepts#rule-suggestions).
 
 <!-- end auto-generated rule header -->
 <!-- Do not manually modify this header. Run: `npm run eslint-docs` -->
@@ -11,6 +11,24 @@ This rule bans the use of `get` and `set` keywords in class and object literal
 definitions due to not being supported in roblox-ts.
 
 See [roblox-ts issue #457](https://github.com/roblox-ts/roblox-ts/issues/457) for more details.
+
+### Suggestion
+
+The rule offers a suggestion, not an autofix. The suggestion renames the
+accessor to a normal method with a `get` or `set` prefix: `get value()` becomes
+`getValue()`, and `set value(v)` becomes `setValue(v)`. The prefix keeps a
+getter/setter pair as two different methods.
+
+This change modifies the public API of the class or object. All callers must
+change from `obj.value` to `obj.getValue()`, so the rule does not apply it
+automatically. Type errors usually show where to update. Check for an untyped
+setter parameter, and for a base class that already has a method with the new
+name, because the rename then overrides it.
+
+There is no suggestion for computed keys (`get [key]()`), string or number
+keys (`get "value"()`), private keys (`get #value()`), when a comment is
+between the keyword and the key, or when the class or object already has a
+member with the new name.
 
 ## Examples
 

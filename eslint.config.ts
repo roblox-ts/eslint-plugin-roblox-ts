@@ -15,6 +15,10 @@ export default style(
 			],
 		},
 		type: "package",
+		typescript: {
+			// tsconfig.json includes every root file except dotfiles.
+			outOfProjectFiles: [".*.ts"],
+		},
 	},
 	{
 		ignores: ["fixtures/**", "scripts/template/**", GLOB_MARKDOWN],

@@ -35,7 +35,6 @@ function checkTruthy(
 
 	if (isAssignableToZero || isAssignableToEmptyString) {
 		context.report({
-			fix: undefined,
 			messageId: FALSY_STRING_NUMBER_CHECK,
 			node,
 		});
