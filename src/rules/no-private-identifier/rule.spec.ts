@@ -191,6 +191,102 @@ const invalid: Array<InvalidTestCase> = [
 		errors: [{ messageId }],
 		output: null,
 	},
+	{
+		code: "class A { [k: string]: string; #x = 1; }",
+		description: "index signature can clash with the name",
+		errors: [{ messageId }],
+		output: null,
+	},
+	{
+		code: "class A { static [k: string]: string; #x = 1; }",
+		description: "static index signature blocks the fix",
+		errors: [{ messageId }],
+		output: null,
+	},
+	{
+		code: 'class A { #toString() { return ""; } }',
+		description: "toString is reserved",
+		errors: [{ messageId }],
+		output: null,
+	},
+	{
+		code: "class A { #x = 1; 'y'() {} }",
+		description: "string key with a different name",
+		errors: [{ messageId }],
+		output: "class A { private x = 1; 'y'() {} }",
+	},
+	{
+		code: 'class A { #x = 1; ["y"]() {} }',
+		description: "computed string key with a different name",
+		errors: [{ messageId }],
+		output: 'class A { private x = 1; ["y"]() {} }',
+	},
+	{
+		code: "class A { #x = 1; [`y`]() {} }",
+		description: "computed template key with a different name",
+		errors: [{ messageId }],
+		output: "class A { private x = 1; [`y`]() {} }",
+	},
+	{
+		code: "class A { #x = 1; constructor(public y: number) {} }",
+		description: "parameter property with a different name",
+		errors: [{ messageId }],
+		output: "class A { private x = 1; constructor(public y: number) {} }",
+	},
+	{
+		code: "class A { #x = 1; constructor(public x: number) {} }",
+		description: "name clash with a parameter property without a default",
+		errors: [{ messageId }],
+		output: null,
+	},
+	{
+		code: "class A { static #length = 1; }",
+		description: "static length clashes with Function.length",
+		errors: [{ messageId }],
+		output: null,
+	},
+	{
+		code: "class A { static #prototype = 1; }",
+		description: "static prototype clashes with Function.prototype",
+		errors: [{ messageId }],
+		output: null,
+	},
+	{
+		code: "class A { static #caller = 1; }",
+		description: "static caller clashes with Function.caller",
+		errors: [{ messageId }],
+		output: null,
+	},
+	{
+		code: "class A { static #arguments = 1; }",
+		description: "static arguments clashes with Function.arguments",
+		errors: [{ messageId }],
+		output: null,
+	},
+	{
+		code: "class Base {} class A { #x = 1; f() { return class extends Base { g(a: A) { return a.#x; } }; } }",
+		description: "nested class with extends uses the outer name",
+		errors: [{ messageId }, { messageId }],
+		output: "class Base {} class A { private x = 1; f() { return class extends Base { g(a: A) { return a.x; } }; } }",
+	},
+	{
+		code: "class A { m() { return this.#y; } }",
+		description: "name that the class does not declare",
+		errors: [{ messageId }],
+		output: null,
+	},
+	{
+		code: "const o = {}; #x in o;",
+		description: "name outside all classes",
+		errors: [{ messageId }],
+		output: null,
+	},
+	{
+		code: "class A { static {} #x = 1; }",
+		description: "static block does not stop the fix",
+		errors: [{ messageId }],
+		output: "class A { static {} private x = 1; }",
+	},
 ];
 
 run({

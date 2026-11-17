@@ -1,4 +1,4 @@
-// cspell:ignore quasis
+// cspell:ignore metamethod quasis
 
 import type { TSESLint, TSESTree } from "@typescript-eslint/utils";
 import { AST_NODE_TYPES } from "@typescript-eslint/utils";
@@ -26,7 +26,7 @@ type Context = Readonly<TSESLint.RuleContext<string, []>>;
 
 interface MemberNames {
 	readonly instance: Set<string>;
-	/** False if a computed key could not be resolved to a name. */
+	/** False if a computed key or an index signature hides a name. */
 	readonly isComplete: boolean;
 	readonly static: Set<string>;
 }
@@ -36,8 +36,13 @@ type PrivateMember =
 	| TSESTree.MethodDefinition
 	| TSESTree.PropertyDefinition;
 
-/** `#constructor` becomes a real constructor (or a syntax error) if renamed. */
-const RESERVED_NAMES = new Set(["constructor"]);
+/**
+ * Names that change meaning if renamed. A `#constructor` becomes a real
+ * constructor or a syntax error. The roblox-ts compiler compiles a `toString`
+ * method to the `__tostring` metamethod, so a renamed `#toString` changes
+ * behavior.
+ */
+const RESERVED_NAMES = new Set(["constructor", "toString"]);
 
 /** Built-in `Function` properties that a static member cannot redeclare. */
 const RESERVED_STATIC_NAMES = new Set(["arguments", "caller", "length", "name", "prototype"]);
@@ -139,10 +144,9 @@ function createOnce(context: Context): RobloxRuleListener {
 function getDeclaringMember(node: TSESTree.PrivateIdentifier): PrivateMember | undefined {
 	const { parent } = node;
 	if (
-		(parent.type === AST_NODE_TYPES.PropertyDefinition ||
-			parent.type === AST_NODE_TYPES.MethodDefinition ||
-			parent.type === AST_NODE_TYPES.AccessorProperty) &&
-		parent.key === node
+		parent.type === AST_NODE_TYPES.PropertyDefinition ||
+		parent.type === AST_NODE_TYPES.MethodDefinition ||
+		parent.type === AST_NODE_TYPES.AccessorProperty
 	) {
 		return parent;
 	}
@@ -161,7 +165,8 @@ function getDeclaringMember(node: TSESTree.PrivateIdentifier): PrivateMember | u
 function getMemberNames(body: TSESTree.ClassBody): MemberNames {
 	const instance = new Set<string>();
 	const staticNames = new Set<string>();
-	let isComplete = true;
+	// An index signature can clash with any name, like an unknown computed key.
+	let isComplete = body.body.every((member) => member.type !== AST_NODE_TYPES.TSIndexSignature);
 	for (const member of body.body) {
 		if (
 			member.type === AST_NODE_TYPES.StaticBlock ||
@@ -222,7 +227,7 @@ function getStaticKeyName(key: TSESTree.Node, computed: boolean): string | undef
  * @returns Whether the identifier is the left side of an `in` check.
  */
 function isBrandCheck(node: TSESTree.PrivateIdentifier): boolean {
-	return node.parent.type === AST_NODE_TYPES.BinaryExpression && node.parent.left === node;
+	return node.parent.type === AST_NODE_TYPES.BinaryExpression;
 }
 
 function isFixableName(
@@ -273,9 +278,7 @@ function reportBound(
 		}
 	}
 
-	if (fixable.length > 0) {
-		report(context, fixable, createFix(context, fixableMembers, fixable));
-	}
+	report(context, fixable, createFix(context, fixableMembers, fixable));
 }
 
 /**
@@ -284,8 +287,8 @@ function reportBound(
  * an enclosing class, so it moves to the outer frame.
  *
  * All fixable names share one fix. A class with an `extends` clause, or with a
- * computed key that cannot be resolved, gets no fix, because a renamed member
- * could clash with a member it cannot see.
+ * computed key that cannot be resolved, or with an index signature, gets no
+ * fix, because a renamed member could clash with a member it cannot see.
  *
  * @param context - The rule context.
  * @param frame - The class body that just finished.
