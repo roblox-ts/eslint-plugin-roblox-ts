@@ -1,3 +1,5 @@
+import type { Linter } from "eslint";
+
 import type { TSRecommendedRules } from "../types/generated";
 import { createConfig } from "../utils/create-config";
 
@@ -51,4 +53,4 @@ export const tsRecommendedCompat = flat;
  * };
  * ```
  */
-export const tsRecommendedCompatLegacy = legacy;
+export const tsRecommendedCompatLegacy: Linter.LegacyConfig = legacy;
