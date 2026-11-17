@@ -1,3 +1,5 @@
+// cspell:ignore quasis
+
 import type { TSESLint, TSESTree } from "@typescript-eslint/utils";
 import { AST_NODE_TYPES } from "@typescript-eslint/utils";
 
@@ -22,10 +24,23 @@ interface ClassFrame {
 
 type Context = Readonly<TSESLint.RuleContext<string, []>>;
 
+interface MemberNames {
+	readonly instance: Set<string>;
+	/** False if a computed key could not be resolved to a name. */
+	readonly isComplete: boolean;
+	readonly static: Set<string>;
+}
+
 type PrivateMember =
 	| TSESTree.AccessorProperty
 	| TSESTree.MethodDefinition
 	| TSESTree.PropertyDefinition;
+
+/** `#constructor` becomes a real constructor (or a syntax error) if renamed. */
+const RESERVED_NAMES = new Set(["constructor"]);
+
+/** Built-in `Function` properties that a static member cannot redeclare. */
+const RESERVED_STATIC_NAMES = new Set(["arguments", "caller", "length", "name", "prototype"]);
 
 function addToGroup<T>(groups: Map<string, Array<T>>, key: string, value: T): void {
 	const group = groups.get(key);
@@ -36,13 +51,44 @@ function addToGroup<T>(groups: Map<string, Array<T>>, key: string, value: T): vo
 	}
 }
 
+function buildFixes(
+	context: Context,
+	fixer: TSESLint.RuleFixer,
+	members: ReadonlyArray<PrivateMember>,
+	identifiers: ReadonlyArray<TSESTree.PrivateIdentifier>,
+): Array<TSESLint.RuleFix> | null {
+	const { sourceCode } = context;
+	const fixes: Array<TSESLint.RuleFix> = [];
+	for (const member of members) {
+		// `private` must come before `static`, `readonly`, `accessor`,
+		// `async`, `get`, `set`, and `*`, but after decorators.
+		const lastDecorator = member.decorators.at(-1);
+		const firstToken =
+			lastDecorator === undefined
+				? sourceCode.getFirstToken(member)
+				: sourceCode.getTokenAfter(lastDecorator);
+		if (firstToken === null) {
+			return null;
+		}
+
+		fixes.push(fixer.insertTextBefore(firstToken, "private "));
+	}
+
+	for (const node of identifiers) {
+		fixes.push(fixer.replaceText(node, node.name));
+	}
+
+	return fixes;
+}
+
 /**
- * Builds one fix that renames a private name at its declarations and all of its
- * uses, so the code stays valid after the fix.
+ * Builds one fix that renames every fixable private name of a class at its
+ * declarations and all of its uses. One fix per class lets ESLint apply all
+ * renames in one pass. The edits are built once and shared by all reports.
  *
  * @param context - The rule context.
- * @param members - The class members that declare the name.
- * @param identifiers - Every private identifier bound to the name.
+ * @param members - The class members that declare the names.
+ * @param identifiers - Every private identifier bound to the names.
  * @returns The fix function.
  */
 function createFix(
@@ -50,30 +96,11 @@ function createFix(
 	members: ReadonlyArray<PrivateMember>,
 	identifiers: ReadonlyArray<TSESTree.PrivateIdentifier>,
 ): TSESLint.ReportFixFunction {
-	const { sourceCode } = context;
+	let cached: Array<TSESLint.RuleFix> | null | undefined;
 
 	return (fixer) => {
-		const fixes: Array<TSESLint.RuleFix> = [];
-		for (const member of members) {
-			// `private` must come before `static`, `readonly`, `accessor`,
-			// `async`, `get`, `set`, and `*`, but after decorators.
-			const lastDecorator = member.decorators.at(-1);
-			const firstToken =
-				lastDecorator === undefined
-					? sourceCode.getFirstToken(member)
-					: sourceCode.getTokenAfter(lastDecorator);
-			if (firstToken === null) {
-				return null;
-			}
-
-			fixes.push(fixer.insertTextBefore(firstToken, "private "));
-		}
-
-		for (const node of identifiers) {
-			fixes.push(fixer.replaceText(node, node.name));
-		}
-
-		return fixes;
+		cached ??= buildFixes(context, fixer, members, identifiers);
+		return cached;
 	};
 }
 
@@ -124,36 +151,41 @@ function getDeclaringMember(node: TSESTree.PrivateIdentifier): PrivateMember | u
 }
 
 /**
- * Collects the names of all non-`#` members of a class body, including
- * constructor parameter properties. A private name that matches one of these
- * cannot be renamed without a clash.
+ * Collects the names of all non-`#` members of a class body, split into static
+ * and instance members. Constructor parameter properties are instance members.
+ * A private name that matches one of these cannot be renamed without a clash.
  *
  * @param body - The class body to scan.
- * @returns The static key of each member and parameter property.
+ * @returns The member names, and whether every key could be resolved.
  */
-function getMemberNames(body: TSESTree.ClassBody): Set<string> {
-	const names = new Set<string>();
+function getMemberNames(body: TSESTree.ClassBody): MemberNames {
+	const instance = new Set<string>();
+	const staticNames = new Set<string>();
+	let isComplete = true;
 	for (const member of body.body) {
 		if (
 			member.type === AST_NODE_TYPES.StaticBlock ||
-			member.type === AST_NODE_TYPES.TSIndexSignature
+			member.type === AST_NODE_TYPES.TSIndexSignature ||
+			member.key.type === AST_NODE_TYPES.PrivateIdentifier
 		) {
 			continue;
 		}
 
 		const name = getStaticKeyName(member.key, member.computed);
-		if (name !== undefined) {
-			names.add(name);
+		if (name === undefined) {
+			isComplete = false;
+		} else {
+			(member.static ? staticNames : instance).add(name);
 		}
 
 		if (member.type === AST_NODE_TYPES.MethodDefinition && member.kind === "constructor") {
 			for (const parameterName of getParameterPropertyNames(member)) {
-				names.add(parameterName);
+				instance.add(parameterName);
 			}
 		}
 	}
 
-	return names;
+	return { instance, isComplete, static: staticNames };
 }
 
 function getParameterPropertyNames(constructor: TSESTree.MethodDefinition): Array<string> {
@@ -175,6 +207,11 @@ function getStaticKeyName(key: TSESTree.Node, computed: boolean): string | undef
 		return String(key.value);
 	}
 
+	if (key.type === AST_NODE_TYPES.TemplateLiteral && key.expressions.length === 0) {
+		const [quasi] = key.quasis;
+		return quasi?.value.cooked ?? undefined;
+	}
+
 	return undefined;
 }
 
@@ -188,6 +225,25 @@ function isBrandCheck(node: TSESTree.PrivateIdentifier): boolean {
 	return node.parent.type === AST_NODE_TYPES.BinaryExpression && node.parent.left === node;
 }
 
+function isFixableName(
+	name: string,
+	members: ReadonlyArray<PrivateMember>,
+	identifiers: ReadonlyArray<TSESTree.PrivateIdentifier>,
+	memberNames: MemberNames,
+): boolean {
+	if (RESERVED_NAMES.has(name) || identifiers.some(isBrandCheck)) {
+		return false;
+	}
+
+	return members.every((member) => {
+		if (member.static) {
+			return !RESERVED_STATIC_NAMES.has(name) && !memberNames.static.has(name);
+		}
+
+		return !memberNames.instance.has(name);
+	});
+}
+
 function report(
 	context: Context,
 	identifiers: ReadonlyArray<TSESTree.PrivateIdentifier>,
@@ -198,10 +254,38 @@ function report(
 	}
 }
 
+function reportBound(
+	context: Context,
+	frame: ClassFrame,
+	bound: ReadonlyMap<string, ReadonlyArray<TSESTree.PrivateIdentifier>>,
+): void {
+	const memberNames = getMemberNames(frame.body);
+	const canFix = memberNames.isComplete && frame.body.parent.superClass === null;
+	const fixable: Array<TSESTree.PrivateIdentifier> = [];
+	const fixableMembers: Array<PrivateMember> = [];
+	for (const [name, identifiers] of bound) {
+		const members = frame.declarations.get(name) ?? [];
+		if (canFix && isFixableName(name, members, identifiers, memberNames)) {
+			fixable.push(...identifiers);
+			fixableMembers.push(...members);
+		} else {
+			report(context, identifiers);
+		}
+	}
+
+	if (fixable.length > 0) {
+		report(context, fixable, createFix(context, fixableMembers, fixable));
+	}
+}
+
 /**
  * Binds the private identifiers of a finished class body to its declarations
  * and reports them. A use of a name that this class does not declare belongs to
  * an enclosing class, so it moves to the outer frame.
+ *
+ * All fixable names share one fix. A class with an `extends` clause, or with a
+ * computed key that cannot be resolved, gets no fix, because a renamed member
+ * could clash with a member it cannot see.
  *
  * @param context - The rule context.
  * @param frame - The class body that just finished.
@@ -224,19 +308,8 @@ function resolveFrame(context: Context, frame: ClassFrame, outer: ClassFrame | u
 		outer.identifiers.push(...unbound);
 	}
 
-	if (bound.size === 0) {
-		return;
-	}
-
-	const memberNames = getMemberNames(frame.body);
-	for (const [name, identifiers] of bound) {
-		const isFixable = !memberNames.has(name) && !identifiers.some(isBrandCheck);
-		const members = frame.declarations.get(name) ?? [];
-		report(
-			context,
-			identifiers,
-			isFixable ? createFix(context, members, identifiers) : undefined,
-		);
+	if (bound.size > 0) {
+		reportBound(context, frame, bound);
 	}
 }
 
