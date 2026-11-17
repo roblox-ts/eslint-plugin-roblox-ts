@@ -21,7 +21,9 @@ getter/setter pair as two different methods.
 
 This change modifies the public API of the class or object. All callers must
 change from `obj.value` to `obj.getValue()`, so the rule does not apply it
-automatically. Type errors at the call sites show where to update.
+automatically. Type errors usually show where to update. Check for an untyped
+setter parameter, and for a base class that already has a method with the new
+name, because the rename then overrides it.
 
 There is no suggestion for computed keys (`get [key]()`), string or number
 keys (`get "value"()`), private keys (`get #value()`), when a comment is

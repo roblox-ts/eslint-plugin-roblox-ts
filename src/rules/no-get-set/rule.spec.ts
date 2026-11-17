@@ -1,3 +1,4 @@
+// cspell:ignore getßeta ßeta
 import { unindent } from "@antfu/utils";
 
 import type { InvalidTestCase, ValidTestCase } from "eslint-vitest-rule-tester";
@@ -149,8 +150,6 @@ const invalid: Array<InvalidTestCase> = [
 	testCase("class K { get get() { return 1; } }", [
 		{ name: "getGet", output: "class K { getGet() { return 1; } }" },
 	]),
-	// A comment between the keyword and the key: no suggestion, so the
-	// comment is never lost or moved.
 	testCase("class L { get /* c */ value() { return 1; } }", [{}]),
 	testCase("class M { get // c\n value() { return 1; } }", [{}]),
 	testCase("class N { get [key]() { return 1; } }", [{}]),
@@ -168,15 +167,38 @@ const invalid: Array<InvalidTestCase> = [
 		{ name: "get_x", output: "class S { get_x() { return 1; } set $y(v) {} }" },
 		{ name: "set$y", output: "class S { get _x() { return 1; } set$y(v) {} }" },
 	]),
-	testCase(String.raw`class T { get abc() { return 1; } }`, [
+	testCase("class T { get \\u0061bc() { return 1; } }", [
 		{ name: "getAbc", output: "class T { getAbc() { return 1; } }" },
 	]),
 	testCase("const obj = { inner: { get value() { return 1; } } };", [
 		{ name: "getValue", output: "const obj = { inner: { getValue() { return 1; } } };" },
 	]),
-	// The new name is already taken: no suggestion.
 	testCase("class U { get value() { return 1; } getValue() { return 2; } }", [{}]),
 	testCase("const obj = { get value() { return 1; }, 'getValue': 2 };", [{}]),
+	testCase("const obj = { get value() { return 1; }, ['getValue']: 2 };", [{}]),
+	testCase("class U1 { get value() { return 1; } getValue = () => 2; }", [{}]),
+	testCase("class U2 { get value() { return 1; } accessor getValue = 2; }", [{}]),
+	testCase("abstract class U3 { get value() { return 1; } abstract getValue(): number; }", [{}]),
+	testCase("abstract class U4 { get value() { return 1; } abstract getValue: number; }", [{}]),
+	testCase(
+		"abstract class U5 { get value() { return 1; } abstract accessor getValue: number; }",
+		[{}],
+	),
+	testCase("class U6 { get value() { return 1; } ['getValue']() { return 2; } }", [{}]),
+	testCase("class U7 { get value() { return 1; } [`getValue`]() { return 2; } }", [{}]),
+	testCase("class U8 { constructor(private getValue: number) {} get value() { return 1; } }", [
+		{},
+	]),
+	testCase("class U9 { constructor(readonly getValue = 1) {} get value() { return 1; } }", [{}]),
+	testCase("class V { static {} get value() { return 1; } }", [
+		{ name: "getValue", output: "class V { static {} getValue() { return 1; } }" },
+	]),
+	testCase("const obj = { ...other, get value() { return 1; } };", [
+		{ name: "getValue", output: "const obj = { ...other, getValue() { return 1; } };" },
+	]),
+	testCase("class W { get ßeta() { return 1; } }", [
+		{ name: "getßeta", output: "class W { getßeta() { return 1; } }" },
+	]),
 ];
 
 run({

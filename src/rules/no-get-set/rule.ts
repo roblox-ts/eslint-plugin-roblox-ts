@@ -1,5 +1,5 @@
 import type { TSESLint, TSESTree } from "@typescript-eslint/utils";
-import { AST_NODE_TYPES } from "@typescript-eslint/utils";
+import { AST_NODE_TYPES, ASTUtils } from "@typescript-eslint/utils";
 
 import { createRobloxRule, type RobloxRuleListener } from "../../util";
 
@@ -42,12 +42,12 @@ function buildSuggestion(
 
 	const { sourceCode } = context;
 	const keyword = sourceCode.getTokenBefore(key);
-	if (keyword?.value !== kind || sourceCode.commentsExistBetween(keyword, key)) {
+	if (keyword === null || sourceCode.commentsExistBetween(keyword, key)) {
 		return null;
 	}
 
 	const name = prefixName(kind, key.name);
-	if (siblings.some((member) => getStaticKeyName(member) === name)) {
+	if (siblings.some((member) => getMemberNames(member).includes(name))) {
 		return null;
 	}
 
@@ -87,25 +87,38 @@ function createOnce(context: Readonly<TSESLint.RuleContext<MessageIds, []>>): Ro
 	};
 }
 
-function getStaticKeyName(member: Member): string | undefined {
+function getMemberNames(member: Member): Array<null | string> {
+	if (member.type === AST_NODE_TYPES.MethodDefinition && member.kind === "constructor") {
+		return member.value.params.map(getParameterPropertyName);
+	}
+
 	if (
-		(member.type !== AST_NODE_TYPES.MethodDefinition &&
-			member.type !== AST_NODE_TYPES.Property &&
-			member.type !== AST_NODE_TYPES.PropertyDefinition &&
-			member.type !== AST_NODE_TYPES.AccessorProperty &&
-			member.type !== AST_NODE_TYPES.TSAbstractMethodDefinition &&
-			member.type !== AST_NODE_TYPES.TSAbstractPropertyDefinition) ||
-		member.computed
+		member.type !== AST_NODE_TYPES.MethodDefinition &&
+		member.type !== AST_NODE_TYPES.Property &&
+		member.type !== AST_NODE_TYPES.PropertyDefinition &&
+		member.type !== AST_NODE_TYPES.AccessorProperty &&
+		member.type !== AST_NODE_TYPES.TSAbstractMethodDefinition &&
+		member.type !== AST_NODE_TYPES.TSAbstractPropertyDefinition &&
+		member.type !== AST_NODE_TYPES.TSAbstractAccessorProperty
 	) {
-		return undefined;
+		return [];
 	}
 
-	const { key } = member;
-	if (key.type === AST_NODE_TYPES.Identifier) {
-		return key.name;
+	const { key, computed } = member;
+	return [
+		!computed && key.type === AST_NODE_TYPES.Identifier
+			? key.name
+			: ASTUtils.getStringIfConstant(key),
+	];
+}
+
+function getParameterPropertyName(parameter: TSESTree.Parameter): null | string {
+	if (parameter.type !== AST_NODE_TYPES.TSParameterProperty) {
+		return null;
 	}
 
-	return key.type === AST_NODE_TYPES.Literal ? String(key.value) : undefined;
+	const { parameter: property } = parameter;
+	return property.type === AST_NODE_TYPES.AssignmentPattern ? property.left.name : property.name;
 }
 
 function prefixName(kind: "get" | "set", name: string): string {
