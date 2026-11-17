@@ -10,6 +10,13 @@
 This rule bans the use of private identifiers (e.g., `#fieldName`) in classes,
 as they are not supported in roblox-ts.
 
+The fix renames the declaration and every use of the name together, and puts
+`private` before other modifiers such as `static`. It does not fix a name when:
+
+- the class already has a member with the same name, or
+- the code uses a brand check (`#name in obj`), which has no `private`
+  equivalent.
+
 ## Examples
 
 ### Incorrect
