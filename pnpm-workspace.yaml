@@ -45,7 +45,7 @@ catalogs:
     unplugin-unused: 0.5.7
     vitest: 4.0.18
   tsc:
-    "@isentinel/tsconfig": 1.2.0
+    "@isentinel/tsconfig": 3.0.0
     typescript: 5.9.3
   types:
     "@rbxts/compiler-types": 3.0.0-types.0

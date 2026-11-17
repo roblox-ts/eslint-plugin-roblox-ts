@@ -104,8 +104,8 @@ catalogs:
       version: 4.0.18
   tsc:
     '@isentinel/tsconfig':
-      specifier: 1.2.0
-      version: 1.2.0
+      specifier: 3.0.0
+      version: 3.0.0
     typescript:
       specifier: 5.9.3
       version: 5.9.3
@@ -149,7 +149,7 @@ importers:
         version: 4.9.0(@types/eslint@9.6.1)(@types/estree@1.0.8)(@typescript-eslint/utils@8.56.0(eslint@9.39.1(jiti@2.6.1))(typescript@5.9.3))(eslint-plugin-eslint-plugin@7.3.1(eslint@9.39.1(jiti@2.6.1)))(eslint-plugin-import@2.32.0(@typescript-eslint/parser@8.56.0(eslint@9.39.1(jiti@2.6.1))(typescript@5.9.3))(eslint@9.39.1(jiti@2.6.1)))(eslint-plugin-n@17.24.0(eslint@9.39.1(jiti@2.6.1))(typescript@5.9.3))(eslint-plugin-react-naming-convention@2.3.5(eslint@9.39.1(jiti@2.6.1))(typescript@5.9.3))(eslint@9.39.1(jiti@2.6.1))(typescript@5.9.3)
       '@isentinel/tsconfig':
         specifier: catalog:tsc
-        version: 1.2.0(typescript@5.9.3)
+        version: 3.0.0(typescript@5.9.3)
       '@oxlint/plugins':
         specifier: catalog:testing
         version: 1.74.0
@@ -1106,8 +1106,8 @@ packages:
   '@isentinel/stylua@2.1.0-esm.3':
     resolution: {integrity: sha512-thwx7ptSzSGOZhzhxWD6cLOSYesk+5U3Ia/RzMrFc9djpv7LXe0spGCxJ/tWfYdJfg1ryU89rubdhhYxVlyMQg==}
 
-  '@isentinel/tsconfig@1.2.0':
-    resolution: {integrity: sha512-MTsDJjte6XV+t3UtbE93UOStGgJ6jw5XG8UoGcyuI8E9mEAOZFhqmdKT8LVXgqncM5Knbe4H/lAUVvRHO+l6tA==}
+  '@isentinel/tsconfig@3.0.0':
+    resolution: {integrity: sha512-j187ESnoLFO6wwU0PpL9b/JDtvEa6TwABaiVSOw41li3yoZyfg4ZEudRWElbxVdvp7hiBgCESTZEohkYS03bsQ==}
     engines: {node: '>=18.0.0'}
     peerDependencies:
       typescript: ^5.5.0
@@ -5987,7 +5987,7 @@ snapshots:
     dependencies:
       rollup: 4.53.2
 
-  '@isentinel/tsconfig@1.2.0(typescript@5.9.3)':
+  '@isentinel/tsconfig@3.0.0(typescript@5.9.3)':
     dependencies:
       typescript: 5.9.3
 
