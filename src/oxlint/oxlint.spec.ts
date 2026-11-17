@@ -118,6 +118,15 @@ describe("oxlint integration", () => {
 		});
 	});
 
+	it("reports no-get-set without an autofix", () => {
+		const code = FIXTURES["no-get-set"]!;
+		const { diagnostics, fixed } = runOxlint({ code, rule: "no-get-set" });
+
+		expect(diagnostics).toHaveLength(1);
+		expect(diagnostics[0]!.code).toBe(`${PLUGIN_NAME}(no-get-set)`);
+		expect(fixed).toBe(code);
+	});
+
 	it("interpolates {{data}} placeholders", () => {
 		const { diagnostics } = runOxlint({
 			code: "const and = true;\n",
