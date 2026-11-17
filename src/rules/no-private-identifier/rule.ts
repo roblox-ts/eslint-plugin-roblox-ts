@@ -252,7 +252,7 @@ function isFixableName(
 function report(
 	context: Context,
 	identifiers: ReadonlyArray<TSESTree.PrivateIdentifier>,
-	fix?: TSESLint.ReportFixFunction,
+	fix: null | TSESLint.ReportFixFunction = null,
 ): void {
 	for (const node of identifiers) {
 		context.report({ fix, messageId: PRIVATE_IDENTIFIER_VIOLATION, node });
