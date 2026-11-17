@@ -116,6 +116,30 @@ describe("oxlint integration", () => {
 				runOxlint({ code: GET_CHILDREN_FIXTURE, rule: "prefer-get-players" }).fixed,
 			).toBe("Players.GetPlayers();\n");
 		});
+
+		it.each([
+			[
+				"class A { #value = 1; read() { return this.#value; } }",
+				"class A { private value = 1; read() { return this.value; } }",
+			],
+			[
+				"class A { static #x = 1; static read() { return A.#x; } }",
+				"class A { private static x = 1; static read() { return A.x; } }",
+			],
+			[
+				"class A { #x = 1; has(obj: object) { return #x in obj; } }",
+				"class A { #x = 1; has(obj: object) { return #x in obj; } }",
+			],
+			[
+				"class A { #x = 1; x = 2; read() { return this.#x; } }",
+				"class A { #x = 1; x = 2; read() { return this.#x; } }",
+			],
+		])("applies the no-private-identifier fix to %s", (code, expected) => {
+			const { diagnostics, fixed } = runOxlint({ code, rule: "no-private-identifier" });
+
+			expect(diagnostics).toHaveLength(2);
+			expect(fixed).toBe(expected);
+		});
 	});
 
 	it("reports no-get-set without an autofix", () => {
